@@ -10,4 +10,4 @@ public class OnOffApplication {
 		SpringApplication.run(OnOffApplication.class, args);
 	}
 
-}
+} 
