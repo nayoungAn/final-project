@@ -1,6 +1,7 @@
 package com.greedy.onoff.member.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,5 +68,5 @@ public class Member {
 	
 	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "MEMBER_CODE")
-	private Append memberImg;
+	private List<Append> memberImg;
 }
