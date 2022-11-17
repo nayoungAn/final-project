@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.classes.dto.ClassesDto;
+import com.greedy.onoff.classes.entity.Classes;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +36,5 @@ public class Attach {
 	@Id
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
-    private ClassesDto classes;
+    private Classes classes;
 }

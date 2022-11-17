@@ -12,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.mtm.dto.ClassesDto;
-import com.greedy.onoff.mtm.dto.MemberDto;
+import com.greedy.onoff.classes.entity.Classes;
+import com.greedy.onoff.member.entity.Member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,11 +45,11 @@ public class mtmEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
-	private MemberDto member;
+	private Member member;
 	
 	@ManyToOne
 	@JoinColumn(name = "CLASS_CODE")
-	private ClassesDto classes;
+	private Classes classes;
 	
 	@Column(name = "MTM_REFER")
     private Date mtmrefer;
