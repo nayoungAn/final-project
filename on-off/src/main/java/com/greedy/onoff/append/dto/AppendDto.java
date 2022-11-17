@@ -5,7 +5,7 @@ import com.greedy.onoff.member.dto.MemberDto;
 import lombok.Data;
 
 @Data
-public class AppendDTO {
+public class AppendDto {
 	
 	private Long appendCode;
 	private String appendFile;
@@ -14,6 +14,6 @@ public class AppendDTO {
 	private String appendType;
 	private String appendSort;
 	//private AttachDto myClass;
-	private MemberDto member;
+	private MemberDto member;//
 	
 }
