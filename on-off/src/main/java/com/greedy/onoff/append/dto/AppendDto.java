@@ -1,5 +1,7 @@
 package com.greedy.onoff.append.dto;
 
+import javax.persistence.Column;
+
 import com.greedy.onoff.member.dto.MemberDto;
 
 import lombok.Data;
@@ -13,7 +15,7 @@ public class AppendDto {
 	private String appendPath;
 	private String appendType;
 	private String appendSort;
-	//private AttachDto myClass;
-	private MemberDto member;//
+	private Long classCode;	
+	private Long memberCode;
 	
 }

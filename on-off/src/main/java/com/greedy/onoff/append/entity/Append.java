@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import com.greedy.onoff.member.entity.Member;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,14 +48,11 @@ public class Append {
 	@Column(name = "APPEND_SORT")
 	private String appendSort;
 	
-	/*
-	@JoinColumn(name = "CLASS_CODE")
-	@ManyToOne
-	private Attach myClass;
+	@Column(name = "CLASS_CODE")
+	private Long classCode;	
 	
-	@JoinColumn(name = "MEMBER_CODE")
-	@ManyToOne
-	private Member member;*/
+	@Column(name = "MEMBER_CODE")
+	private Long memberCode;
 	
 	
 }

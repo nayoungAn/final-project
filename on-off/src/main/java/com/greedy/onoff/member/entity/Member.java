@@ -2,13 +2,18 @@ package com.greedy.onoff.member.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.greedy.onoff.append.entity.Append;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,4 +64,8 @@ public class Member {
 	
 	@Column(name = "MEMBER_REGISTER_DATE")
 	private Date memberRegisterDate;
+	
+	@OneToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name = "MEMBER_CODE")
+	private Append memberImg;
 }
