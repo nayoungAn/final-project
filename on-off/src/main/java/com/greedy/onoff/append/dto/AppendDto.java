@@ -14,6 +14,6 @@ public class AppendDto {
 	private String appendType;
 	private String appendSort;
 	//private AttachDto myClass;
-	private MemberDto member;
+	private MemberDto member;//
 	
 }
