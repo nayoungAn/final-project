@@ -1,8 +1,5 @@
 package com.greedy.onoff.append.dto;
 
-import javax.persistence.Column;
-
-import com.greedy.onoff.member.dto.MemberDto;
 
 import lombok.Data;
 

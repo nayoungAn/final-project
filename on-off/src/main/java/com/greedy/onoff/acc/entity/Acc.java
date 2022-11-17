@@ -23,7 +23,7 @@ import lombok.Setter;
 @SequenceGenerator(name = "ACC_SEQ_GENERATOR",
 sequenceName = "SEQ_CON_CODE",
 initialValue = 1, allocationSize = 1)
-public class AccEntity {
+public class Acc {
 
 	@Id
 	@Column(name = "ACC_CODE")

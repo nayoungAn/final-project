@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@192.168.219.100:1521:xe
     username: C##ONO
     password: ONO
   servlet:

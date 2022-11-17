@@ -1,6 +1,6 @@
 package com.greedy.onoff.classes.entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -64,9 +64,6 @@ public class Classes {
 	@Column(name = "CLASS_DESCRIPTION")
 	private String classDescription;
 	
-	@Column(name = "CLASS_STUDENTS")
-	private Long classStudents;
-	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
 	private Member member;
@@ -79,6 +76,9 @@ public class Classes {
 	@JoinColumn(name = "CLASS_CODE")
 	private List<ClassesSchedule> classesSchedule;
 	
+	@Column(name = "CLASS_STUDENTS")
+	private Long classStudents;
 	
-
+	
+	
 	}
