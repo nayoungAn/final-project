@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.greedy.onoff.classes.entity.ClassesSchedule;
+import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.subject.dto.SubjectDto;
 
 import lombok.Data;

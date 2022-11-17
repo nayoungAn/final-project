@@ -1,4 +1,4 @@
-package com.greedy.onoff.subject.entity;
+package com.greedy.onoff.teacher.entity;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.greedy.onoff.classes.entity.Member;
+import com.greedy.onoff.member.entity.Member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

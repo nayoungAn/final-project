@@ -16,16 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.subject.entity.Subject;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@Getter
+@NoArgsConstructor 
+@Getter	
 @Setter
-@Entity	
+@Entity
 @Table(name = "TBL_CLASSES")
 @SequenceGenerator(name = "CLASSES_SEQ_GENERATOR", 
 	sequenceName = "SEQ_CLASSES_CODE", 
@@ -79,27 +80,5 @@ public class Classes {
 	private List<ClassesSchedule> classesSchedule;
 	
 	
-	
-	
-	
-	
 
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-}
