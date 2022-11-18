@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 public class MemberDto {
 	
-	private Long memberCode;
 	private String memberId;
 	private String memberPassword;
 	private String memberName;
@@ -18,6 +17,7 @@ public class MemberDto {
 	private String memberAddress;
 	private String memberStatus;
 	private String memberEmail;
+	private Long memberCode;
 	private String memberRole;
 	private Date memberRegisterDate;
 	private List<AppendDto> memberImg;

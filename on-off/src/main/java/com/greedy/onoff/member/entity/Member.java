@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -28,14 +29,9 @@ import lombok.Setter;
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "SEQ_MEMBER_CODE", initialValue = 1, allocationSize = 1)
 public class Member {
 	
-	@Id
-	@Column(name = "MEMBER_CODE" )
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-	private Long memberCode;
-	
 	@Column(name = "MEMBER_ID")
 	private String memberId;
-	
+		
 	@Column(name = "MEMBER_PASSWORD")
 	private String memberPassword;
 	
@@ -60,13 +56,18 @@ public class Member {
 	@Column(name = "MEMBER_EMAIL")
 	private String memberEmail;
 	
+	@Id
+	@Column(name = "MEMBER_CODE")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+	private Long memberCode;
+	
 	@Column(name = "MEMBER_ROLE")
 	private String memberRole;
 	
 	@Column(name = "MEMBER_REGISTER_DATE")
 	private Date memberRegisterDate;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "MEMBER_CODE")
 	private List<Append> memberImg;
 }

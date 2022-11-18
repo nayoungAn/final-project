@@ -30,7 +30,7 @@ import lombok.Setter;
 public class TeacherHistory {
 
 	@Id
-	@Column(name = "HISOTRY_CODE")
+	@Column(name = "HISTORY_CODE")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TEACHER_HISTORY_SEQ_GENERATOR")
     private Long historyCode;
     

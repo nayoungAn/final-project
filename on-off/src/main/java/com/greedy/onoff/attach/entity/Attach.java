@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.classes.dto.ClassesDto;
+import com.greedy.onoff.classes.entity.Classes;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name ="TBL_ATTACH" )
+@Table(name ="TBL_ATTACH")
 @SequenceGenerator(name = "ATTACH_SEQ_GENERATOR",
 sequenceName = "SEQ_CLASS_CODE",
 initialValue = 1, allocationSize = 1)
@@ -39,6 +39,5 @@ public class Attach {
 	@Id
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="CLASSES_SEQ_GENERATOR")
-    private List<ClassesDto> classes;
+  private List<Classes> classes;
 }

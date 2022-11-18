@@ -13,7 +13,7 @@ public class TeacherHistoryDto {
 	private Long historyCode;
 	private MemberDto member;
 	private Date joinDate;
-	private Date RetirementDate;
+	private Date retirementDate;
 	
 	
 }

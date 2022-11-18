@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TBL_SUBJECT")
-@SequenceGenerator(name = "SUBJECT_SEQ_GENERATOR", sequenceName = "SEQ_SUBJECT_CODE", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "SUBJECT_CODE_SEQ_GENERATOR", sequenceName = "SEQ_SUBJECT_CODE", initialValue = 1, allocationSize = 1)
 @DynamicInsert
 public class Subject {
 
@@ -37,7 +37,6 @@ public class Subject {
 	@Column(name = "SUBJECT_LANGUAGE")
     private String subjectLanguage;
 
-	
 	@Column(name = "SUBJECT_BOOK")
     private String subjectBook;
 	
