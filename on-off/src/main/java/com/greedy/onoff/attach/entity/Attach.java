@@ -40,5 +40,5 @@ public class Attach {
 	@Id
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "CLASS_CODE")
-	private List<Classes> classesSchedule;
+	private List<Classes> classes;
 }
