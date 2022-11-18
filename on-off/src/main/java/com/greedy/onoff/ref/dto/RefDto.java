@@ -4,6 +4,9 @@ import java.sql.Date;
 
 import com.greedy.onoff.acc.dto.AccDto;
 
+import lombok.Data;
+
+@Data
 public class RefDto {
 	
 	private Long refPrice;

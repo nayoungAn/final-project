@@ -4,11 +4,22 @@ package com.greedy.onoff.ref.entity;
 import java.sql.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-import com.greedy.onoff.acc.dto.AccDto;
+import com.greedy.onoff.acc.entity.AccEntity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity	
+@Table(name = "TBL_REF")
 public class RefEntity {
 	
 	@Column(name = "REF_PRICE")
@@ -20,8 +31,9 @@ public class RefEntity {
 	@Column(name = "REF_CONTENT")
 	private String refContent;
 	
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "ACC_CODE")
-	private AccDto acc;
+	private AccEntity acc;
 
 }

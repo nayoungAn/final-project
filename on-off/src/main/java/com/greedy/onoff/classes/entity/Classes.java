@@ -64,9 +64,6 @@ public class Classes {
 	@Column(name = "CLASS_DESCRIPTION")
 	private String classDescription;
 	
-	@Column(name = "CLASS_STUDENTS")
-	private Long classStudents;
-	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
 	private Member member;
@@ -77,8 +74,11 @@ public class Classes {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "CLASS_CODE")
-	private List<ClassesSchedule> classesSchedule;
+	private List<ClassesSchedule> classesScheduleList;
+	
+	@Column(name = "CLASS_STUDENTS")
+	private Long classStudents;
 	
 	
-
+	
 	}
