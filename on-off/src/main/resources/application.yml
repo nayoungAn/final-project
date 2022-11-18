@@ -32,7 +32,7 @@ spring:
 image:
   # WebConfig에 세팅
   add-resource-locations: classpath:/static/imgs/
-  add-resource-handler: /productimgs/**
+  add-resource-handler: /memberimgs/**
   # ProductService에 세팅
   image-dir: src/main/resources/static/imgs
   image-url: http://localhost:8001/imgs/
