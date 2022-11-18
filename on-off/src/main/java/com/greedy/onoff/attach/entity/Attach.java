@@ -1,9 +1,12 @@
 package com.greedy.onoff.attach.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,5 +39,6 @@ public class Attach {
 	@Id
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
-    private ClassesDto classes;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="CLASSES_SEQ_GENERATOR")
+    private List<ClassesDto> classes;
 }
