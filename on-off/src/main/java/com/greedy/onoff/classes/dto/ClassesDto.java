@@ -23,7 +23,7 @@ public class ClassesDto {
 	private String classDescription;
 	private MemberDto member;
 	private SubjectDto subject;
-	private List<ClassesScheduleDto> classesSchedule;
+	private List<ClassesScheduleDto> classesScheduleList;
 	private Long classStudents; 
 	
 

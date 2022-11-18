@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -56,7 +57,7 @@ public class Member {
 	private String memberEmail;
 	
 	@Id
-	@Column(name = "MEMBER_CODE" )
+	@Column(name = "MEMBER_CODE")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
 	private Long memberCode;
 	
@@ -66,7 +67,7 @@ public class Member {
 	@Column(name = "MEMBER_REGISTER_DATE")
 	private Date memberRegisterDate;
 	
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToMany(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "MEMBER_CODE")
 	private List<Append> memberImg;
 }

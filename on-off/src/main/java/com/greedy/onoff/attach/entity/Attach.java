@@ -1,6 +1,7 @@
 package com.greedy.onoff.attach.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name ="TBL_ATTACH" )
+@Table(name ="TBL_ATTACH")
 @SequenceGenerator(name = "ATTACH_SEQ_GENERATOR",
 sequenceName = "SEQ_CLASS_CODE",
 initialValue = 1, allocationSize = 1)
@@ -36,5 +37,5 @@ public class Attach {
 	@Id
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
-    private Classes classes;
+    private List<Classes> classes;
 }

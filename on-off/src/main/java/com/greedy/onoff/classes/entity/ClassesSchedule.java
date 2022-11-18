@@ -1,7 +1,9 @@
 package com.greedy.onoff.classes.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,21 +19,22 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TBL_CLASSES_SCHEDULE")
+@IdClass(ClassesSchedulePK.class)
 @DynamicInsert
 public class ClassesSchedule {
 
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "DAY_CODE")
     private Day day;
 	
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "CLASS_CODE")
-    private Classes classes;
-
+	@Column(name = "CLASS_CODE")
+    private Long classCode;
+	
+	@Id
 	@ManyToOne
 	@JoinColumn(name = "TIME_CODE")
     private Time time;
-
 
 }

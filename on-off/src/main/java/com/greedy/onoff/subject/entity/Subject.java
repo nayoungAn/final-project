@@ -37,7 +37,6 @@ public class Subject {
 	@Column(name = "SUBJECT_LANGUAGE")
     private String subjectLanguage;
 
-	
 	@Column(name = "SUBJECT_BOOK")
     private String subjectBook;
 	

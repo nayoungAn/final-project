@@ -21,10 +21,10 @@ public class Day {
 
 	@Id
 	@Column(name = "DAY_CODE")
-    private Long DAY_CODE;
+    private Long dayCode;
     
 	@Column(name = "DAY_NAME")
-    private String DAY_NAME;
+    private String dayName;
 
     
 }

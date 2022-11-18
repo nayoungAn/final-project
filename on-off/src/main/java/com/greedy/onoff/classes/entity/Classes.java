@@ -74,7 +74,7 @@ public class Classes {
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "CLASS_CODE")
-	private List<ClassesSchedule> classesSchedule;
+	private List<ClassesSchedule> classesScheduleList;
 	
 	@Column(name = "CLASS_STUDENTS")
 	private Long classStudents;

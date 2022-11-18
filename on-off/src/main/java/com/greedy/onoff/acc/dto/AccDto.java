@@ -2,6 +2,9 @@ package com.greedy.onoff.acc.dto;
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data
 public class AccDto {
 
 	private Long accCode;
