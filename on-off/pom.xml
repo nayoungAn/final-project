@@ -75,6 +75,13 @@
             <version>2.11.0</version>
         </dependency>
         
+        <!--starter-security 추가-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+        
+        
         <!-- JWT 토큰을 사용하기 위한 라이브러리 -->
         <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
         <dependency>
