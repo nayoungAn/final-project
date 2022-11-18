@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.greedy.onoff.acc.entity.AccEntity;
+import com.greedy.onoff.acc.entity.Acc;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @Entity	
 @Table(name = "TBL_REF")
-public class RefEntity {
+public class Ref {
 	
 	@Column(name = "REF_PRICE")
 	private Long refPrice;
@@ -34,6 +34,6 @@ public class RefEntity {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "ACC_CODE")
-	private AccEntity acc;
+	private Acc acc;
 
 }
