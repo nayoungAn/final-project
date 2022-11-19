@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class RefDto {
 	
+	private Long refCode;
+	
 	private Long refPrice;
 	private Date refDate;
 	private String refContent;

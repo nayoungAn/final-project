@@ -9,7 +9,7 @@ import com.greedy.onoff.subject.dto.SubjectDto;
 import lombok.Data;
 
 @Data
-public class ClassesDto {
+public class OpenClassesDto {
 	
 	private Long classCode;
 	private String className;
