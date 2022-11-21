@@ -13,5 +13,5 @@ public class SubjectDto {
 	private String subjectBook;
 	private String subjectDescription;
 	private String subjectLearningObjectives;
-	
+	private String subjectStatus;
 }
