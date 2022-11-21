@@ -8,5 +8,4 @@ public class TimeDto {
 		private Long TimeCode;
 		private String TimeName;
 
-
 }
