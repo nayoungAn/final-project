@@ -14,7 +14,7 @@ import com.greedy.onoff.member.service.AuthService;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-	
+	//
 	private final AuthService authService;
 	
 	public AuthController(AuthService authService) {
