@@ -1,21 +1,18 @@
 package com.greedy.onoff.member.entity;
 
 import java.sql.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.append.entity.Append;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,11 +24,18 @@ import lombok.Setter;
 @Entity
 @Table(name = "TBL_MEMBER")
 @SequenceGenerator(name = "MEMBER_SEQ_GENERATOR", sequenceName = "SEQ_MEMBER_CODE", initialValue = 1, allocationSize = 1)
+@DynamicInsert
+@DynamicUpdate
 public class Member {
+	
+	@Id
+	@Column(name = "MEMBER_CODE" )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
+	private Long memberCode;
 	
 	@Column(name = "MEMBER_ID")
 	private String memberId;
-		
+	
 	@Column(name = "MEMBER_PASSWORD")
 	private String memberPassword;
 	
@@ -56,18 +60,12 @@ public class Member {
 	@Column(name = "MEMBER_EMAIL")
 	private String memberEmail;
 	
-	@Id
-	@Column(name = "MEMBER_CODE")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBER_SEQ_GENERATOR")
-	private Long memberCode;
-	
 	@Column(name = "MEMBER_ROLE")
 	private String memberRole;
 	
 	@Column(name = "MEMBER_REGISTER_DATE")
 	private Date memberRegisterDate;
 	
-	@OneToMany(cascade=CascadeType.PERSIST)
-	@JoinColumn(name = "MEMBER_CODE")
-	private List<Append> memberImg;
+	@Column(name = "MEMBER_IMAGE_URL")
+	private String memberImageUrl;
 }
