@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,7 +70,7 @@ private final NoticeService noticeService;
 	}
 	
 	/* 4. 공지사항 수정 */
-	@GetMapping("/notice")
+	@PutMapping("/notice")
 	public ResponseEntity<ResponseDto> updateNotice(@ModelAttribute NoticeDto noticeDto) {
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "공지사항 수정 완료", noticeService.updateNotice(noticeDto)));
