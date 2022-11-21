@@ -1,0 +1,46 @@
+package com.greedy.onoff.util;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+public class FileUploadUtils {
+	
+	public static String saveFile(String uploadDir, String fileName, MultipartFile singleFile) throws IOException {
+		
+		Path uploadPath = Paths.get(uploadDir);
+		
+		if(!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+		
+		String replaceFileName = fileName + "." + FilenameUtils.getExtension(singleFile.getOriginalFilename());
+		
+		try(InputStream inputStream = singleFile.getInputStream()){
+			Path filePath = uploadPath.resolve(replaceFileName);
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch(IOException e) {
+			throw new IOException("파일 저장에 실패하였습니다. file name : " + fileName);
+		}
+		
+		return replaceFileName;		
+	}
+	
+	public static void deleteFile(String uploadDir, String fileName) throws IOException {
+		
+		Path uploadPath = Paths.get(uploadDir);
+		Path filePath = uploadPath.resolve(fileName);
+		try {
+			Files.delete(filePath);
+		}catch (IOException e) {
+			throw new IOException("파일 삭제에 실패하였습니다. file name:" + fileName);
+		}
+	}
+	
+}
