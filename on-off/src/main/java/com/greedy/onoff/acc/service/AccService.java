@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.greedy.onoff.acc.dto.AccDto;
 import com.greedy.onoff.acc.entity.Acc;
 import com.greedy.onoff.acc.repository.AccRepository;
-import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.member.repository.MemberRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,16 +20,16 @@ import lombok.extern.slf4j.Slf4j;
 public class AccService {
 	
 	private final AccRepository accRepository;
-	//private final MemberRepository memberRepository;
-	//private final ClassesRepository classesRepository;
+	private final MemberRepository memberRepository;
+	//private final OpenClassesRepository openClassesRepository;
 	private final ModelMapper modelMapper;
 	
 	public AccService(AccRepository accRepository,
-			//MemberRepository memberRepository, ClassesRepository classesRepository,
+			MemberRepository memberRepository, //OpenClassesRepository openClassesRepository,
 			ModelMapper modelMapper) {
 		this.accRepository = accRepository;
-		//this.memberRepository = memberRepository;
-		//this.classesRepository = classesRepository;
+		this.memberRepository = memberRepository;
+		//this.openClassesRepository = openClassesRepository;
 		this.modelMapper = modelMapper;
 	}
 	
