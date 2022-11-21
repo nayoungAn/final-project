@@ -16,7 +16,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TBL_DAY")
-@DynamicInsert
 public class Day {
 
 	@Id

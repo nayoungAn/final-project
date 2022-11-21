@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.classes.entity.Classes;
+import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.entity.Member;
 
 import lombok.Getter;
@@ -51,6 +51,6 @@ public class Acc {
 	
 	@ManyToOne
 	@JoinColumn(name = "CLASS_CODE")
-	private Classes classes;
+	private OpenClasses classes;
 	
 }
