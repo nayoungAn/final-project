@@ -4,7 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -16,10 +19,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TBL_NOTICE")
+@SequenceGenerator(name = "NOTICE_SEQ_GENERATOR", 
+	sequenceName = "SEQ_NOTICE_CODE", 
+	initialValue = 1, allocationSize = 1)
 public class Notice {
 
 	@Id
 	@Column(name = "NOTICE_CODE")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ_GENERATOR")
 	private Long noticeCode;
 	
 	@Column(name = "NOTICE_TITLE")
@@ -34,6 +41,8 @@ public class Notice {
 	@Column(name = "MEMBER_CODE")
 	private Long memberCode;
 	
+	
+	/* 수정 용도의 메소드 정의 */
 	public void update(String noticeTitle, String noticeContent) {
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
