@@ -7,9 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
+
+import com.greedy.onoff.classes.entity.OpenClasses;
+import com.greedy.onoff.classes.entity.ClassesHistory;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,13 +40,13 @@ public class Attend {
 	@Column(name = "ATTEND_STATUS")
 	private String attendStatus;
 	
-	/*
+	
 	@JoinColumn(name = "MEMBER_CODE")
 	@ManyToOne
-	private classesHistory student;
+	private ClassesHistory student;
 	
 	@JoinColumn(name = "CLASS_CODE")
 	@ManyToOne
-	private Classes class;*/
+	private OpenClasses classes;
 	
 }

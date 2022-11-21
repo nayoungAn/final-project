@@ -31,7 +31,7 @@ import lombok.Setter;
 @SequenceGenerator(name = "CLASSES_SEQ_GENERATOR", 
 	sequenceName = "SEQ_CLASSES_CODE", 
 	initialValue = 1, allocationSize = 1)
-public class Classes {
+public class OpenClasses {
 	@Id
 	@Column(name = "CLASS_CODE")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLASSES_SEQ_GENERATOR")
@@ -64,9 +64,6 @@ public class Classes {
 	@Column(name = "CLASS_DESCRIPTION")
 	private String classDescription;
 	
-	@Column(name = "CLASS_STUDENTS")
-	private Long classStudents;
-	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
 	private Member member;
@@ -75,10 +72,13 @@ public class Classes {
 	@JoinColumn(name = "SUBJECT_CODE")
 	private Subject subject;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "CLASS_CODE")
-	private List<ClassesSchedule> classesSchedule;
+	private List<ClassesSchedule> classesScheduleList;
+	
+	@Column(name = "CLASS_STUDENTS")
+	private Long classStudents;
 	
 	
-
+	
 	}

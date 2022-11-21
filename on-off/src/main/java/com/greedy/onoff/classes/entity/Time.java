@@ -16,15 +16,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "TBL_TIME")
-@DynamicInsert
 public class Time {
 
 	@Id
 	@Column(name = "TIME_CODE")
-    private Long TIME_CODE;
+    private Long timeCode;
     
 	@Column(name = "TIME_NAME")
-    private String TIME_NAME;
+    private String timeName;
 
     
 }

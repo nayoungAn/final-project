@@ -8,8 +8,8 @@ import lombok.Data;
 @Data
 public class ClassesHistoryDto {
 	
-	  private ClassesDto classes;
+	  private OpenClassesDto openClasses;
 	  private MemberDto member;
 	  private String classStatus;
-	
+	  private Long classHistoryCode;
 }
