@@ -46,19 +46,15 @@ public class Subject {
 	
 	@Column(name = "SUBJECT_LEARNING_OBJECTIVES")
     private String subjectLearningObjectives;
-	
-	@Column(name = "SUBJECT_STATUS")
-    private String subjectStatus;
 
 	public void update(String subjectName, String subjectForm, String subjectLanguage, String subjectBook,
-			String subjectDescription, String subjectLearningObjectives, String subjectStatus) {
+			String subjectDescription, String subjectLearningObjectives) {
 		this.subjectName =subjectName;
 		this.subjectForm =subjectForm;
 		this.subjectLanguage =subjectLanguage;
 		this.subjectBook =subjectBook;
 		this.subjectDescription =subjectDescription;
 		this.subjectLearningObjectives =subjectLearningObjectives;
-		this.subjectStatus =subjectStatus;
 
 
 	}

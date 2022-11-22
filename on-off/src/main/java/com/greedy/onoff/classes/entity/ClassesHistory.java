@@ -41,7 +41,7 @@ public class ClassesHistory {
 	private OpenClasses openClasses;
 	
 	@Column(name = "CLASS_STATUS")
-	private Long classStatus;
+	private String classStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
