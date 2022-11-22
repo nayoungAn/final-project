@@ -1,13 +1,15 @@
 package com.greedy.onoff.classes.dto;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ClassesScheduleDto {
 	
-	  private OpenClassesDto openClasses;
-	  private DayDto day;
-	  private TimeDto time;
-	  private Long scheduleCode;
+	private Long scheduleCode;
+	//private OpenClassesDto openClasses;
+	private DayDto day;
+	private TimeDto time;
 }

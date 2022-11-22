@@ -45,8 +45,5 @@ public class Subject {
 	
 	@Column(name = "SUBJECT_LEARNING_OBJECTIVES")
     private String subjectLearningObjectives;
-	
-	@Column(name = "SUBJECT_STATUS")
-    private String subjectStatus;
     
 }

@@ -49,4 +49,14 @@ public class AccService {
 		return accDtoList;
 	}
 
+	/* 수납 내역 상세 조회 */
+	public Object selectAccForAdmin(Long accCode) {
+
+		Acc acc = accRepository.findById(accCode)
+				.orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. accCode=" + accCode));
+		AccDto accDto = modelMapper.map(acc, AccDto.class);
+		
+		return accDto;
+	}
+
 }

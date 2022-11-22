@@ -10,7 +10,7 @@ import com.greedy.onoff.subject.entity.Subject;
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
 
 	/* 1. 과목 목록 조회 - 페이징, 상태 여부 'N' 제외 (고객) */
-	Page<Subject> findBySubjectStatus(Pageable pageable, String subjectStatus);
+	Page<Subject> findAll(Pageable pageable);
 //	
 //	/* 2. 상품 목록 조회 - 페이징, 주문 불가 상품 포함 (관리자) */
 //	/* JpaRepository<Product, Long>에 이미 구현 되어 있는 Page<Product> findAll(Pageable pageable) 사용 가능 */
