@@ -36,7 +36,7 @@ public class Ref {
 	@Column(name = "REF_CONTENT")
 	private String refContent;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "ACC_CODE")
 	private Acc acc;
 
