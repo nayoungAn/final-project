@@ -25,7 +25,22 @@ spring:
     properties:
       hibernate:
         '[format_sql]': true      
-      
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rhaehfdlvn91@gmail.com
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
 
 # 이미지 저장할 위치와 응답 시 이미지 주소 설정
