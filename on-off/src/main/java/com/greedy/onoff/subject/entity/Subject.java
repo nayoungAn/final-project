@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -45,5 +46,17 @@ public class Subject {
 	
 	@Column(name = "SUBJECT_LEARNING_OBJECTIVES")
     private String subjectLearningObjectives;
-    
+
+	public void update(String subjectName, String subjectForm, String subjectLanguage, String subjectBook,
+			String subjectDescription, String subjectLearningObjectives) {
+		this.subjectName =subjectName;
+		this.subjectForm =subjectForm;
+		this.subjectLanguage =subjectLanguage;
+		this.subjectBook =subjectBook;
+		this.subjectDescription =subjectDescription;
+		this.subjectLearningObjectives =subjectLearningObjectives;
+
+
+	}
+	
 }
