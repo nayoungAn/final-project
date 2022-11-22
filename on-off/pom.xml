@@ -23,10 +23,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency> 
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -95,6 +95,12 @@
             <version>0.11.2</version>
             <scope>runtime</scope>
         </dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    
+		</dependency>
       </dependencies>
         
 	<build>
