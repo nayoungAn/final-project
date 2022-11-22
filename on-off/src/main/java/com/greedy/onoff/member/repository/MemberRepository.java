@@ -2,6 +2,8 @@ package com.greedy.onoff.member.repository;
 
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.greedy.onoff.member.entity.Member;
@@ -18,5 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 
 	Optional<Member> findByMemberNameAndMemberEmail(String memberEmail, String memberName);
 
-	
+	Page<Member> findByMemberRole(Pageable pageable, String memberRole);
+
 }
