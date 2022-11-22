@@ -27,28 +27,42 @@ public class ConsEntity {
 	@Id
 	@Column(name = "CON_CODE")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CON_SEQ_GENERATOR")
-    private Long conCode;
+    private Long consCode;
 
 	@Column(name = "CON_DATE")
-	private Date conDate;
+	private String consDate;
 	
 	@Column(name = "CON_NAME")
-    private String conName;
+    private String consName;
 	
 	@Column(name = "CON_GENDER")
-    private String conGender;
+    private String consGender;
 	
 	@Column(name = "CON_BIRTH")
-    private Date conBirth;
+    private String consBirth;
 	
 	@Column(name = "CON_TITLE")
-    private String conTitle;
+    private String consTitle;
 	
 	@Column(name = "CON_DESCRIPTION")
-    private String conDescription;
+    private String consDescription;
 	
 	@Column(name = "CON_PHONE")
-    private String conPhone;
+    private String consPhone;
+
+	public void updateCons(Long consCode, String consDate, String consName, String consGender, String consBirth,
+			String consTitle, String consDescription, String consPhone) {
+		
+		this.consCode = consCode;
+		this.consDate = consDate;
+		this.consName = consName;
+		this.consGender = consGender;
+		this.consBirth = consBirth;
+		this.consTitle = consTitle;
+		this.consDescription = consDescription;
+		this.consPhone = consPhone;
+		
+	}
 
 
 }

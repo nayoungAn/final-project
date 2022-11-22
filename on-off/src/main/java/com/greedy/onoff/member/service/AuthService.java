@@ -3,13 +3,10 @@ package com.greedy.onoff.member.service;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.classmate.MemberResolver;
 import com.greedy.onoff.jwt.TokenProvider;
-import com.greedy.onoff.member.dto.MailDto;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.dto.TokenDto;
 import com.greedy.onoff.member.entity.Member;
