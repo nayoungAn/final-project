@@ -28,13 +28,15 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final ModelMapper modelMapper;
 	private final TokenProvider tokenProvider;
+	private final MailUtil mailUtil;
 
 	public AuthService(MemberRepository memberRepository, PasswordEncoder passwordEncoder,
-			ModelMapper modelMapper, TokenProvider tokenProvider) {
+			ModelMapper modelMapper, TokenProvider tokenProvider, MailUtil mailUtil) {
 		this.memberRepository = memberRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenProvider = tokenProvider;
+		this.mailUtil = mailUtil;
 		
 	}
 	
@@ -71,7 +73,6 @@ public class AuthService {
 		log.info("[AuthService] resetPassword Start ==================================");
 		log.info("[AuthService] memberDto : {}" , memberDto);
 		String result = null;
-		
 		Member member = memberRepository.findByMemberIdAndMemberEmail(memberDto.getMemberId(), memberDto.getMemberEmail())
 				.orElseThrow(() -> new FindMemberFaildeException("아이디 또는 이메일을 정확하게 입력해 주세요."));
 		
@@ -82,18 +83,17 @@ public class AuthService {
 			
 			memberDto.setMemberPassword(tempPw);
 			
-			MailUtil mail = new MailUtil();
-			mail.sendEmail(member);
-			member.update(member.getMemberPassword());
-			
-		/*	MailDto mailDto = new MailDto();
-			
-			mailDto.setAddress(memberDto.getMemberEmail());
-			mailDto.setTitle(" ONO 임시 비밀번호 안내 이메일입니다.");
-			mailDto.setMessage("안녕하세요. ONO 임시비밀번호 안내 관련 이메일 입니다." + "임시 비밀번호는" + tempPw + "입니다.");*/
+		
+			mailUtil.sendEmail(memberDto);
+			log.info("[AuthService] memberDto : {}" , memberDto);
 			
 			String securePw = passwordEncoder.encode(memberDto.getMemberPassword());
 			memberDto.setMemberPassword(securePw);
+			log.info("[AuthService] securePw : {}" , securePw);
+			
+			member.update(memberDto.getMemberPassword());
+			log.info("[AuthService] Password : {}" , member.getMemberPassword());
+			memberRepository.save(member);
 			
 			result = "true";
 			
@@ -104,35 +104,5 @@ public class AuthService {
 		
 		return result;
 	}
-
-/*	private String getTempPassword() {
-		  
-		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-	                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
-
-	        String str = "";
-
-	        int idx = 0;
-	        for (int i = 0; i < 10; i++) {
-	            idx = (int) (charSet.length * Math.random());
-	            str += charSet[idx];
-	        }
-	        return str;
-	}
-	
-	public void updatePassword(String str, String userEmail) {
-		String pw = passwordEncoder.encode(str);
-		
-		Member member = memberRepository.findByMemberEmail(userEmail);
-		
-		memberRepository.save(member, str);
-	
-	}*/
-
-
-
-
-
-
 
 }
