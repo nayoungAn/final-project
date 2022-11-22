@@ -12,8 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.greedy.onoff.classes.entity.OpenClasses;
-import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.classes.entity.ClassesHistory;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "TBL_ACC")
 @SequenceGenerator(name = "ACC_SEQ_GENERATOR",
-sequenceName = "SEQ_CON_CODE",
+sequenceName = "SEQ_ACC_CODE",
 initialValue = 1, allocationSize = 1)
 public class Acc {
 
@@ -46,11 +45,7 @@ public class Acc {
 	private String accContent;
 	
 	@ManyToOne
-	@JoinColumn(name = "MEMBER_CODE")
-	private Member member;
-	
-	@ManyToOne
-	@JoinColumn(name = "CLASS_CODE")
-	private OpenClasses classes;
+	@JoinColumn(name = "CLASS_HISTORY_CODE")
+	private ClassesHistory classesHistory;
 	
 }

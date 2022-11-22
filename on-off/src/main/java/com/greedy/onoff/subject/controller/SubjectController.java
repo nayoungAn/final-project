@@ -58,7 +58,7 @@ public class SubjectController {
 
 	
 
-	/* 2. 과목 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
+	/* 2. 과목 검색 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
 	@GetMapping("/subjects/search")
 	public ResponseEntity<ResponseDto> selectSearchList
 		(@RequestParam(name="page", defaultValue="1") int page, @RequestParam(name="search") String subjectName) {

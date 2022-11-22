@@ -56,7 +56,7 @@ public class OpenClasses {
 	private String classRoom;
 	
 	@Column(name = "CLASS_STATUS")
-	private Long classStatus;
+	private String classStatus;
 	
 	@Column(name = "CLASS_CIRCUIT")
 	private String classCircuit;

@@ -117,8 +117,7 @@ public class SubjectService {
 					subjectDto.getSubjectLanguage(),
 					subjectDto.getSubjectBook(), 
 					subjectDto.getSubjectDescription(), 
-					subjectDto.getSubjectLearningObjectives(),
-					subjectDto.getSubjectStatus());
+					subjectDto.getSubjectLearningObjectives());
 			
 			subjectRepository.save(oriSubject);
 		
