@@ -68,4 +68,15 @@ public class Member {
 	
 	@Column(name = "MEMBER_IMAGE_URL")
 	private String memberImageUrl;
+
+	
+
+	public void update(String memberPassword) {
+		
+		this.memberPassword =memberPassword;
+		
+	}
+
+	
+	
 }
