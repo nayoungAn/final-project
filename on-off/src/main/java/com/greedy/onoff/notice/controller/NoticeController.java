@@ -77,9 +77,8 @@ private final NoticeService noticeService;
 	}
 	
 	/* 4. 공지사항 삭제 */
-	@DeleteMapping("/notice")
+	@DeleteMapping("/notice/{noticeCode}")
 	public ResponseEntity<ResponseDto> deleteNotice(@PathVariable Long noticeCode) {
-		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "공지사항 삭제 완료", noticeService.deleteNotice(noticeCode)));
 	}
 }

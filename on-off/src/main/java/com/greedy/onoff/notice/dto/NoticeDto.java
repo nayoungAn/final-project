@@ -12,7 +12,7 @@ public class NoticeDto {
 	private Long noticeCode;
 	private String noticeTitle;
 	private String noticeContent;
-	private Date noticeDate;
-	private MemberDto memberCode;
+	private String noticeDate;
+	private MemberDto member;
 	
 }
