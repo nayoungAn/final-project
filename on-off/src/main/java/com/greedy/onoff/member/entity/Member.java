@@ -46,7 +46,7 @@ public class Member {
 	private String memberPhone;
 	
 	@Column(name = "MEMBER_BIRTHDAY")
-	private Date memberBirthday;
+	private String memberBirthday;
 	
 	@Column(name = "MEMBER_GENDER")
 	private String memberGender;
@@ -77,6 +77,23 @@ public class Member {
 		
 	}
 
-	
+
+
+	public void update(String memberName, String memberPhone, String memberGender, String memberBirthday,
+			String memberEmail, String memberStatus, String memberAddress, String memberImageUrl) {
+		this.memberName = memberName;
+		this.memberPhone = memberPhone;
+		this.memberGender = memberGender;
+		this.memberBirthday = memberBirthday;
+		this.memberEmail = memberEmail;
+		this.memberStatus = memberStatus;
+		this.memberAddress = memberAddress;
+		this.memberImageUrl = memberImageUrl;
+
+
+	}
+
+
+
 	
 }

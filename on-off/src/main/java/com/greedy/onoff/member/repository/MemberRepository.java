@@ -22,4 +22,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 
 	Page<Member> findByMemberRole(Pageable pageable, String memberRole);
 
+	Page<Member> findByMemberNameContainsAndMemberRole(Pageable pageable, String memberName, String memberRole);
+
 }
