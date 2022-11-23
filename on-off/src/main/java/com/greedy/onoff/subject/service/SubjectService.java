@@ -112,7 +112,9 @@ public class SubjectService {
 					() -> new IllegalArgumentException("해당 과목이 없습니다. subjectCode=" + subjectDto.getSubjectCode()));
 			
 			/* 조회 했던 기존 엔티티의 내용을 수정 */
-			oriSubject.update(subjectDto.getSubjectName(), 
+			oriSubject.update(
+					subjectDto.getSubjectCode(),
+					subjectDto.getSubjectName(), 
 					subjectDto.getSubjectForm(), 
 					subjectDto.getSubjectLanguage(),
 					subjectDto.getSubjectBook(), 
@@ -127,27 +129,16 @@ public class SubjectService {
 	}
 
 	/* 과목 삭제*/
-	public SubjectDto deleteBySubjectCode(Long subjectCode) {
-	     
-		Subject subject = subjectRepository.findBySubjectCode(subjectCode)
-        		.orElseThrow(() -> new IllegalArgumentException("해당 과목이 없습니다. subjectCode=" + subjectCode));
-        
-		SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
-		
-		
-        return subjectDto;
-		
-	}
-	/* 과목 삭제*/
+	@Transactional
 	public SubjectDto deleteSubject(Long subjectCode) {
 		
 		Subject subject = subjectRepository.findBySubjectCode(subjectCode)
 				.orElseThrow(() -> new IllegalArgumentException("해당 과목이 없습니다. subjectCode=" + subjectCode));
 		
-		SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
+		SubjectDto foundSubject = modelMapper.map(subject, SubjectDto.class);
 		
 		subjectRepository.delete(subject);
-		return subjectDto;
+		return foundSubject;
 	}
 	
 	
