@@ -1,6 +1,8 @@
 package com.greedy.onoff.subject.controller;
 
 
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,7 +61,7 @@ public class SubjectController {
 
 	
 
-	/* 2. 과목 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
+	/* 2. 과목 검색 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
 	@GetMapping("/subjects/search")
 	public ResponseEntity<ResponseDto> selectSearchList
 		(@RequestParam(name="page", defaultValue="1") int page, @RequestParam(name="search") String subjectName) {

@@ -8,6 +8,10 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +42,8 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 		
 	}
+	
+	
 	
 	@Transactional
 	public MemberDto teacherRegister(MemberDto memberDto) {
@@ -76,6 +82,25 @@ public class MemberService {
 		
 		return memberDto;
 	}
-	
+
+
+	/* 2. 상품 목록 조회 - 페이징, 주문 불가 상품 포함 (관리자) */
+	public Page<MemberDto> selectMemberListForAdmin(int page) {
+		log.info("[MemberService] selectMemberListForAdmin Start =====================" );
+		
+		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
+
+		Page<Member> memberList = memberRepository.findByMemberRole(pageable,"ROLE_TEACHER");
+		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
+		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
+		memberDtoList.forEach(member -> member.setMemberImageUrl(IMAGE_URL + member.getMemberImageUrl()));
+		
+		log.info("[MemberService] memberDtoList : {}", memberDtoList.getContent());
+		
+		log.info("[MemberService] selectMemberListForAdmin End =====================" );
+		
+		return memberDtoList;
+	}
+
 
 }

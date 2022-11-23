@@ -36,9 +36,9 @@ public class ClassesSchedule {
 	@JoinColumn(name = "DAY_CODE")
     private Day day;
 	
-	@ManyToOne
-	@JoinColumn(name = "CLASS_CODE")
-    private OpenClasses openClasses;
+//	@ManyToOne
+//	@JoinColumn(name = "CLASS_CODE")
+//    private OpenClasses openClasses;
 	
 	@ManyToOne
 	@JoinColumn(name = "TIME_CODE")
