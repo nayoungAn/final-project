@@ -1,7 +1,8 @@
 package com.greedy.onoff.member.service;
 
 import java.io.IOException;
-import java.util.Locale.Category;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
+import com.greedy.onoff.member.exception.FindMemberFaildeException;
 import com.greedy.onoff.member.repository.StudentRepository;
 import com.greedy.onoff.util.FileUploadUtils;
 
@@ -101,7 +104,7 @@ log.info("[memberList] selectStudentName Start =====================" );
 		String replaceFileName = null;
 		
 		Member oriStudent = studentRepository.findById(memberDto.getMemberCode())
-				.orElseThrow(() -> new RuntimeException("존재하지 않는 리뷰입니다." + memberDto.getMemberCode()));
+				.orElseThrow(() -> new FindMemberFaildeException("등록되지 않은 원생입니다." + memberDto.getMemberCode()));
 		String oriImage = oriStudent.getMemberImageUrl();
 		try {
 			
@@ -142,6 +145,35 @@ log.info("[memberList] selectStudentName Start =====================" );
 		
 		log.info("[StudentService] updateStudent End ============================");
 		
+		return memberDto;
+	}
+
+	/* 원생 등록 */
+	@Transactional
+	public Object signupStudent(MemberDto memberDto) {
+		
+		log.info("[StudentService] signupStudent Start ============================");
+		log.info("[StudentService] memberDto : {}" + memberDto);
+		
+		if(studentRepository.findByMemberId(memberDto.getMemberId()) != null) {
+			log.info("[StudentService] 아이디가 중복 됩니다.");
+			throw new DuplicateMemberEmailException("아이디가 중복 됩니다.");
+		}
+		
+		if(studentRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
+			log.info("[StudentService] 이메일이 중복 됩니다.");
+			throw new DuplicateMemberEmailException("이메일이 중복 됩니다.");
+		}
+		
+		
+		memberDto.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
+		memberDto.setMemberRole("ROLE_STUDENT");
+		studentRepository.save(modelMapper.map(memberDto, Member.class));
+		
+		
+		
+		
+		log.info("[StudentService] signupStudent End ============================");
 		return memberDto;
 	}
 
