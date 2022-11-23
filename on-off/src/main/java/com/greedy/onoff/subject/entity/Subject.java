@@ -47,8 +47,9 @@ public class Subject {
 	@Column(name = "SUBJECT_LEARNING_OBJECTIVES")
     private String subjectLearningObjectives;
 
-	public void update(String subjectName, String subjectForm, String subjectLanguage, String subjectBook,
+	public void update(Long subjectCode,String subjectName, String subjectForm, String subjectLanguage, String subjectBook,
 			String subjectDescription, String subjectLearningObjectives) {
+		this.subjectCode =subjectCode;
 		this.subjectName =subjectName;
 		this.subjectForm =subjectForm;
 		this.subjectLanguage =subjectLanguage;
