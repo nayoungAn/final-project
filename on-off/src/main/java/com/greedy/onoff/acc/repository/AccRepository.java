@@ -9,7 +9,7 @@ import com.greedy.onoff.acc.entity.Acc;
 public interface AccRepository extends JpaRepository<Acc, Long>{
 
 	/* 수납 내역 조회 */
-	//@EntityGraph(attributePaths = {"member"})
+	//@EntityGraph(attributePaths = {"classesHistory"})
 	Page<Acc> findAll(Pageable pageable);
 
 }
