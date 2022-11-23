@@ -39,7 +39,7 @@ public class AuthController {
 		
 	}
 	
-	@PostMapping("/reset-password")
+	@PostMapping("/temporary-pwd")
 	public ResponseEntity<ResponseDto> resetPassword(@RequestBody MemberDto memberDto){
 		
 			

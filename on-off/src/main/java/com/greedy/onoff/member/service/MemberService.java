@@ -47,6 +47,9 @@ public class MemberService {
 		String imageName = UUID.randomUUID().toString().replace("-", "");
 		String replaceFileName = null;
 		
+		if(memberRepository.findByMemberId(memberDto.getMemberId()) != null) {
+			throw new DuplicateMemberEmailException("아이디가 중복됩니다.");
+		}
 		if(memberRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
 			throw new DuplicateMemberEmailException("이메일이 중복됩니다.");
 		}

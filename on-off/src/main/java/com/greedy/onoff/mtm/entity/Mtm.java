@@ -27,7 +27,7 @@ import lombok.Setter;
 @SequenceGenerator(name = "MTM_SEQ_GENERATOR", 
 sequenceName = "SEQ_MTM_CODE", 
 initialValue = 1, allocationSize = 1)
-public class mtmEntity {
+public class Mtm {
 	
 	@Id
 	@Column(name = "MTM_CODE")

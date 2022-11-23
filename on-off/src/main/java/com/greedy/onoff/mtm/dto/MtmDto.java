@@ -8,7 +8,7 @@ import com.greedy.onoff.member.dto.MemberDto;
 import lombok.Data;
 
 @Data
-public class mtmDto {
+public class MtmDto {
 	
 	 	private Long mtmCode;
 	    private Date mtmDate;
