@@ -1,6 +1,7 @@
 package com.greedy.onoff.cons.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.greedy.onoff.common.ResponseDto;
 import com.greedy.onoff.common.paging.Pagenation;
 import com.greedy.onoff.common.paging.PagingButtonInfo;
@@ -69,6 +71,7 @@ private final ConsService consService;
 	/* 7. 등록상담 등록 */
     @PostMapping("/cons")
     public ResponseEntity<ResponseDto> insertCons(@ModelAttribute ConsDto consDto) throws IOException  {
+    
     	
     	return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "등록상담 입력 성공", consService.insertCons(consDto)));
     	

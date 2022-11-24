@@ -1,6 +1,7 @@
 package com.greedy.onoff.cons.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +27,7 @@ import lombok.Setter;
 @SequenceGenerator(name = "CON_SEQ_GENERATOR", 
 sequenceName = "SEQ_CON_CODE", 
 initialValue = 1, allocationSize = 1)
-public class ConsEntity {
+public class Cons {
 	
 	@Id
 	@Column(name = "CON_CODE")
@@ -50,7 +55,7 @@ public class ConsEntity {
 	@Column(name = "CON_PHONE")
     private String consPhone;
 
-	public void updateCons(Long consCode, String consDate, String consName, String consGender, String consBirth,
+	public void updateCons(Long consCode,String consDate, String consName,String consGender,String consBirth, 
 			String consTitle, String consDescription, String consPhone) {
 		
 		this.consCode = consCode;

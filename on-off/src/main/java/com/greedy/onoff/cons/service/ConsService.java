@@ -1,7 +1,8 @@
 package com.greedy.onoff.cons.service;
 
 import java.io.IOException;
-import java.util.UUID;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.transaction.Transactional;
 
@@ -13,10 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.greedy.onoff.cons.dto.ConsDto;
-import com.greedy.onoff.cons.entity.ConsEntity;
+import com.greedy.onoff.cons.entity.Cons;
 import com.greedy.onoff.cons.repository.ConsRepository;
 import com.greedy.onoff.member.exception.UserNotFoundException;
-
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +38,7 @@ public class ConsService {
 		log.info("[ConsService] selectMyInfo Start ===========================");
 		log.info("[ConsService] consCode : {}", consCode);
 		
-		ConsEntity cons = consRepository.findByConsCode(consCode)
+		Cons cons = consRepository.findByConsCode(consCode)
 				.orElseThrow(() -> new UserNotFoundException(consCode + "를 찾을 수 없습니다."));
 		
 		log.info("[ConsService] consEntity : {} ", cons);
@@ -55,10 +55,12 @@ public class ConsService {
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("ConsCode").descending());
 		
-		Page<ConsEntity> consList = consRepository.findAll(pageable);
+		Page<Cons> consList = consRepository.findAll(pageable);
 		Page<ConsDto> consDtoList = consList.map(cons -> modelMapper.map(cons, ConsDto.class));
 		
+		
 		log.info("[ConsService] ConsDtoList : {}", consDtoList.getContent());
+		
 		
 		log.info("[ConsService] selectConsListForAdmin End =====================" );
 		
@@ -71,7 +73,10 @@ public class ConsService {
 		
 		log.info("[ConsService] insertCons Start ===================================");
 		log.info("[ConsService] ConsDto : {}", consDto);
-	consRepository.save(modelMapper.map(consDto, ConsEntity.class));
+		
+	
+    	
+	consRepository.save(modelMapper.map(consDto, Cons.class));
 	
 	log.info("[ConsService] insertCons End ===================================");
 		return consDto;
@@ -87,10 +92,10 @@ public class ConsService {
 
 
 
-			ConsEntity oriProduct = consRepository.findById(consDto.getConsCode()).orElseThrow(
+		Cons oriProduct = consRepository.findById(consDto.getConsCode()).orElseThrow(
 					() -> new IllegalArgumentException("해당 상담목록이 없습니다. ConsCode=" + consDto.getConsCode()));
 
-			
+
 			/* 조회 했던 기존 엔티티의 내용을 수정 */
 			oriProduct.updateCons(consDto.getConsCode(), 
 					consDto.getConsDate(), 
@@ -113,7 +118,7 @@ public class ConsService {
 	@Transactional
 	public ConsDto deleteCons(Long consCode) {
 		
-		ConsEntity cons = consRepository.findByConsCode(consCode)
+		Cons cons = consRepository.findByConsCode(consCode)
 				.orElseThrow(() -> new UserNotFoundException(consCode + "를 찾을 수 없습니다."));
 		
 		log.info("[ConsService] consEntity : {} ", cons);
