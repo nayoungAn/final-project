@@ -1,7 +1,10 @@
 package com.greedy.onoff.member.service;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -19,6 +22,9 @@ import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
 import com.greedy.onoff.member.repository.MemberRepository;
+import com.greedy.onoff.teacher.dto.TeacherHistoryDto;
+import com.greedy.onoff.teacher.entity.TeacherHistory;
+import com.greedy.onoff.teacher.repository.TeacherHistoryRepository;
 import com.greedy.onoff.util.FileUploadUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,16 +41,18 @@ public class MemberService {
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 	private final MemberRepository memberRepository;
+	private final TeacherHistoryRepository teacherHistoryRepository;
 	
-	public MemberService(ModelMapper modelMapper,  PasswordEncoder passwordEncoder, MemberRepository memberRepository) {
+	public MemberService(ModelMapper modelMapper,  PasswordEncoder passwordEncoder, MemberRepository memberRepository, 
+			TeacherHistoryRepository teacherHistoryRepository) {
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 		this.memberRepository = memberRepository;
+		this.teacherHistoryRepository = teacherHistoryRepository;
 		
 	}
 	
-	
-	
+
 	@Transactional
 	public MemberDto teacherRegister(MemberDto memberDto) {
 		
@@ -76,6 +84,15 @@ public class MemberService {
 			}	 
 		}
 		
+		/* 강사이력추가*/
+		TeacherHistoryDto teacherHistoryDto = new TeacherHistoryDto();
+		teacherHistoryDto.setJoinDate(memberDto.getMemberRegisterDate());
+		/* 현재 등록되는 멤버 코드 번호 */
+		Long memberCode = memberRepository.getCurrvalMemberCodeSequence();
+		MemberDto memberdto = new MemberDto();
+		memberdto.setMemberCode(memberCode);
+		teacherHistoryDto.setMember(memberdto);	
+		teacherHistoryRepository.save(modelMapper.map(teacherHistoryDto, TeacherHistory.class));
 		
 		return memberDto;
 	}
@@ -143,7 +160,19 @@ public class MemberService {
 
 		log.info("[MemberService] updateMember Start ===================================");
 		log.info("[MemberService] memberDto : {}", memberDto);
+		
+		/* 오늘 날짜 삽입 */
+//		Date date = new Date();
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+//		String today = sdf.format(date);
+//		java.sql.Date sqlDate = java.sql.Date.valueOf(today);
 
+		Date date = new Date();
+		long timeInMilliSeconds = date.getTime();
+		java.sql.Date sqlDate = new java.sql.Date(timeInMilliSeconds);
+		log.info("SQL Date: " + sqlDate);
+		
+		
 		String replaceFileName = null;
 
 		try {
@@ -168,6 +197,39 @@ public class MemberService {
 				memberDto.setMemberImageUrl(oriImage);
 			}
 			
+
+			/* 퇴사를 했을경우 퇴사일을 넣어서 데이터 수정 */
+			if(memberDto.getMemberStatus().equals("N"))
+			{
+				log.info("=============if 문 들어옴========");
+				/* 퇴사일이 비어있는 회원코드로 조회해온다.*/
+				List<TeacherHistory> teacherHistoryList = teacherHistoryRepository.findAll();
+				TeacherHistory foundTeacherHistory = teacherHistoryList.stream()
+					        .filter(h -> h.getMember().getMemberCode() == memberDto.getMemberCode()&& h.getRetirementDate() == (null))
+					        .findFirst()
+					        .orElseThrow(() -> new IllegalArgumentException());
+				log.info(foundTeacherHistory.toString());
+				TeacherHistory oriTeacherHistory = teacherHistoryRepository.findByHistoryCode(foundTeacherHistory.getHistoryCode())
+						.orElseThrow(() -> new IllegalArgumentException("해당 강의이력이 없습니다. historyCode =" + foundTeacherHistory.getHistoryCode()));
+				
+				oriTeacherHistory.update(sqlDate);
+				
+				teacherHistoryRepository.save(oriTeacherHistory);
+				log.info("=======if 문 나감 ========");
+			}
+
+			/* 퇴사했던 강사가 다시 입사를 하였을 때 */
+			// 강사 이력 엔티티에 데이터를 삽입해준다. 
+			if(memberDto.getMemberStatus().equals("Y") && oriMember.getMemberStatus().equals("N"))
+			{
+				TeacherHistoryDto teacherHistoryDto = new TeacherHistoryDto();
+				/* 오늘 날짜로 입사일을 바꿔준다.*/
+				memberDto.setMemberRegisterDate(sqlDate);
+				teacherHistoryDto.setJoinDate(memberDto.getMemberRegisterDate());
+				teacherHistoryDto.setMember(memberDto);			
+				teacherHistoryRepository.save(modelMapper.map(teacherHistoryDto, TeacherHistory.class));
+			}
+			
 			/* 조회 했던 기존 엔티티의 내용을 수정 */
 			oriMember.update(memberDto.getMemberName(), 
 					memberDto.getMemberPhone(), 
@@ -176,7 +238,8 @@ public class MemberService {
 					memberDto.getMemberEmail(), 
 					memberDto.getMemberStatus(),
 					memberDto.getMemberAddress(),
-					memberDto.getMemberImageUrl());
+					memberDto.getMemberImageUrl(),
+					memberDto.getMemberRegisterDate());
 			
 			
 					memberRepository.save(oriMember);
