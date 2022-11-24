@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.greedy.onoff.append.entity.Append;
 import com.greedy.onoff.classes.entity.OpenClasses;
 
 import lombok.Getter;
@@ -37,8 +39,12 @@ public class Attach {
 	@Column(name = "ATTACH_NOTE")
 	private String attachNote;
 	
-
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
 	private OpenClasses classes;
+	
+	@OneToMany
+	@JoinColumn(name = "ATTACH_CODE")
+	private List<Append>  appendList;
+	
 }
