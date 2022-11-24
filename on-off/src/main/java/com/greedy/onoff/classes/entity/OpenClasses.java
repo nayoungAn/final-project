@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.greedy.onoff.attach.entity.Attach;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.subject.entity.Subject;
 
@@ -78,6 +79,9 @@ public class OpenClasses {
 	
 	@Column(name = "CLASS_STUDENTS")
 	private Long classStudents;
+	
+	@OneToMany(mappedBy = "classes")
+	private List <Attach> attachList;
 	
 	
 	
