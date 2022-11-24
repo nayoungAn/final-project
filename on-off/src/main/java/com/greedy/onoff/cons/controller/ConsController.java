@@ -45,7 +45,7 @@ private final ConsService consService;
 	}
 	
 	/* 2. 등록 상담 목록 조회 - 페이징, 주문 불가 상품 포함 (관리자) */
-	@GetMapping("/cons-management")
+	@GetMapping("/cons")
 	public ResponseEntity<ResponseDto> selectProductListForAdmin(@RequestParam(name="page", defaultValue="1") int page) {
 		
 		log.info("[ProductController] selectProductListForAdmin Start ================================");
