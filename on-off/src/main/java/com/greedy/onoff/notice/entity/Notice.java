@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.greedy.onoff.member.entity.Member;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -40,7 +42,7 @@ public class Notice {
 	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
-	private Long member;
+	private Member member;
 	
 	
 	/* 수정 용도의 메소드 정의 */
