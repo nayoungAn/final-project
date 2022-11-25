@@ -89,37 +89,23 @@ public class ClassesService {
         return classesDto;
 	}
 
-//	/* 7. 상품 등록 */
-//	@Transactional
-//	public ProductDto insertProduct(ProductDto productDto) {
-//		
-//		log.info("[ProductService] insertProduct Start ===================================");
-//		log.info("[ProductService] productDto : {}", productDto);
-//		String imageName = UUID.randomUUID().toString().replace("-", "");
-//		String replaceFileName = null;
-//		
-//		try {
-//			replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, productDto.getProductImage());
-//			productDto.setProductImageUrl(replaceFileName);
-//			
-//			log.info("[ProductService] replaceFileName : {}", replaceFileName);
-//			
-//			productRepository.save(modelMapper.map(productDto, Product.class));
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			try {
-//				FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//		
-//		log.info("[ProductService] insertProduct End ===================================");
-//		
-//		return productDto;
-//		
-//	}
+
+
+	/*  강의 등록 */
+	@Transactional
+	public OpenClassesDto insertClasses(OpenClassesDto openClassesDto) {
+		
+		log.info("[ClassesService] insertClasses Start ===================================");
+		log.info("[ProductService] insertClasses : {}", openClassesDto);
+		
+	
+			classesRepository.save(modelMapper.map(openClassesDto, OpenClasses.class));
+		
+		log.info("[ProductService] insertProduct End ===================================");
+		
+		return openClassesDto;
+		
+	}
 //	
 //	/* 8. 상품 수정 */
 //	@Transactional
