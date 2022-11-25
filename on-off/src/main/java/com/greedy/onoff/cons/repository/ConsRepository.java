@@ -6,14 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.greedy.onoff.cons.entity.ConsEntity;
+import com.greedy.onoff.cons.entity.Cons;
 
 
-public interface ConsRepository  extends JpaRepository<ConsEntity, Long>{
+
+public interface ConsRepository  extends JpaRepository<Cons, Long>{
 	
 	/* 전체 조회 */
-	Page<ConsEntity> findAll(Pageable pageable);
+	Page<Cons> findAll(Pageable pageable);
 
 	/* consId로 조회 */
-	Optional<ConsEntity> findByConsCode(Long consCode);
+	Optional<Cons> findByConsCode(Long consCode);
 }
