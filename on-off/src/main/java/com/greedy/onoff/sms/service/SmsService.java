@@ -15,14 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class SmsService {
 
-	private final ClassesHistory classesHistory;
-	private final ModelMapper modelMapper;
-	
-	public SmsService(ClassesHistory classesHistory,
-			ModelMapper modelMapper) {
-		this.classesHistory = classesHistory;
-		this.modelMapper = modelMapper;
-	}
 
 	/* 문자 대상 조회 */
 	public List<ClassesHistoryDto> selectSmsListForAdmin(SmsCriteria smsCriteria) {
