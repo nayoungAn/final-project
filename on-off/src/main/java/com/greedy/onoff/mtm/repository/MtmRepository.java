@@ -9,24 +9,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.greedy.onoff.classes.entity.OpenClasses;
+import com.greedy.onoff.member.dto.MemberDto;
+import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
 
 public interface MtmRepository extends JpaRepository<Mtm, Long>{
 
-/*	@Query("SELECT m " + 
-			"FROM Mtm m " +
-			"WHERE m.member.memberCode = :memberCode " +
-			"AND m.mtmDelete = 'N'"
-			)
-	Page<Mtm> findByMtmDelete(Pageable pageable, @Param("memberCode") Long memberCode);*/
-	
-
-	@Query("SELECT m " + 
-			"FROM Mtm m " +
-			"WHERE m.mtmDelete = 'N'" 
-			)
-	Page<Mtm> findByMtmDelete(Pageable pageable);
 
 
 	Optional<Mtm> findByMtmCodeAndMtmReferAndAnswerCode(Long mtmCode, Long mtmRefer, Long answerCode);
@@ -43,8 +33,15 @@ public interface MtmRepository extends JpaRepository<Mtm, Long>{
 	Mtm findByMtmCode(Long mtmCode);
 
 
-	
-	
+	@Query("SELECT m " + 
+			"FROM Mtm m " +
+			"WHERE m.mtmDelete = 'N'" +
+			"AND m.classes.classCode = :classCode"
+			)
+	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
 
+
+
+	
 
 }

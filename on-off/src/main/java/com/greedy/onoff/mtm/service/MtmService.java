@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.greedy.onoff.member.dto.MemberDto;
+import com.greedy.onoff.classes.dto.OpenClassesDto;
+
+import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
 import com.greedy.onoff.mtm.repository.MtmRepository;
@@ -29,16 +31,18 @@ public class MtmService {
 		this.mtmRepository = mtmRepository;
 	}
 
-	public Page<MtmDto> selectMtmList(MemberDto member, int page) {
-		
-		Long memberCode = member.getMemberCode();
-		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmRefer").descending());
-		
-		Page<Mtm> mtmList = mtmRepository.findByMtmDelete(pageable);
-		Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
-		
-		return mtmDtoList;
-	}
+	//상담내역 조회
+		public Page<MtmDto> selectMtmList(int page, Long classCode) {
+			
+			
+			Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmRefer").descending());
+			
+			Page<Mtm> mtmList = mtmRepository.findByClassCode(pageable, classCode);
+					
+			Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
+			
+			return mtmDtoList;
+		}
 	
 	@Transactional
 	public Mtm insertQnaReply(MtmDto mtmDto) {
@@ -87,6 +91,12 @@ public class MtmService {
 		
 		return modelMapper.map(mtm, MtmDto.class);
 	}
+
+
+
+	
+
+
 
 	
 	

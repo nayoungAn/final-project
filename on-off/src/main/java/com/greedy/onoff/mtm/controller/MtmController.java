@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greedy.onoff.classes.dto.OpenClassesDto;
 import com.greedy.onoff.common.ResponseDto;
 import com.greedy.onoff.common.paging.Pagenation;
 import com.greedy.onoff.common.paging.PagingButtonInfo;
@@ -34,25 +35,19 @@ public class MtmController {
 	}
 	
 	//상담내역조회
-	@GetMapping("/qna")
-	public ResponseEntity<ResponseDto> getMtmList(@AuthenticationPrincipal MemberDto member, @RequestParam(name="page", defaultValue="1")int page){
-		
-		Page <MtmDto> mtmDtoList = mtmService.selectMtmList(member, page);
-		
-		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
-		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
-		responseDtoWithPaging.setPageInfo(pageInfo);
-		responseDtoWithPaging.setData(mtmDtoList.getContent());
-		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
-	}
-
-	//상담 상세조회
-	@GetMapping("/qna/{mtmCode}")
-	public ResponseEntity<ResponseDto> selectMtmDetail(@PathVariable Long mtmCode){
-		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "상세조회 성공", mtmService.selectMtmDetail(mtmCode)));
-	}
+		@GetMapping("/qna/{classCode}")
+		public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page){
+			
+			Page <MtmDto> mtmDtoList = mtmService.selectMtmList(page,classCode);
+			
+			PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
+			ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+			responseDtoWithPaging.setPageInfo(pageInfo);
+			responseDtoWithPaging.setData(mtmDtoList.getContent());
+			
+			return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
+		}
+	
 	
 	
 	//답글 작성
