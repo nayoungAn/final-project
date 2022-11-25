@@ -15,7 +15,7 @@ public class MemberDto implements UserDetails{
 	private String memberPassword;
 	private String memberName;
 	private String memberPhone;
-	private Date memberBirthday;
+	private String memberBirthday;
 	private String memberGender;
 	private String memberAddress;
 	private String memberStatus;

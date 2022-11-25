@@ -46,7 +46,7 @@ public class Member {
 	private String memberPhone;
 	
 	@Column(name = "MEMBER_BIRTHDAY")
-	private Date memberBirthday;
+	private String memberBirthday;
 	
 	@Column(name = "MEMBER_GENDER")
 	private String memberGender;
