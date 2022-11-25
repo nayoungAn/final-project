@@ -22,11 +22,11 @@ public interface MtmRepository extends JpaRepository<Mtm, Long>{
 	Page<Mtm> findByMtmDelete(Pageable pageable, @Param("memberCode") Long memberCode);*/
 	
 
-	@Query("SELECT m " + 
+/*	@Query("SELECT m " + 
 			"FROM Mtm m " +
 			"WHERE m.mtmDelete = 'N'" 
 			)
-	Page<Mtm> findByMtmDelete(Pageable pageable);
+	Page<Mtm> findByMtmDelete(Pageable pageable);*/
 
 
 	Optional<Mtm> findByMtmCodeAndMtmReferAndAnswerCode(Long mtmCode, Long mtmRefer, Long answerCode);
@@ -40,7 +40,28 @@ public interface MtmRepository extends JpaRepository<Mtm, Long>{
 	Mtm findByMtmCodeAndMtmRefer(@Param("mtmCode") Long mtmCode,@Param("mtmRefer") Long mtmRefer);
 
 
+/*	@Query("SELECT m " + 
+			"FROM Mtm m " +
+			"WHERE m.member.memberCode = :memberCode " +
+			"AND m.mtmDelete = 'N'"
+			)
+	Page<Mtm> findByMtmDelete(Pageable pageable, @Param("memberCode") Long memberCode);*/
+
+
 	Mtm findByMtmCode(Long mtmCode);
+
+	@Query("SELECT m " + 
+			"FROM Mtm m " +
+			"WHERE m.mtmDelete = 'N'" +
+			"AND m.classes.classCode = :classCode"
+			)
+	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
+
+
+
+
+
+
 
 
 	

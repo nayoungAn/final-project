@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.common.ResponseDto;
 import com.greedy.onoff.common.paging.Pagenation;
 import com.greedy.onoff.common.paging.PagingButtonInfo;
@@ -34,10 +35,10 @@ public class MtmController {
 	}
 	
 	//상담내역조회
-	@GetMapping("/qna")
-	public ResponseEntity<ResponseDto> getMtmList(@AuthenticationPrincipal MemberDto member, @RequestParam(name="page", defaultValue="1")int page){
+	@GetMapping("/myclass/qna/{classCode}")
+	public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page){
 		
-		Page <MtmDto> mtmDtoList = mtmService.selectMtmList(member, page);
+		Page <MtmDto> mtmDtoList = mtmService.selectMtmList(page,classCode);
 		
 		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
 		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
@@ -48,7 +49,7 @@ public class MtmController {
 	}
 
 	//상담 상세조회
-	@GetMapping("/qna/{mtmCode}")
+	@GetMapping("/myclass/qna/classes/{mtmCode}")
 	public ResponseEntity<ResponseDto> selectMtmDetail(@PathVariable Long mtmCode){
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "상세조회 성공", mtmService.selectMtmDetail(mtmCode)));
@@ -56,22 +57,22 @@ public class MtmController {
 	
 	
 	//답글 작성
-	@PostMapping("/qnaReply")
+	@PostMapping("/myclass/qnaReply")
 	public ResponseEntity<ResponseDto> insertQnaReply(@RequestBody MtmDto mtm, @AuthenticationPrincipal MemberDto member){
 		
 		mtm.setMember(member);
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 작성 성공", mtmService.insertQnaReply(mtm)));
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 작성 성공", mtmService.insertQnaReply(mtm, member)));
 	}
 	
 	//답글 수정
-	@PutMapping("/qnaReply")
+	@PutMapping("/myclass/qnaReply")
 	public ResponseEntity<ResponseDto> updateQnaReply(@RequestBody MtmDto mtmDto){
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 수정 성공", mtmService.updateQnaReply(mtmDto)));
 	}
 	
 	//답글 삭제
-	@DeleteMapping("/qnaReply/{mtmCode}")
+	@DeleteMapping("/myclass/qnaReply/{mtmCode}")
 	public ResponseEntity<ResponseDto> deleteQnaReply(@PathVariable Long mtmCode){
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 삭제 성공", mtmService.deleteQnaReply(mtmCode)));

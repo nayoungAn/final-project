@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
@@ -28,22 +29,25 @@ public class MtmService {
 		this.modelMapper = modelMapper;
 		this.mtmRepository = mtmRepository;
 	}
-
-	public Page<MtmDto> selectMtmList(MemberDto member, int page) {
+	
+	//상담내역 조회
+	public Page<MtmDto> selectMtmList(int page, Long classCode) {
 		
-		Long memberCode = member.getMemberCode();
+		
 		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmRefer").descending());
 		
-		Page<Mtm> mtmList = mtmRepository.findByMtmDelete(pageable);
+		Page<Mtm> mtmList = mtmRepository.findByClassCode(pageable, classCode);
+				
 		Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
 		
 		return mtmDtoList;
 	}
 	
+	
+	//답글 등록
 	@Transactional
-	public Mtm insertQnaReply(MtmDto mtmDto) {
-		
-		
+	public Mtm insertQnaReply(MtmDto mtmDto, MemberDto memberDto) {
+	
 		
 		if(mtmDto.getMtmCode() != null) {
 			Mtm origin = mtmRepository.findById(mtmDto.getMtmCode()).orElseThrow();
@@ -52,11 +56,11 @@ public class MtmService {
 			mtmDto.setMtmRefer(origin.getMtmRefer());
 		}
 		
-			
 		return mtmRepository.save(modelMapper.map(mtmDto, Mtm.class));
 	}
 
 	
+	//답글 상세 조회
 	public MtmDto selectMtmDetail(Long mtmCode) {
 		
 		MtmDto mtmDto = modelMapper.map(mtmRepository.findById(mtmCode)
@@ -66,6 +70,7 @@ public class MtmService {
 	}
 
 	
+	//답글 수정
 	@Transactional
 	public MtmDto updateQnaReply(MtmDto mtmDto) {
 		
@@ -78,7 +83,8 @@ public class MtmService {
 		
 		return mtmDto;
 	}
-
+	
+	//답글 삭제
 	public MtmDto deleteQnaReply(Long mtmCode) {
 		
 		Mtm mtm = mtmRepository.findByMtmCode(mtmCode);
@@ -87,6 +93,16 @@ public class MtmService {
 		
 		return modelMapper.map(mtm, MtmDto.class);
 	}
+
+
+
+
+
+
+	
+	
+
+
 
 	
 	
