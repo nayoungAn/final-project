@@ -32,17 +32,15 @@ public class ClassesSchedule {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLASSES_SCHEDULE_SEQ_GENERATOR")
     private Long scheduleCode;
 
-	@ManyToOne
-	@JoinColumn(name = "DAY_CODE")
-    private Day day;
+	@Column(name = "DAY_NAME")
+    private String dayName;
 	
 //	@ManyToOne
 //	@JoinColumn(name = "CLASS_CODE")
 //    private OpenClasses openClasses;
 	
-	@ManyToOne
-	@JoinColumn(name = "TIME_CODE")
-    private Time time;
+	@Column(name = "TIME_NAME")
+    private String timeName;
 	
 	
 }
