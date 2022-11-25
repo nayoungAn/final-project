@@ -1,6 +1,10 @@
 package com.greedy.onoff.cons.dto;
 
-import java.sql.Date;
+
+
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -15,5 +19,6 @@ public class ConsDto {
 	    private String consTitle;
 	    private String consDescription;
 	    private String consPhone;
-
+		
+		
 }

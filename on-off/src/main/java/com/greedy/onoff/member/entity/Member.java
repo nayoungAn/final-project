@@ -89,6 +89,23 @@ public class Member {
 		this.memberImageUrl = memberImageUrl;
 	}
 
-	
+
+
+	public void update(String memberName, String memberPhone, String memberGender, String memberBirthday,
+			String memberEmail, String memberStatus, String memberAddress, String memberImageUrl, Date memberRegisterDate) {
+		this.memberName = memberName;
+		this.memberPhone = memberPhone;
+		this.memberGender = memberGender;
+		this.memberBirthday = memberBirthday;
+		this.memberEmail = memberEmail;
+		this.memberStatus = memberStatus;
+		this.memberAddress = memberAddress;
+		this.memberImageUrl = memberImageUrl;
+		this.memberRegisterDate = memberRegisterDate;
+
+	}
+
+
+
 	
 }

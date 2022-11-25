@@ -8,7 +8,7 @@ import com.greedy.onoff.member.dto.MemberDto;
 import lombok.Data;
 
 @Data
-public class mtmDto {
+public class MtmDto {
 	
 	 	private Long mtmCode;
 	    private Date mtmDate;
@@ -16,8 +16,8 @@ public class mtmDto {
 	    private String mtmDescription;
 	    private MemberDto member;
 	    private OpenClassesDto classes;
-	    private Long mtmrefer;
+	    private Long mtmRefer;
 	    private Long answerCode;
-	    private String mtmdelete;
+	    private String mtmDelete;
 
 }

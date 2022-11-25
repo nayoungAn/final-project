@@ -44,6 +44,11 @@ public class TeacherHistory {
 	
 	@Column(name = "RETIREMENT_DATE")
 	private Date retirementDate;
+
+	public void update(java.sql.Date retirementDate) {
+
+		this.retirementDate = retirementDate;
+	}
 	
 	
 	
