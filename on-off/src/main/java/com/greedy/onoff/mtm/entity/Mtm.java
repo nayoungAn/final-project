@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.entity.Member;
 
@@ -27,6 +30,8 @@ import lombok.Setter;
 @SequenceGenerator(name = "MTM_SEQ_GENERATOR", 
 sequenceName = "SEQ_MTM_CODE", 
 initialValue = 1, allocationSize = 1)
+@DynamicInsert
+@DynamicUpdate
 public class Mtm {
 	
 	@Id
@@ -52,13 +57,19 @@ public class Mtm {
 	private OpenClasses classes;
 	
 	@Column(name = "MTM_REFER")
-    private Date mtmrefer;
+    private Long mtmRefer;
 	
 	@Column(name = "ANSWER_CODE")
-    private String answerCode;
+    private Long answerCode;
 	
 	@Column(name = "MTM_DELETE")
-    private String mtmdelete;
+    private String mtmDelete;
+
+	public void update(String mtmTitle, String mtmDescription) {
+		this.mtmTitle = mtmTitle;
+		this.mtmDescription = mtmDescription;
+		
+	}
 	
 
 }

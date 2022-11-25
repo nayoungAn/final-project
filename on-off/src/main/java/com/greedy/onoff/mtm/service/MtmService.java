@@ -1,10 +1,15 @@
-/*package com.greedy.onoff.mtm.service;
+package com.greedy.onoff.mtm.service;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
 import com.greedy.onoff.mtm.repository.MtmRepository;
@@ -18,18 +23,74 @@ public class MtmService {
 	private final ModelMapper modelMapper;
 	private final MtmRepository mtmRepository;
 	
+	
 	public MtmService(ModelMapper modelMapper, MtmRepository mtmRepository) {
 		this.modelMapper = modelMapper;
 		this.mtmRepository = mtmRepository;
 	}
+
+	public Page<MtmDto> selectMtmList(MemberDto member, int page) {
+		
+		Long memberCode = member.getMemberCode();
+		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmRefer").descending());
+		
+		Page<Mtm> mtmList = mtmRepository.findByMtmDelete(pageable);
+		Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
+		
+		return mtmDtoList;
+	}
 	
-	public List<MtmDto> selectMtmList(Long mtmCode) {
+	@Transactional
+	public Mtm insertQnaReply(MtmDto mtmDto) {
 		
-		log.info("[PurchaseService] selectPurchaseList Start ==============================");
-		log.info("[PurchaseService] memberId : {}", mtmCode);
 		
-		Mtm mtm = mtmRepository.findByMtmCode(mtmCode);
-		return null;
+		
+		if(mtmDto.getMtmCode() != null) {
+			Mtm origin = mtmRepository.findById(mtmDto.getMtmCode()).orElseThrow();
+			origin.setAnswerCode(origin.getAnswerCode() +1);
+			mtmDto.setMtmCode(null);
+			mtmDto.setMtmRefer(origin.getMtmRefer());
+		}
+		
+			
+		return mtmRepository.save(modelMapper.map(mtmDto, Mtm.class));
 	}
 
-}*/
+	
+	public MtmDto selectMtmDetail(Long mtmCode) {
+		
+		MtmDto mtmDto = modelMapper.map(mtmRepository.findById(mtmCode)
+				.orElseThrow(() -> new RuntimeException("존재하지 않는 글입니다.")), MtmDto.class);
+		
+		return mtmDto;
+	}
+
+	
+	@Transactional
+	public MtmDto updateQnaReply(MtmDto mtmDto) {
+		
+		Mtm foundMtm = mtmRepository.findById(mtmDto.getMtmCode())
+				.orElseThrow(() -> new RuntimeException("존재하지 않는 글입니다."));
+		
+		foundMtm.update(mtmDto.getMtmTitle(), mtmDto.getMtmDescription());
+		
+		mtmRepository.save(foundMtm);
+		
+		return mtmDto;
+	}
+
+	public MtmDto deleteQnaReply(Long mtmCode) {
+		
+		Mtm mtm = mtmRepository.findByMtmCode(mtmCode);
+		mtm.setMtmDelete("Y");
+		mtmRepository.save(mtm);		
+		
+		return modelMapper.map(mtm, MtmDto.class);
+	}
+
+	
+	
+	
+	
+
+}

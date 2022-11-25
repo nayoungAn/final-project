@@ -16,8 +16,8 @@ public class MtmDto {
 	    private String mtmDescription;
 	    private MemberDto member;
 	    private OpenClassesDto classes;
-	    private Long mtmrefer;
+	    private Long mtmRefer;
 	    private Long answerCode;
-	    private String mtmdelete;
+	    private String mtmDelete;
 
 }
