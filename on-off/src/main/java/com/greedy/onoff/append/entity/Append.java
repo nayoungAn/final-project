@@ -48,11 +48,6 @@ public class Append {
 	@Column(name = "APPEND_SORT")
 	private String appendSort;
 	
-	@Column(name = "CLASS_CODE")
-	private Long classCode;	
-	
-	@Column(name = "MEMBER_CODE")
-	private Long memberCode;
 	
 	
 }
