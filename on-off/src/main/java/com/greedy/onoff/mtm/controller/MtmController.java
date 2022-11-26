@@ -24,6 +24,9 @@ import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.service.MtmService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/ono")
 public class MtmController {
@@ -39,7 +42,7 @@ public class MtmController {
 	public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page){
 		
 		Page <MtmDto> mtmDtoList = mtmService.selectMtmList(page,classCode);
-		
+		log.info("상담내역조회 : {} ", mtmDtoList);
 		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
 		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
 		responseDtoWithPaging.setPageInfo(pageInfo);
