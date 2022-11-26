@@ -10,6 +10,6 @@ public class ClassesScheduleDto {
 	
 	private Long scheduleCode;
 	//private OpenClassesDto openClasses;
-	private DayDto day;
-	private TimeDto time;
+	private String dayName;
+	private String timeName;
 }
