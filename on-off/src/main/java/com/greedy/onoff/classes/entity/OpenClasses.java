@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicInsert;
+
+import com.greedy.onoff.classes.dto.ClassesScheduleDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.subject.entity.Subject;
 
@@ -31,6 +34,7 @@ import lombok.Setter;
 @SequenceGenerator(name = "CLASSES_SEQ_GENERATOR", 
 	sequenceName = "SEQ_CLASSES_CODE", 
 	initialValue = 1, allocationSize = 1)
+@DynamicInsert
 public class OpenClasses {
 	@Id
 	@Column(name = "CLASS_CODE")
@@ -78,6 +82,28 @@ public class OpenClasses {
 	
 	@Column(name = "CLASS_STUDENTS")
 	private Long classStudents;
+
+	public void update(Long classCode, String className, Long classQuota, Long classPrice, Date classStartDate, Date classEndDate,
+			String classRoom, String classStatus, String classDescription, Long classStudents,
+			List<ClassesSchedule> classesScheduleList, Member member, Subject subject) {
+		this.classCode = classCode;
+		this.className = className;
+		this.classQuota = classQuota;
+		this.classPrice = classPrice;
+		this.classStartDate = classStartDate;
+		this.classEndDate = classEndDate;
+		this.classRoom = classRoom;
+		this.classStatus = classStatus;
+		this.classDescription = classDescription;
+		this.classStudents = classStudents;
+		this.classesScheduleList = classesScheduleList;
+		this.member = member;
+		this.subject = subject;
+		
+		
+		
+		
+	}
 	
 	
 	

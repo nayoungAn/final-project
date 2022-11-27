@@ -4,6 +4,7 @@ package com.greedy.onoff.subject.service;
 
 import java.util.List;
 import java.util.Locale.Category;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -51,6 +52,21 @@ public class SubjectService {
 		return subjectDtoList;
 	}
 
+
+//
+//		/* 1. 과목 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+//	public Optional<Object> selectSubjectListForAdmin() {
+//			
+//
+//			List<Subject> subjectList = subjectRepository.findAll();
+//			List<SubjectDto> subjectDtoList = ((<Subject>) subjectList).map(subject -> modelMapper.map(subject, SubjectDto.class));
+//			
+//			
+//			log.info("[SubjectService] subjectDtoList End =====================" );
+//			
+//			return subjectDtoList;
+//		}	
+//		
 	/* 2. 과목 목록 조회 - 상품명 검색 기준, 페이징, 상태 여부 'N'포함 (관리자) */
 	public Page<SubjectDto> selectSubjectListBySubjectName(int page, String subjectName) {
 	
@@ -140,6 +156,8 @@ public class SubjectService {
 		subjectRepository.delete(subject);
 		return foundSubject;
 	}
+
+	}
 	
 	
 
@@ -154,7 +172,3 @@ public class SubjectService {
 	
 	
 	
-	
-	
-
-}

@@ -35,10 +35,10 @@ public class ClassesSchedule {
 	@Column(name = "DAY_NAME")
     private String dayName;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "CLASS_CODE")
-//    private OpenClasses openClasses;
 	
+	@Column(name = "CLASS_CODE")
+    private Long classCode;
+
 	@Column(name = "TIME_NAME")
     private String timeName;
 	

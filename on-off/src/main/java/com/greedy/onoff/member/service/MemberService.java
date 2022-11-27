@@ -154,19 +154,13 @@ public class MemberService {
 
 
 
-	/* 8. 상품 수정 */
+	/* 8. 강사 수정 */
 	@Transactional
 	public MemberDto updateMember(MemberDto memberDto) {
 
 		log.info("[MemberService] updateMember Start ===================================");
 		log.info("[MemberService] memberDto : {}", memberDto);
 		
-		/* 오늘 날짜 삽입 */
-//		Date date = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
-//		String today = sdf.format(date);
-//		java.sql.Date sqlDate = java.sql.Date.valueOf(today);
-
 		Date date = new Date();
 		long timeInMilliSeconds = date.getTime();
 		java.sql.Date sqlDate = new java.sql.Date(timeInMilliSeconds);
