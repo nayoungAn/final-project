@@ -39,7 +39,7 @@ public class NoticeService {
 		
 		log.info("[NoticeService] selectNoticeList Start ===================================");
 		
-		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("noticeCode").ascending());
+		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("noticeCode").descending());
 		
 		Page<Notice> noticeList = noticeRepository.findAll(pageable);
 		Page<NoticeDto> noticeDtoList = noticeList.map(notice -> modelMapper.map(notice, NoticeDto.class));
@@ -72,7 +72,10 @@ public class NoticeService {
 		log.info("[NoticeService] insertNotice Start ===================================");
 		log.info("[NoticeService] insertNotice noticeDto : {}", noticeDto);
 		
-		noticeDto.setNoticeDate(date.format(formatter));
+		String date = LocalDate.now().toString();
+		
+		noticeDto.setNoticeDate(date);
+		
 		noticeRepository.save(modelMapper.map(noticeDto, Notice.class));
 		
 		log.info("[NoticeService] insertNotice End ===================================");
