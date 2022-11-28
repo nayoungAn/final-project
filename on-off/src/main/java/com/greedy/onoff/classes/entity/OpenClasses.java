@@ -80,8 +80,7 @@ public class OpenClasses {
 	@Column(name = "CLASS_STUDENTS")
 	private Long classStudents;
 	
-	@OneToMany(mappedBy = "classes")
-	private List <Attach> attachList;
+
 	
 	
 	
