@@ -1,6 +1,6 @@
 package com.greedy.onoff.classes.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +19,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.greedy.onoff.attach.entity.Attach;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.subject.entity.Subject;
 
@@ -84,8 +83,7 @@ public class OpenClasses {
 	@Column(name = "CLASS_STUDENTS")
 	private Long classStudents;
 
-	@OneToMany(mappedBy = "classes")
-	private List <Attach> attachList;
+
 	
 	public void update(Long classCode, String className, Long classQuota, Long classPrice, Date classStartDate, Date classEndDate,
 			String classRoom, String classStatus, String classDescription, Long classStudents,
