@@ -103,7 +103,7 @@ public class StudentManagerService {
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
 		
-		Page<Member> memberList = studentManagerRepository.findByMemberName(pageable, memberName);
+		Page<Member> memberList = studentManagerRepository.findByMemberNameContains(pageable, memberName);
 		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
 		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
 		memberDtoList.forEach(product -> product.setMemberImageUrl(IMAGE_URL + product.getMemberImageUrl()));
