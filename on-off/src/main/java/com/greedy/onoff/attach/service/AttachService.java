@@ -72,6 +72,16 @@ public class AttachService {
 	}
 
 	
+	/*3. 강의 자료 공유 등록 */
+
+//	public Object attachRegist(OpenClassesDto openclassesDto) {
+//		
+//		
+//		
+//		return null;
+//	}
+
+	
 	
 	
 	/*7. 원생정보 조회 */
@@ -88,6 +98,7 @@ public class AttachService {
 		
 		return memberDtoList;
 	}
+
 
 
 

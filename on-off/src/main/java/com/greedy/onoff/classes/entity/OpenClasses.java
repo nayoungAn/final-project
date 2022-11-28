@@ -109,8 +109,7 @@ public class OpenClasses {
 		
 	}
 	
-	@OneToMany(mappedBy = "classes")
-	private List <Attach> attachList;
+
 	
 	
 	

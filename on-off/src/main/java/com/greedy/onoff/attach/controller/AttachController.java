@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,7 +75,15 @@ public class AttachController {
 	
 	
 	/*3. 강의 자료 공유 등록 */
-	
+//	@PostMapping
+//	public ResponseEntity<ResponseDto> attachRegist(@RequestBody OpenClassesDto openclassesDto, List<MultipartFile> attachfile, @Authen){
+//		
+//		
+//		
+//		
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "파일첨부 등록 성공", attachService.attachRegist(openclassesDto)));
+//	}
+//	
 	/*4. 강의 자료 공유 수정 */
 	
 	/*5. 강의 자료 공유 삭제 */
