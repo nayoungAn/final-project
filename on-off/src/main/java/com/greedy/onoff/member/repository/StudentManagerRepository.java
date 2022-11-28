@@ -1,5 +1,7 @@
 package com.greedy.onoff.member.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,6 +21,8 @@ public interface StudentManagerRepository extends JpaRepository<Member, Long>{
 
 	/* 원생 조회 필터링 ROLE_STUDENT만 조회 */
 	Page<Member> findByMemberRole(Pageable pageable, String memberRole);
+
+	List<Member> findByMemberRole(String memberRole);
 
 	
 }

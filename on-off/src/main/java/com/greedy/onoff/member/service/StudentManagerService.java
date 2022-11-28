@@ -197,8 +197,21 @@ public class StudentManagerService {
 		log.info("[StudentService] signupStudent End ============================");
 		return memberDto;
 	}
-
 	
+	/*  원생 목록 조회 - 상태 'n' 포함 , 페이징 X (관리자) */
+	public List<MemberDto> selectStudentListForAdmin() {
+		
+
+		List<Member> memberList = studentManagerRepository.findByMemberRole("ROLE_STUDENT");
+		List<MemberDto> memberDtoList = memberList.stream()
+		.map(member -> modelMapper.map(member, MemberDto.class))
+		.collect(Collectors.toList());
+		
+		
+		log.info("[StudentService] memberDtoList End =====================" );
+		
+		return memberDtoList;
+	}	
 	
 
 	

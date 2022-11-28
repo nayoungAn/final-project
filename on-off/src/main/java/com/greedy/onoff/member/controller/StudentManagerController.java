@@ -120,7 +120,17 @@ public class StudentManagerController {
 	}
 	
 	
-	
+	/*  원생 목록 조회 - 상태 'n' 포함 , 페이징 X (관리자) */
+	@GetMapping("/students-management-nopaging")
+	public ResponseEntity<ResponseDto> selectStudentListForAdminNopaging() {
+		
+		log.info("[StudentController] selectStudentListForAdminNopaging Start ================================");
+
+			
+		log.info("[StudentController] selectStudentListForAdminNopaging End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", studentManagerService.selectStudentListForAdmin()));
+	}
 	
 	
 	
