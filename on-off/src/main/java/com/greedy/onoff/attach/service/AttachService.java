@@ -49,8 +49,28 @@ public class AttachService {
 		
 		return classesDtoList;
 	}
-
 	
+	
+	
+	/*2. 내강의 정보 상세 조회 */
+
+	public OpenClassesDto selectMyclass(Long classCode) {
+		
+		log.info("[AttachService] selectMyclass Start==============================");
+		log.info("[AttachService] classCode : {}", classCode);
+		
+		OpenClasses openClasses = (myclassRepository.findByclassCode(classCode))
+				.orElseThrow(()-> new IllegalArgumentException("해당 강좌가 없습니다. classCode =" + classCode));
+		OpenClassesDto openclassesDto = modelMapper.map(openClasses, OpenClassesDto.class);
+		
+		log.info("[AttachService] openclassesDto: " + openclassesDto);
+		
+		log.info("[AttachService] selectMyclass End==============================");
+		
+		
+		return openclassesDto;
+	}
+
 	
 	
 	
@@ -68,6 +88,8 @@ public class AttachService {
 		
 		return memberDtoList;
 	}
+
+
 
 
 

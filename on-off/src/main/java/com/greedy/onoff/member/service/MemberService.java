@@ -209,7 +209,7 @@ public class MemberService {
 			
 
 			/* 퇴사를 했을경우 퇴사일을 넣어서 데이터 수정 */
-			if(memberDto.getMemberStatus().equals("N"))
+			if(memberDto.getMemberStatus().equals("N") && oriMember.getMemberStatus().equals("Y") )
 			{
 				log.info("=============if 문 들어옴========");
 				/* 퇴사일이 비어있는 회원코드로 조회해온다.*/
