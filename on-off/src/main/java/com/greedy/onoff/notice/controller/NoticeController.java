@@ -3,6 +3,7 @@ package com.greedy.onoff.notice.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +18,7 @@ import com.greedy.onoff.common.ResponseDto;
 import com.greedy.onoff.common.paging.Pagenation;
 import com.greedy.onoff.common.paging.PagingButtonInfo;
 import com.greedy.onoff.common.paging.ResponseDtoWithPaging;
+import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.notice.dto.NoticeDto;
 import com.greedy.onoff.notice.service.NoticeService;
 
@@ -64,7 +66,9 @@ private final NoticeService noticeService;
 	
 	/* 3. 공지사항 등록 */
 	@PostMapping("/notice")
-	public ResponseEntity<ResponseDto> insertNotice(@ModelAttribute NoticeDto noticeDto) {
+	public ResponseEntity<ResponseDto> insertNotice(@ModelAttribute NoticeDto noticeDto, @AuthenticationPrincipal MemberDto member) {
+		
+		noticeDto.setMember(member);
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "공지사항 등록 성공", noticeService.insertNotice(noticeDto)));
 	}
@@ -77,9 +81,8 @@ private final NoticeService noticeService;
 	}
 	
 	/* 4. 공지사항 삭제 */
-	@DeleteMapping("/notice")
+	@DeleteMapping("/notice/{noticeCode}")
 	public ResponseEntity<ResponseDto> deleteNotice(@PathVariable Long noticeCode) {
-		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "공지사항 삭제 완료", noticeService.deleteNotice(noticeCode)));
 	}
 }

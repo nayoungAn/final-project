@@ -1,14 +1,16 @@
 package com.greedy.onoff.notice.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.greedy.onoff.member.entity.Member;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,16 +38,18 @@ public class Notice {
 	private String noticeContent;
 	
 	@Column(name = "NOTICE_DATE")
-	private Date noticeDate;
+	private String noticeDate;
 	
-	@Column(name = "MEMBER_CODE")
-	private Long memberCode;
+	@ManyToOne
+	@JoinColumn(name = "MEMBER_CODE")
+	private Member member;
 	
 	
 	/* 수정 용도의 메소드 정의 */
-	public void update(String noticeTitle, String noticeContent) {
+	public void update(String noticeTitle, String noticeContent, String date) {
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
+		this.noticeDate = date;
 		
 	}
 }

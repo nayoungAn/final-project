@@ -1,6 +1,5 @@
 package com.greedy.onoff.util;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,8 +19,8 @@ public class MailUtil {
 	
 	public void sendEmail(MemberDto memberDto) {
 		
-		String subject= memberDto.getMemberName() +"님의 ONO 임시 비밀번호 안내 이메일입니다.";
-		String msg = memberDto.getMemberName() + "님의 임시 비밀번호 입니다. 로그인 후 비밀번호를 변경해 주세요. 임시비밀번호는" + memberDto.getMemberPassword() +"입니다.";
+		String subject= "안녕하세요. ONO 임시 비밀번호 안내 이메일입니다.";
+		String msg = "임시비밀번호는" + "[" + memberDto.getMemberPassword() + "]" + "입니다. 해당 임시비밀번호로 로그인 후 비밀번호를 변경해 주세요. ";
 		
 			
 		SimpleMailMessage message = new SimpleMailMessage();

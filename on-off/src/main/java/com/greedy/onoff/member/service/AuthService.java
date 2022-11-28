@@ -57,12 +57,13 @@ public class AuthService {
 
 
 
-	public String findId(MemberDto memberDto) {
+	public MemberDto findId(MemberDto memberDto) {
 		
-		Member member = memberRepository.findByMemberEmailAndMemberName(memberDto.getMemberEmail(), memberDto.getMemberName())
+		Member member = memberRepository.findByMemberNameAndMemberEmail(memberDto.getMemberName(), memberDto.getMemberEmail())
 				.orElseThrow(() -> new FindMemberFaildeException("아이디 찾기에 실패하였습니다."));
-				
-		return  member.getMemberId();
+			
+		return modelMapper.map(member, MemberDto.class);
+		//return  member.getMemberId();
 	}
 	
 
@@ -79,7 +80,6 @@ public class AuthService {
 			tempPw = tempPw.substring(0,10);
 			
 			memberDto.setMemberPassword(tempPw);
-			
 		
 			mailUtil.sendEmail(memberDto);
 			log.info("[AuthService] memberDto : {}" , memberDto);

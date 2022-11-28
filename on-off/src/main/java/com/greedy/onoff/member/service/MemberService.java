@@ -60,6 +60,10 @@ public class MemberService {
 		String imageName = UUID.randomUUID().toString().replace("-", "");
 		String replaceFileName = null;
 		
+		/*if(memberRepository.findByMemberId(memberDto.getMemberId()) != null) {
+			throw new DuplicateMemberEmailException("아이디가 중복됩니다.");
+		}*/
+		
 		if(memberRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
 			throw new DuplicateMemberEmailException("이메일이 중복됩니다.");
 		}
@@ -83,6 +87,7 @@ public class MemberService {
 			}	 
 		}
 		
+
 		/* 강사이력추가*/
 		TeacherHistoryDto teacherHistoryDto = new TeacherHistoryDto();
 		teacherHistoryDto.setJoinDate(memberDto.getMemberRegisterDate());
@@ -93,19 +98,27 @@ public class MemberService {
 		teacherHistoryDto.setMember(memberdto);	
 		teacherHistoryRepository.save(modelMapper.map(teacherHistoryDto, TeacherHistory.class));
 		
+
 		return memberDto;
 	}
 
 
-	/* 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
+
+
+
+	
+
+	/* 1. 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
+
 	public Page<MemberDto> selectTeacherListForAdmin(int page) {
 		log.info("[MemberService] selectTeacherListForAdmin Start =====================" );
+
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
 
 		Page<Member> memberList = memberRepository.findByMemberRole(pageable,"ROLE_TEACHER");
 		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
-		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
+		
 		memberDtoList.forEach(member -> member.setMemberImageUrl(IMAGE_URL + member.getMemberImageUrl()));
 		
 		log.info("[MemberService] memberDtoList : {}", memberDtoList.getContent());

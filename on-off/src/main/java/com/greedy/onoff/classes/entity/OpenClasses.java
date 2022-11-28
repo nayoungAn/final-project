@@ -1,6 +1,6 @@
 package com.greedy.onoff.classes.entity;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -107,6 +108,9 @@ public class OpenClasses {
 		
 		
 	}
+	
+	@OneToMany(mappedBy = "classes")
+	private List <Attach> attachList;
 	
 	
 	
