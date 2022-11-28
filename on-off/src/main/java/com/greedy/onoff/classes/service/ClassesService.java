@@ -127,13 +127,6 @@ public class ClassesService {
 			OpenClasses oriOpenClasses = classesRepository.findByClassCode(openClassesDto.getClassCode()).orElseThrow(
 					() -> new IllegalArgumentException("해당 강의가 없습니다. classCode=" + openClassesDto.getClassCode()));
 	
-//			classesScheduleRepository.save(openClassesDto.getClassesScheduleList().stream()
-//					.map(scheduleListDto -> ModelMpper.map(scheduleListDto, ClassesSchedule.class)));
-		
-//
-//			return tradeReplyList.stream().map(tradeReply -> modelMapper.map(tradeReply, TradeReplyDTO.class))
-//					.collect(Collectors.toList());
-			
 			/* 조회 했던 기존 엔티티의 내용을 수정 */
 			oriOpenClasses.update(
 					openClassesDto.getClassCode(),
@@ -154,7 +147,6 @@ public class ClassesService {
 					
 
 			classesRepository.save(oriOpenClasses);
-			
 			/* null값 스케쥴코드 삭제*/
 			List<ClassesSchedule> classesSchedule = classesScheduleRepository.findByClassCode(null);
 			

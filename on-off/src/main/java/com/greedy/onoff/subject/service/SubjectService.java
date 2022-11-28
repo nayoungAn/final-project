@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale.Category;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -35,7 +36,7 @@ public class SubjectService {
 		this.modelMapper = modelMapper;
 	}
 	
-	/* 1. 과목 목록 조회 - 페이징, 상태 여부 'N'포함 (관리자)*/
+	/* 과목 목록 조회 - 페이징, 상태 여부 'N'포함 (관리자)*/
 	public Page<SubjectDto> selectSubjectListForAdmin(int page) {
 		
 		log.info("[SubjectService] selectSubjectList Start =====================" );
@@ -53,20 +54,22 @@ public class SubjectService {
 	}
 
 
-//
-//		/* 1. 과목 목록 조회 -  상태 여부 'N'포함 (관리자)*/
-//	public Optional<Object> selectSubjectListForAdmin() {
-//			
-//
-//			List<Subject> subjectList = subjectRepository.findAll();
-//			List<SubjectDto> subjectDtoList = ((<Subject>) subjectList).map(subject -> modelMapper.map(subject, SubjectDto.class));
-//			
-//			
-//			log.info("[SubjectService] subjectDtoList End =====================" );
-//			
-//			return subjectDtoList;
-//		}	
-//		
+
+		/* 과목 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+	public List<SubjectDto> selectSubjectListForAdmin() {
+			
+
+			List<Subject> subjectList = subjectRepository.findAll();
+			List<SubjectDto> subjectDtoList = subjectList.stream()
+			.map(subject -> modelMapper.map(subject, SubjectDto.class))
+			.collect(Collectors.toList());
+			
+			
+			log.info("[SubjectService] subjectDtoList End =====================" );
+			
+			return subjectDtoList;
+		}	
+		
 	/* 2. 과목 목록 조회 - 상품명 검색 기준, 페이징, 상태 여부 'N'포함 (관리자) */
 	public Page<SubjectDto> selectSubjectListBySubjectName(int page, String subjectName) {
 	

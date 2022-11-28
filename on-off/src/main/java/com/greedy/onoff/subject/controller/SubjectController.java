@@ -37,7 +37,7 @@ public class SubjectController {
 		this.subjectService = subjectService;
 	}
 	
-	/* 1. 과목 목록 조회 - 페이징, 상태 'n' 상품 포함 (관리자) */
+	/* 과목 목록 조회 - 페이징, 상태 'n' 상품 포함 (관리자) */
 	@GetMapping("/subjects-management")
 	public ResponseEntity<ResponseDto> selectSubjectListForAdmin(@RequestParam(name="page", defaultValue="1") int page) {
 		
@@ -58,21 +58,21 @@ public class SubjectController {
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
 	}
-//
-//	/* 1. 과목 목록 조회 - 상태 'n' 상품 포함 (관리자) */
-//	@GetMapping("/subjects-management-nopaging")
-//	public ResponseEntity<ResponseDto> selectSubjectListForAdminNopaging() {
-//		
-//		log.info("[SubjectController] selectSubjectListForAdminNopaging Start ================================");
-//
-//			
-//		log.info("[SubjectController] selectSubjectListForAdmin End ================================");
-//		
-//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", subjectService.selectSubjectListForAdmin()));
-//	}
-//	
 
-	/* 2. 과목 검색 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
+	/*  과목 목록 조회 - 상태 'n' 상품 포함  (관리자) */
+	@GetMapping("/subjects-management-nopaging")
+	public ResponseEntity<ResponseDto> selectSubjectListForAdminNopaging() {
+		
+		log.info("[SubjectController] selectSubjectListForAdminNopaging Start ================================");
+
+			
+		log.info("[SubjectController] selectSubjectListForAdmin End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", subjectService.selectSubjectListForAdmin()));
+	}
+	
+
+	/* 과목 검색 목록 조회 - 과목명 검색 기준, 페이징, 상태 'n' 상품 포함(관리자) */
 	@GetMapping("/subjects/search")
 	public ResponseEntity<ResponseDto> selectSearchList
 		(@RequestParam(name="page", defaultValue="1") int page, @RequestParam(name="search") String subjectName) {

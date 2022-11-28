@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -22,6 +23,8 @@ import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
 import com.greedy.onoff.member.repository.MemberRepository;
+import com.greedy.onoff.subject.dto.SubjectDto;
+import com.greedy.onoff.subject.entity.Subject;
 import com.greedy.onoff.teacher.dto.TeacherHistoryDto;
 import com.greedy.onoff.teacher.entity.TeacherHistory;
 import com.greedy.onoff.teacher.repository.TeacherHistoryRepository;
@@ -98,7 +101,7 @@ public class MemberService {
 	}
 
 
-	/* 1. 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
+	/* 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
 	public Page<MemberDto> selectTeacherListForAdmin(int page) {
 		log.info("[MemberService] selectTeacherListForAdmin Start =====================" );
 		
@@ -116,7 +119,24 @@ public class MemberService {
 		return memberDtoList;
 	}
 
-	/* 2. 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
+	
+	/* 강사 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+	public List<MemberDto> selectTeacherListForAdmin() {
+			
+
+			List<Member> memberList = memberRepository.findAll();
+			List<MemberDto> memberDtoList = memberList.stream()
+			.map(member -> modelMapper.map(member, MemberDto.class))
+			.collect(Collectors.toList());
+			
+			
+			log.info("[MemberService] memberDtoList End =====================" );
+			
+			return memberDtoList;
+		}	
+		
+	
+	/* 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
 	public Page<MemberDto> selectTeacherListByMemberName(int page, String memberName) {
 		
 		log.info("[MemberService] selectTeacherListByMemberName Start =====================" );
@@ -251,6 +271,8 @@ public class MemberService {
 
 		return memberDto;
 	}
+
+
 	
 
 }
