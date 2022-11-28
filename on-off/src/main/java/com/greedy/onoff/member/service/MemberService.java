@@ -1,10 +1,8 @@
 package com.greedy.onoff.member.service;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -23,8 +21,6 @@ import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
 import com.greedy.onoff.member.repository.MemberRepository;
-import com.greedy.onoff.subject.dto.SubjectDto;
-import com.greedy.onoff.subject.entity.Subject;
 import com.greedy.onoff.teacher.dto.TeacherHistoryDto;
 import com.greedy.onoff.teacher.entity.TeacherHistory;
 import com.greedy.onoff.teacher.repository.TeacherHistoryRepository;
