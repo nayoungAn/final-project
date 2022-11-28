@@ -1,12 +1,12 @@
 package com.greedy.onoff.classes.service;
 
-import java.io.IOException;
-import java.util.UUID;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +14,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.greedy.onoff.classes.dto.OpenClassesDto;
+import com.greedy.onoff.classes.entity.ClassesSchedule;
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.classes.repository.ClassesRepository;
+import com.greedy.onoff.classes.repository.ClassesScheduleRepository;
+import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.subject.entity.Subject;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,11 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ClassesService {
 	
 	private final ClassesRepository classesRepository;
+	private final ClassesScheduleRepository classesScheduleRepository;
 	private final ModelMapper modelMapper;
 	
-	public ClassesService(ClassesRepository classesRepository, ModelMapper modelMapper) {
+	public ClassesService(ClassesRepository classesRepository, ClassesScheduleRepository classesScheduleRepository, ModelMapper modelMapper) {
 		this.classesRepository = classesRepository;
 		this.modelMapper = modelMapper;
+		this.classesScheduleRepository = classesScheduleRepository;
+
 	}
 	
 	
@@ -96,89 +103,62 @@ public class ClassesService {
 	public OpenClassesDto insertClasses(OpenClassesDto openClassesDto) {
 		
 		log.info("[ClassesService] insertClasses Start ===================================");
-		log.info("[ProductService] insertClasses : {}", openClassesDto);
+		log.info("[ClassesService] insertClasses : {}", openClassesDto);
 		
-	
 			classesRepository.save(modelMapper.map(openClassesDto, OpenClasses.class));
-		
-		log.info("[ProductService] insertProduct End ===================================");
+			
+			
+		log.info("[ClassesService] insertClasses End ===================================");
 		
 		return openClassesDto;
 		
 	}
-//	
-//	/* 8. 상품 수정 */
-//	@Transactional
-//	public ProductDto updateProduct(ProductDto productDto) {
-//
-//		log.info("[ProductService] updateProduct Start ===================================");
-//		log.info("[ProductService] productDto : {}", productDto);
-//
-//		String replaceFileName = null;
-//
-//		try {
-//
-//			Product oriProduct = productRepository.findById(productDto.getProductCode()).orElseThrow(
-//					() -> new IllegalArgumentException("해당 상품이 없습니다. productCode=" + productDto.getProductCode()));
-//			String oriImage = oriProduct.getProductImageUrl();
-//
-//			/* 이미지를 변경하는 경우 */
-//			if (productDto.getProductImage() != null) {
-//					
-//				/* 새로 입력 된 이미지 저장 */
-//				String imageName = UUID.randomUUID().toString().replace("-", "");
-//				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, productDto.getProductImage());
-//				productDto.setProductImageUrl(replaceFileName);
-//				
-//				/* 기존에 저장 된 이미지 삭제*/
-//				FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
-//
-//			} else { 
-//				/* 이미지를 변경하지 않는 경우 */
-//				productDto.setProductImageUrl(oriImage);
-//			}
-//			
-//			/* 조회 했던 기존 엔티티의 내용을 수정 */
-//			oriProduct.update(productDto.getProductName(), 
-//					productDto.getProductPrice(), 
-//					productDto.getProductDescription(), 
-//					productDto.getProductOrderable(), 
-//					modelMapper.map(productDto.getCategory(), Category.class), 
-//					productDto.getProductImageUrl(), 
-//					productDto.getProductStock());
-//			
-//			productRepository.save(oriProduct);
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//			try {
-//				FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			}
-//		}
-//		
-//		log.info("[ProductService] updateProduct End ===================================");
-//
-//		return productDto;
-//	}
-//
-//
-//	
-//	
-//
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//
-}
+	
+	/* 강의 수정 */
+	@Transactional
+
+	public OpenClassesDto updateClasses(OpenClassesDto openClassesDto) {
+
+		log.info("[ClassesService] updateClasses Start ===================================");
+		log.info("[ClassesService] openClassesDto : {}", openClassesDto);
+
+
+			OpenClasses oriOpenClasses = classesRepository.findByClassCode(openClassesDto.getClassCode()).orElseThrow(
+					() -> new IllegalArgumentException("해당 강의가 없습니다. classCode=" + openClassesDto.getClassCode()));
+	
+			/* 조회 했던 기존 엔티티의 내용을 수정 */
+			oriOpenClasses.update(
+					openClassesDto.getClassCode(),
+					openClassesDto.getClassName(), 
+					openClassesDto.getClassQuota(),
+					openClassesDto.getClassPrice(),
+					openClassesDto.getClassStartDate(),
+					openClassesDto.getClassEndDate(),
+					openClassesDto.getClassRoom(),
+					openClassesDto.getClassStatus(),
+					openClassesDto.getClassDescription(),
+					openClassesDto.getClassStudents(),
+					openClassesDto.getClassesScheduleList().stream()
+					.map(scheduleList -> modelMapper.map(scheduleList,ClassesSchedule.class))
+					.collect(Collectors.toList()),
+					modelMapper.map(openClassesDto.getMember(), Member.class), 
+					modelMapper.map(openClassesDto.getSubject(), Subject.class));
+					
+
+			classesRepository.save(oriOpenClasses);
+			/* null값 스케쥴코드 삭제*/
+			List<ClassesSchedule> classesSchedule = classesScheduleRepository.findByClassCode(null);
+			
+			classesScheduleRepository.deleteAll(classesSchedule);
+			
+		log.info("[ClassesService] updateClasses End ===================================");
+
+		return openClassesDto;
+	}
+
+
+	
+	}
+
+
+	

@@ -33,7 +33,7 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 	
-	/* 1. 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
+	/* 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
 	@GetMapping("/teachers-management")
 	public ResponseEntity<ResponseDto> selectTeacherListForAdmin(@RequestParam(name="page", defaultValue="1") int page) {
 		
@@ -55,7 +55,19 @@ public class MemberController {
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
 	}
 	
-	/* 2. 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
+	/*  강사 목록 조회 - 상태 'n' 상품 포함 (관리자) */
+	@GetMapping("/teachers-management-nopaging")
+	public ResponseEntity<ResponseDto> selectTeacherListForAdminNopaging() {
+		
+		log.info("[SubjectController] selectTeacherListForAdminNopaging Start ================================");
+
+			
+		log.info("[SubjectController] selectTeacherListForAdminNopaging End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", memberService.selectTeacherListForAdmin()));
+	}
+	
+	/* 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
 	@GetMapping("/teachers/search")
 	public ResponseEntity<ResponseDto> selectSearchTeacherList
 		(@RequestParam(name="page", defaultValue="1") int page, @RequestParam(name="search") String memberName) {

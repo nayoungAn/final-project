@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.greedy.onoff.classes.entity.OpenClasses;
 
@@ -24,10 +25,8 @@ public interface ClassesRepository extends JpaRepository<OpenClasses, Long> {
 	Optional<OpenClasses> findByClassCode(Long classCode) ;
 
 
-
-
-	
-
-
+	/* 현재 등록하는 강의 코드 값*/
+	@Query(value = "SELECT SEQ_CLASSES_CODE.currval FROM dual", nativeQuery = true)
+    public Long getCurrvalClassCodeSequence();
 	
 }

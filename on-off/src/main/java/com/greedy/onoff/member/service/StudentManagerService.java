@@ -1,9 +1,9 @@
 package com.greedy.onoff.member.service;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -16,18 +16,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.greedy.onoff.classes.dto.ClassesHistoryDto;
+import com.greedy.onoff.classes.entity.ClassesHistory;
+import com.greedy.onoff.classes.repository.HistoryRepository;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
 import com.greedy.onoff.member.exception.FindMemberFaildeException;
-import com.greedy.onoff.member.repository.StudentRepository;
+import com.greedy.onoff.member.repository.StudentManagerRepository;
 import com.greedy.onoff.util.FileUploadUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class StudentService {
+public class StudentManagerService {
 	
 	@Value("${image.image-dir}")
 	private String IMAGE_DIR;
@@ -36,12 +39,14 @@ public class StudentService {
 	
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
-	private final StudentRepository studentRepository;
+	private final StudentManagerRepository studentManagerRepository;
+	private final HistoryRepository historyRepository;
 	
-	public StudentService(ModelMapper modelMapper,  PasswordEncoder passwordEncoder, StudentRepository studentRepository) {
+	public StudentManagerService(ModelMapper modelMapper,  PasswordEncoder passwordEncoder, StudentManagerRepository studentManagerRepository, HistoryRepository historyRepository) {
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
-		this.studentRepository = studentRepository;
+		this.studentManagerRepository = studentManagerRepository;
+		this.historyRepository = historyRepository;
 		
 	}
 	
@@ -51,7 +56,8 @@ public class StudentService {
 		
 		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("memberCode").ascending());
 		
-		Page<Member> studentList = studentRepository.findAll(pageable);
+		Page<Member> studentList = studentManagerRepository.findByMemberRole(pageable, "ROLE_STUDENT");
+		
 		Page<MemberDto> studentDtoList = studentList.map(student -> modelMapper.map(student, MemberDto.class));
 		
 		log.info("[StudentService] studentList : {}", studentList.getContent());
@@ -62,27 +68,42 @@ public class StudentService {
 
 	
 	/* 원생 상세 조회 */
-	public MemberDto selectStudent(Long memberCode) {
-		log.info("[StudentService] selectStudent Start ============================");
-		log.info("[StudentService] memberCode : {}", memberCode);
-		
-		MemberDto memberDto = modelMapper.map(studentRepository.findById(memberCode)
-				.orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다.")), MemberDto.class);
-		
-		log.info("[StudentService] selectStudent End ============================");
-		
-		return memberDto;
-
-	}
+	
+	  public MemberDto selectStudent(Long memberCode) {
+	  log.info("[StudentService] selectStudent Start ============================"); 
+	  log.info("[StudentService] memberCode : {}", memberCode);
+	  
+	  MemberDto memberDto = modelMapper.map(studentManagerRepository.findById(memberCode)
+	  .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다.")), MemberDto.class);
+	  
+	  log.info("[StudentService] selectStudent End ============================");
+	  
+	  return memberDto;
+	  
+	  }
+	  
+	  
+	  /* 듣고있는 강의 목록 조회 */
+		public List<ClassesHistoryDto> studentClassList(Long memberCode, MemberDto memberDto) {
+			log.info("[StudentService] studentClassList Start ============================");
+			log.info(memberDto.getMemberName());
+			List<ClassesHistory> classesHistoryList = historyRepository.findByMember(modelMapper.map(memberDto, Member.class));
+			
+			log.info("[StudentService] studentClassList End ============================");	
+			
+			return classesHistoryList.stream().map(classes -> modelMapper.map(classes, ClassesHistoryDto.class))
+					.collect(Collectors.toList());
+		}
+	 
 	
 	/* 원생 이름 검색 */
 	public Page<MemberDto> selectStudentName(int page, String memberName) {
 		
-log.info("[memberList] selectStudentName Start =====================" );
+		log.info("[memberList] selectStudentName Start =====================" );
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
 		
-		Page<Member> memberList = studentRepository.findByMemberName(pageable, memberName);
+		Page<Member> memberList = studentManagerRepository.findByMemberName(pageable, memberName);
 		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
 		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
 		memberDtoList.forEach(product -> product.setMemberImageUrl(IMAGE_URL + product.getMemberImageUrl()));
@@ -103,7 +124,7 @@ log.info("[memberList] selectStudentName Start =====================" );
 		
 		String replaceFileName = null;
 		
-		Member oriStudent = studentRepository.findById(memberDto.getMemberCode())
+		Member oriStudent = studentManagerRepository.findById(memberDto.getMemberCode())
 				.orElseThrow(() -> new FindMemberFaildeException("등록되지 않은 원생입니다." + memberDto.getMemberCode()));
 		String oriImage = oriStudent.getMemberImageUrl();
 		try {
@@ -133,7 +154,7 @@ log.info("[memberList] selectStudentName Start =====================" );
 					memberDto.getMemberRole(),
 					memberDto.getMemberImageUrl());
 			
-			studentRepository.save(oriStudent);
+			studentManagerRepository.save(oriStudent);
 		} catch (IOException e) {
 			e.printStackTrace();
 			try {
@@ -155,12 +176,12 @@ log.info("[memberList] selectStudentName Start =====================" );
 		log.info("[StudentService] signupStudent Start ============================");
 		log.info("[StudentService] memberDto : {}" + memberDto);
 		
-		if(studentRepository.findByMemberId(memberDto.getMemberId()) != null) {
+		if(studentManagerRepository.findByMemberId(memberDto.getMemberId()) != null) {
 			log.info("[StudentService] 아이디가 중복 됩니다.");
 			throw new DuplicateMemberEmailException("아이디가 중복 됩니다.");
 		}
 		
-		if(studentRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
+		if(studentManagerRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
 			log.info("[StudentService] 이메일이 중복 됩니다.");
 			throw new DuplicateMemberEmailException("이메일이 중복 됩니다.");
 		}
@@ -168,7 +189,7 @@ log.info("[memberList] selectStudentName Start =====================" );
 		
 		memberDto.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
 		memberDto.setMemberRole("ROLE_STUDENT");
-		studentRepository.save(modelMapper.map(memberDto, Member.class));
+		studentManagerRepository.save(modelMapper.map(memberDto, Member.class));
 		
 		
 		
@@ -176,6 +197,9 @@ log.info("[memberList] selectStudentName Start =====================" );
 		log.info("[StudentService] signupStudent End ============================");
 		return memberDto;
 	}
+
+	
+	
 
 	
 	
