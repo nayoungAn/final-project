@@ -81,12 +81,12 @@ public class StudentClassesController {
 	}
 	
 	/*3. 내 상담신청 목록조회(원생) - 페이징 , 로그인한 멤버의 상담 신청 내역 조회  */
-	@GetMapping("/memberclass/qna/{classCode}")
-	public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page,@AuthenticationPrincipal MemberDto Member ){
+	@GetMapping("/memberclass/qna")
+	public ResponseEntity<ResponseDto> getMtmList(@RequestParam(name="page", defaultValue="1")int page,@AuthenticationPrincipal MemberDto Member ){
 			
 		Long memberCode = Member.getMemberCode();
 		log.info("멤버코드 : {} ", Member.getMemberCode());
-		Page <MtmDto> mtmDtoList = studentClassesService.selectMtmList(classCode,page, Member);
+		Page <MtmDto> mtmDtoList = studentClassesService.selectMtmList(page, Member);
 		log.info("상담내역조회 : {} ", mtmDtoList);
 		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
 		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();

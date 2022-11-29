@@ -19,27 +19,27 @@ public interface MtmRepository extends JpaRepository<Mtm, Long>{
 
 
 
-	Optional<Mtm> findByMtmCodeAndMtmReferAndAnswerCode(Long mtmCode, Long mtmRefer, Long answerCode);
-
-	
-	@Query("SELECT m " +
-			"FROM Mtm m " +
-			"WHERE m.mtmCode = :mtmCode " +
-			"AND m.mtmRefer = :mtmRefer"
-			)
-	Mtm findByMtmCodeAndMtmRefer(@Param("mtmCode") Long mtmCode,@Param("mtmRefer") Long mtmRefer);
-
-
-	Mtm findByMtmCode(Long mtmCode);
-
-
-	@Query("SELECT m " + 
-			"FROM Mtm m " +
-			"WHERE m.mtmDelete = 'N'" +
-			"AND m.classes.classCode = :classCode"
-			)
-	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
-
+//	Optional<Mtm> findByMtmCodeAndMtmReferAndAnswerCode(Long mtmCode, Long mtmRefer, Long answerCode);
+//
+//	
+//	@Query("SELECT m " +
+//			"FROM Mtm m " +
+//			"WHERE m.mtmCode = :mtmCode " +
+//			"AND m.mtmRefer = :mtmRefer"
+//			)
+//	Mtm findByMtmCodeAndMtmRefer(@Param("mtmCode") Long mtmCode,@Param("mtmRefer") Long mtmRefer);
+//
+//
+//	Mtm findByMtmCode(Long mtmCode);
+//
+//
+//	@Query("SELECT m " + 
+//			"FROM Mtm m " +
+//			"WHERE m.mtmDelete = 'N'" +
+//			"AND m.classes.classCode = :classCode"
+//			)
+//	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
+//
 
 
 	
