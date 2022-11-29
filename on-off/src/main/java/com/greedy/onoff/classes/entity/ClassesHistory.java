@@ -47,7 +47,9 @@ public class ClassesHistory {
 	@JoinColumn(name = "MEMBER_CODE")
 	private Member member;
 	
-
+	public interface HistoryMapping {
+		OpenClasses openClasses();
+	}
 	
 
 		

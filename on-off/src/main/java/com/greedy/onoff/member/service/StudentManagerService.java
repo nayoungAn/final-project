@@ -149,9 +149,7 @@ public class StudentManagerService {
 					memberDto.getMemberName(), 
 					memberDto.getMemberPhone(),  
 					memberDto.getMemberAddress(), 
-					memberDto.getMemberStatus(),
 					memberDto.getMemberEmail(), 
-					memberDto.getMemberRole(),
 					memberDto.getMemberImageUrl());
 			
 			studentManagerRepository.save(oriStudent);

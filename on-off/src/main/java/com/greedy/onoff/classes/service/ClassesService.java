@@ -1,6 +1,7 @@
 package com.greedy.onoff.classes.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.greedy.onoff.classes.dto.ClassesHistoryDto;
 import com.greedy.onoff.classes.dto.OpenClassesDto;
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.classes.repository.ClassesRepository;
@@ -181,4 +183,7 @@ public class ClassesService {
 //	
 //	
 //
+
+
+	
 }

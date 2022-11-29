@@ -78,14 +78,12 @@ public class Member {
 	}
 	
 	public void studentUpdate(String memberId, String memberName, String memberPhone,
-			String memberAddress, String memberStatus, String memberEmail, String memberRole, String memberImageUrl) {
+			String memberAddress, String memberEmail, String memberImageUrl) {
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
 		this.memberAddress = memberAddress;
-		this.memberStatus = memberStatus;
 		this.memberEmail = memberEmail;
-		this.memberRole = memberRole;
 		this.memberImageUrl = memberImageUrl;
 	}
 
