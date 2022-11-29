@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +64,7 @@ public class AccController {
 	
 	/* 수납 내역 수정 */
 	@PutMapping("/acc-management/{accCode}")
-	public ResponseEntity<ResponseDto> updateAcc(@ModelAttribute AccDto accDto){
+	public ResponseEntity<ResponseDto> updateAcc(@RequestBody AccDto accDto){
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "수납 내역 수정 성공!", accService.updateAcc(accDto)));
 	}

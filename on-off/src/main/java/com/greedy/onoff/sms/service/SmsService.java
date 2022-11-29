@@ -41,6 +41,22 @@ public class SmsService {
 		
 		return smsDtoList;
 	}
+
+	/* 문자 전송 대상 상세 조회 */
+	public Object selectSmsForAdmin(Long smsCode) {
+		
+		log.info("[SmsService] selectSmsForAdmin Start ====================");
+		log.info("[SmsService] smsCode " + smsCode);
+		
+		Sms sms = smsRepository.findById(smsCode)
+				.orElseThrow(() -> new IllegalArgumentException("해당 내역이 업습니다!. accCode=" + smsCode));
+		SmsDto smsDto = modelMapper.map(sms, SmsDto.class);
+		
+		log.info("[SmsService] smsDto : " + smsDto);
+		log.info("[SmsService] selectSmsForAdmin End ====================");
+		
+		return smsCode;
+	}
 	
 	
 	
