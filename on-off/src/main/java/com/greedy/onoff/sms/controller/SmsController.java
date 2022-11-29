@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,14 @@ public class SmsController {
 		responseDtoWithPaging.setData(smsDtoList.getContent());
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "문자 전송 대상 조회 성공!", responseDtoWithPaging));
+	}
+	
+	/* 문자 전송 대상 상세 조회 */
+	@GetMapping("/sms-management/{smsCode}")
+	public ResponseEntity<ResponseDto> selectSmsDetailForAdmin(@PathVariable Long smsCode){
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "문자 전송 대상 상세 조회 성공!",
+				smsService.selectSmsForAdmin(smsCode)));
 	}
 
 }
