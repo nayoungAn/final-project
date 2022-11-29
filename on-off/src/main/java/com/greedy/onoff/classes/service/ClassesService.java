@@ -83,7 +83,7 @@ public class ClassesService {
 	/*  강의 목록 조회 - 상태 'n' 제외 , 페이지 X (관리자) */
 	public List<OpenClassesDto> selectClassListForAdminNopaging() { 
 
-		List<OpenClasses> classList = classesRepository.findByClassStatus("폐강");
+		List<OpenClasses> classList = classesRepository.findByClassStatus("개강");
 		List<OpenClassesDto> classDtoList = classList.stream()
 				.map(classes -> modelMapper.map(classes, OpenClassesDto.class)).collect(Collectors.toList());
 
