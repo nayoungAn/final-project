@@ -60,7 +60,7 @@ public class StudentManagerController {
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
 	}
 	
-	/* 원생 상세 조회 */
+	/* 원생 상세 조회 (듣고 있는 강의 목록 조회)*/
 	@GetMapping("/student-manager/{memberCode}")
 	public ResponseEntity<ResponseDto> selectStudentDetail(@PathVariable Long memberCode, MemberDto memberDto) {
 		
@@ -77,6 +77,16 @@ public class StudentManagerController {
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생 상세 조회 성공", data));
 	}
+	
+	/* 원생 상세 조회 */
+	@GetMapping("/student-managers/{memberCode}")
+	public ResponseEntity<ResponseDto> selectStudentManagerDetail(@PathVariable Long memberCode) {
+		
+
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생 상세 조회 성공", 
+				studentManagerService.selectStudentDetail(memberCode)));
+	}
+	
 	
 	
 	/* 원생 정보 수정 */

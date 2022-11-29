@@ -103,8 +103,7 @@ public class StudentManagerService {
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
 		
-		Page<Member> memberList = studentManagerRepository.findByMemberNameContains(pageable, memberName);
-		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
+		Page<Member> memberList = studentManagerRepository.findByMemberNameContainsAndMemberRole(pageable, memberName, "ROLE_STUDENT");		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
 		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
 		memberDtoList.forEach(product -> product.setMemberImageUrl(IMAGE_URL + product.getMemberImageUrl()));
 		
@@ -211,7 +210,24 @@ public class StudentManagerService {
 		log.info("[StudentService] memberDtoList End =====================" );
 		
 		return memberDtoList;
-	}	
+	}
+
+
+	
+	/* 원생 상세 조회 - memberCode로 강사 1명 조회 , 포함상태 'N' 포함 (관리자) */
+	public MemberDto selectStudentDetail(Long memberCode) { 
+        log.info("[StudentService] selectStudentDetail Start ===================================");
+        log.info("[StudentService] memberCode : " + memberCode);
+        
+        Member member = studentManagerRepository.findById(memberCode)
+        		.orElseThrow(() -> new IllegalArgumentException("해당 원생이 없습니다. memberCode=" + memberCode));
+        MemberDto memberDto = modelMapper.map(member, MemberDto.class);
+        
+        log.info("[StudentService] memberDto : " + memberDto);
+        log.info("[StudentService] selectStudentDetail End ===================================");
+        
+        return memberDto;
+	}
 	
 
 	
