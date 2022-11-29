@@ -54,12 +54,12 @@ public class AccController {
 				accService.selectAccForAdmin(accCode)));
 	}
 	
-	/* 수납 내역 등록 */
-	@PostMapping("/acc-management/{accCode}")
-	public ResponseEntity<ResponseDto> insertAcc(@ModelAttribute AccDto accDto){
-		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "수납 내역 입력 성공!", accService.insertAcc(accDto)));
-	}
+//	/* 수납 내역 등록 */
+//	@PostMapping("/acc-management/{accCode}")
+//	public ResponseEntity<ResponseDto> insertAcc(@ModelAttribute AccDto accDto){
+//		
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "수납 내역 입력 성공!", accService.insertAcc(accDto)));
+//	}
 	
 	/* 수납 내역 수정 */
 	@PutMapping("/acc-management/{accCode}")

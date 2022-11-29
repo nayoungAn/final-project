@@ -9,7 +9,6 @@ import lombok.Setter;
 public class ClassesScheduleDto {
 	
 	private Long scheduleCode;
-	//private OpenClassesDto openClasses;
 	private String dayName;
 	private String timeName;
 }

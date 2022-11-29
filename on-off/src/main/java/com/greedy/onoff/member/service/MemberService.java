@@ -1,11 +1,10 @@
 package com.greedy.onoff.member.service;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -105,9 +104,12 @@ public class MemberService {
 
 
 
+
+
 	
 
 	/* 1. 강사 목록 조회 - 페이징, 상태 'N' 포함, Role teacher (관리자) */
+
 	public Page<MemberDto> selectTeacherListForAdmin(int page) {
 		log.info("[MemberService] selectTeacherListForAdmin Start =====================" );
 
@@ -126,7 +128,24 @@ public class MemberService {
 		return memberDtoList;
 	}
 
-	/* 2. 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
+	
+	/* 강사 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+	public List<MemberDto> selectTeacherListForAdmin() {
+			
+
+			List<Member> memberList = memberRepository.findAll();
+			List<MemberDto> memberDtoList = memberList.stream()
+			.map(member -> modelMapper.map(member, MemberDto.class))
+			.collect(Collectors.toList());
+			
+			
+			log.info("[MemberService] memberDtoList End =====================" );
+			
+			return memberDtoList;
+		}	
+		
+	
+	/* 강사목록 조회 - 이름 검색 기준, 페이징, 상태 'N' 포함, Role teacher (관리자) */
 	public Page<MemberDto> selectTeacherListByMemberName(int page, String memberName) {
 		
 		log.info("[MemberService] selectTeacherListByMemberName Start =====================" );
@@ -164,19 +183,13 @@ public class MemberService {
 
 
 
-	/* 8. 상품 수정 */
+	/* 8. 강사 수정 */
 	@Transactional
 	public MemberDto updateMember(MemberDto memberDto) {
 
 		log.info("[MemberService] updateMember Start ===================================");
 		log.info("[MemberService] memberDto : {}", memberDto);
 		
-		/* 오늘 날짜 삽입 */
-//		Date date = new Date();
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
-//		String today = sdf.format(date);
-//		java.sql.Date sqlDate = java.sql.Date.valueOf(today);
-
 		Date date = new Date();
 		long timeInMilliSeconds = date.getTime();
 		java.sql.Date sqlDate = new java.sql.Date(timeInMilliSeconds);
@@ -209,7 +222,7 @@ public class MemberService {
 			
 
 			/* 퇴사를 했을경우 퇴사일을 넣어서 데이터 수정 */
-			if(memberDto.getMemberStatus().equals("N"))
+			if(memberDto.getMemberStatus().equals("N") && oriMember.getMemberStatus().equals("Y") )
 			{
 				log.info("=============if 문 들어옴========");
 				/* 퇴사일이 비어있는 회원코드로 조회해온다.*/
@@ -267,6 +280,8 @@ public class MemberService {
 
 		return memberDto;
 	}
+
+
 	
 
 }

@@ -63,12 +63,12 @@ public class AccService {
 		return accDto;
 	}
 
-	/* 수납 내역 등록 */
-	@Transactional
-	public Object insertAcc(AccDto accDto) {
-		
-		return accRepository.save(modelMapper.map(accDto, Acc.class));
-	}
+//	/* 수납 내역 등록 */
+//	@Transactional
+//	public Object insertAcc(AccDto accDto) {
+//		
+//		return accRepository.save(modelMapper.map(accDto, Acc.class));
+//	}
 
 	/* 수납 내역 수정 */
 	@Transactional
