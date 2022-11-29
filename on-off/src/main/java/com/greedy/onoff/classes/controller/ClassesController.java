@@ -82,7 +82,18 @@ public class ClassesController {
 
 	}
 
+	/*  강의 목록 조회 - 상태 'n' 제외 , 페이지 X (관리자) */
+	@GetMapping("/classes-management-nopaging")
+	public ResponseEntity<ResponseDto> selectClassListForAdminNopaging() {
+		
+		log.info("[ClassesController] selectClassListForAdminNopaging Start ================================");
 
+			
+		log.info("[ClassesController] selectClassListForAdminNopaging End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", classesService.selectClassListForAdminNopaging()));
+	}
+	
 	/* 강의 상세 조회 - classCode로 강의 1개 조회, 상태 여부 'N' 포함 (관리자) */
     @GetMapping("/classes-management/{classCode}")
     public ResponseEntity<ResponseDto> selectClassesDetailForAdmin(@PathVariable Long classCode) {

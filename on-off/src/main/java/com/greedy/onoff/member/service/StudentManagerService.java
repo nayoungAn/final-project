@@ -76,6 +76,7 @@ public class StudentManagerService {
 	  MemberDto memberDto = modelMapper.map(studentManagerRepository.findById(memberCode)
 	  .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다.")), MemberDto.class);
 	  
+	
 	  log.info("[StudentService] selectStudent End ============================");
 	  
 	  return memberDto;
@@ -89,6 +90,7 @@ public class StudentManagerService {
 			log.info(memberDto.getMemberName());
 			List<ClassesHistory> classesHistoryList = historyRepository.findByMember(modelMapper.map(memberDto, Member.class));
 			
+			log.info(classesHistoryList.toString());
 			log.info("[StudentService] studentClassList End ============================");	
 			
 			return classesHistoryList.stream().map(classes -> modelMapper.map(classes, ClassesHistoryDto.class))
