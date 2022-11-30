@@ -43,7 +43,7 @@ public class ClassesHistoryService {
 		
 	}
 
-	/* 강의 수정 */
+	/* 수강 이력 수정 */
 	@Transactional
 	public ClassesHistoryDto updateClassesHistory(ClassesHistoryDto classesHistoryDto) {
 
