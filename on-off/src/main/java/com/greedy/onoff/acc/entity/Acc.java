@@ -54,10 +54,11 @@ public class Acc {
 	private ClassesHistory classesHistory;
 	
 	/* Acc 수정 용도의 메소드 정의 */
-	public void update(Date accDate, String accOption, String accContent) {
+	public void update(Date accDate, String accOption, String accStatus , String accContent) {
 		
 		this.accDate = accDate;
 		this.accOption = accOption;
+		this.accStatus = accStatus;
 		this.accContent = accContent;
 	}
 	

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.greedy.onoff.acc.dto.AccDto;
 import com.greedy.onoff.acc.entity.Acc;
 import com.greedy.onoff.acc.repository.AccRepository;
-import com.greedy.onoff.classes.entity.ClassesHistory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,13 +62,6 @@ public class AccService {
 		return accDto;
 	}
 
-//	/* 수납 내역 등록 */
-//	@Transactional
-//	public Object insertAcc(AccDto accDto) {
-//		
-//		return accRepository.save(modelMapper.map(accDto, Acc.class));
-//	}
-
 	/* 수납 내역 수정 */
 	@Transactional
 	public Object updateAcc(AccDto accDto) {
@@ -80,6 +72,7 @@ public class AccService {
 		oriAcc.update(
 				accDto.getAccDate(),
 				accDto.getAccOption(),
+				accDto.getAccStatus(),
 				accDto.getAccContent());
 				//modelMapper.map(accDto.getClassesHistory(), ClassesHistory.class));
 		
