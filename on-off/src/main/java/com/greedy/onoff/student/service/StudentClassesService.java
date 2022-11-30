@@ -10,15 +10,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.greedy.onoff.classes.dto.ClassesHistoryDto;
+import com.greedy.onoff.classes.dto.OpenClassesDto;
 import com.greedy.onoff.classes.entity.ClassesHistory;
+import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
-import com.greedy.onoff.member.exception.UserNotFoundException;
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
+import com.greedy.onoff.re.entity.Re;
+import com.greedy.onoff.student.repository.StudentClassesDetailRepository;
 import com.greedy.onoff.student.repository.StudentClassesRepository;
 import com.greedy.onoff.student.repository.StudentQnaRepository;
-import com.greedy.onoff.teacher.dto.TeacherHistoryDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,12 +31,14 @@ public class StudentClassesService {
 	private final ModelMapper modelMapper;
 	private final StudentClassesRepository studentClassesRepository;
 	private final StudentQnaRepository studentQnaRepository;
+	private final StudentClassesDetailRepository studentClassesDetailRepository;
 	
 	
-	public StudentClassesService(ModelMapper modelMapper, StudentClassesRepository studentClassesRepository, StudentQnaRepository studentQnaRepository) {
+	public StudentClassesService(ModelMapper modelMapper, StudentClassesRepository studentClassesRepository, StudentQnaRepository studentQnaRepository, StudentClassesDetailRepository studentClassesDetailRepository) {
 		this.modelMapper = modelMapper;
 		this.studentClassesRepository = studentClassesRepository;
 		this.studentQnaRepository = studentQnaRepository;
+		this.studentClassesDetailRepository = studentClassesDetailRepository;
 	}
 	
 	  	/* 1. 내강의 목록 조회 - 페이징, 내강의 목록(원생), "수강중"인 강의만 조회 */
@@ -57,34 +61,28 @@ public class StudentClassesService {
 		
 		}
 		
-//		/* qna 조회 */
-//		@SuppressWarnings("unchecked")
-//		public Page<MtmDto> selectMtmList(int page, MemberDto member) {
-//			
-//			Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("classHistoryCode").descending());
-//			
-//		
-//			
-//			Page<Mtm> classesList =  studentQnaRepository.findByMtm(pageable, modelMapper.map(member, Member.class));
-//			Page<Mtm> foundTeacherHistory = (Page<Mtm>) classesList.stream()
-//			        .filter(h -> h.getMember().getMemberCode() == member.getMemberCode()&& h.getMtmRefer() == (null))
-//			        .findFirst()
-//			        .orElseThrow(() -> new IllegalArgumentException());
-//			log.info(foundTeacherHistory.toString());
-//			Page<MtmDto> oriTeacherHistory = classesList.findByMtmCode(foundTeacherHistory, MtmDto.class)
-//				.orElseThrow(() -> new IllegalArgumentException("해당 강의이력이 없습니다. historyCode =" + foundTeacherHistory.getMtmCode()));
-//			
-//			Page<ClassesHistoryDto> classesDtoList = classesList.map(c -> modelMapper.map(c, ClassesHistoryDto.class));
-//			log.info("[AttachService] classesList : {}", classesList);
-//			
-//			Page<MtmDto> mtmtDtoList = classesDtoList.map(c -> modelMapper.map(c, MtmDto.class));
-//			log.info("[AttachService] classesDtoList : {}", classesDtoList);
-//			
-//			return mtmtDtoList;
-//		}
+		/* 2. 내강의 상세목록 조회 */
+		public OpenClassesDto selectMyclass(Long classCode) {
+			
+			log.info("[AttachService] selectMyclass Start==============================");
+			log.info("[AttachService] classCode : {}", classCode);
+			
+			OpenClasses openClasses = (studentClassesDetailRepository.findByClassCode(classCode))
+					.orElseThrow(()-> new IllegalArgumentException("해당 강좌가 없습니다. classCode =" + classCode));
+			OpenClassesDto openclassesDto = modelMapper.map(openClasses, OpenClassesDto.class);
+			
+			log.info("[AttachService] openclassesDto: " + openclassesDto);
+			
+			log.info("[AttachService] selectMyclass End==============================");
+			
+			
+			return openclassesDto;
+		}
+		
+
 		
 		/* qna 목록 조회*/
-		public Page<MtmDto> selectMtmList(Long classCode, int page, MemberDto member) {
+		public Page<MtmDto> selectMtmList(int page, MemberDto member) {
 			
 			
 			//Mtm orginMember = studentQnaRepository.findAll( member )
@@ -92,14 +90,18 @@ public class StudentClassesService {
 			
 			Long memberCode = member.getMemberCode();
 			log.info("멤버코드 : {} ", memberCode.toString());
-			log.info("강의코드 : {} ", classCode);
 			
-			Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmRefer").descending());
 			
-			Page<Mtm> mtmList = studentQnaRepository.findByMemberAndClasses(pageable, memberCode, classCode);
+			Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmDelete").descending());
+			Page<Mtm> mtmCode = studentQnaRepository.findAll(pageable);
+			Page<MtmDto> mtmCodeList = mtmCode.map(mtm -> modelMapper.map(mtm, MtmDto.class));
+			log.info("답변테스트 : {} ", mtmCodeList.getContent());
+			
+			
+			Page<Mtm> mtmList = studentQnaRepository.findByMember(pageable, modelMapper.map(member, Member.class));
 					
 			Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
-			log.info("상담내역조회 : {} ", mtmDtoList);
+			log.info("상담내역조회 : {} ", mtmDtoList.getContent());
 			
 			return mtmDtoList;
 		}
@@ -109,11 +111,12 @@ public class StudentClassesService {
 		public Mtm insertQnaRequest(MtmDto mtmDto, MemberDto memberDto) {
 		
 			
+			
 			if(mtmDto.getMtmCode() != null) {
 				Mtm origin = studentQnaRepository.findById(mtmDto.getMtmCode()).orElseThrow();
-				origin.setAnswerCode(origin.getAnswerCode() +1);
+				//origin.setAnswerCode(origin.getAnswerCode() +1);
 				mtmDto.setMtmCode(null);
-				mtmDto.setMtmRefer(origin.getMtmRefer());
+				
 			}
 			
 			return studentQnaRepository.save(modelMapper.map(mtmDto, Mtm.class));
@@ -139,7 +142,13 @@ public class StudentClassesService {
 			Mtm foundMtm = studentQnaRepository.findById(mtmDto.getMtmCode())
 					.orElseThrow(() -> new RuntimeException("존재하지 않는 글입니다."));
 			
-			foundMtm.update(mtmDto.getMtmTitle(), mtmDto.getMtmDescription());
+			foundMtm.update(mtmDto.getMtmTitle(), mtmDto.getMtmDescription(),
+					modelMapper.map(mtmDto.getReList(), Re.class),
+//					.stream()
+//					.map(reList -> modelMapper.map(reList,Re.class))
+//					.collect(Collectors.toList()),
+					modelMapper.map(mtmDto.getMember(), Member.class), 
+					modelMapper.map(mtmDto.getClasses(), OpenClasses.class));
 			
 			studentQnaRepository.save(foundMtm);
 			
@@ -155,7 +164,9 @@ public class StudentClassesService {
 			
 			return modelMapper.map(mtm, MtmDto.class);
 		}
+
 	
+		
 
 		
 	

@@ -34,44 +34,44 @@ public class MtmController {
 		this.mtmService = mtmService;
 	}
 	
-	//상담내역조회
-		@GetMapping("/qna/{classCode}")
-		public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page){
-			
-			Page <MtmDto> mtmDtoList = mtmService.selectMtmList(page,classCode);
-			
-			PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
-			ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
-			responseDtoWithPaging.setPageInfo(pageInfo);
-			responseDtoWithPaging.setData(mtmDtoList.getContent());
-			
-			return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
-		}
-	
-	
-	
-	//답글 작성
-	@PostMapping("/qnaReply")
-	public ResponseEntity<ResponseDto> insertQnaReply(@RequestBody MtmDto mtm, @AuthenticationPrincipal MemberDto member){
-		
-		mtm.setMember(member);
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 작성 성공", mtmService.insertQnaReply(mtm)));
-	}
-	
-	//답글 수정
-	@PutMapping("/qnaReply")
-	public ResponseEntity<ResponseDto> updateQnaReply(@RequestBody MtmDto mtmDto){
-		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 수정 성공", mtmService.updateQnaReply(mtmDto)));
-	}
-	
-	//답글 삭제
-	@DeleteMapping("/qnaReply/{mtmCode}")
-	public ResponseEntity<ResponseDto> deleteQnaReply(@PathVariable Long mtmCode){
-		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 삭제 성공", mtmService.deleteQnaReply(mtmCode)));
-	}
-	
+//	//상담내역조회
+//		@GetMapping("/qna/{classCode}")
+//		public ResponseEntity<ResponseDto> getMtmList(@PathVariable Long classCode, @RequestParam(name="page", defaultValue="1")int page){
+//			
+//			Page <MtmDto> mtmDtoList = mtmService.selectMtmList(page,classCode);
+//			
+//			PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
+//			ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+//			responseDtoWithPaging.setPageInfo(pageInfo);
+//			responseDtoWithPaging.setData(mtmDtoList.getContent());
+//			
+//			return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
+//		}
+//	
+//	
+//	
+//	//답글 작성
+//	@PostMapping("/qnaReply")
+//	public ResponseEntity<ResponseDto> insertQnaReply(@RequestBody MtmDto mtm, @AuthenticationPrincipal MemberDto member){
+//		
+//		mtm.setMember(member);
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 작성 성공", mtmService.insertQnaReply(mtm)));
+//	}
+//	
+//	//답글 수정
+//	@PutMapping("/qnaReply")
+//	public ResponseEntity<ResponseDto> updateQnaReply(@RequestBody MtmDto mtmDto){
+//		
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 수정 성공", mtmService.updateQnaReply(mtmDto)));
+//	}
+//	
+//	//답글 삭제
+//	@DeleteMapping("/qnaReply/{mtmCode}")
+//	public ResponseEntity<ResponseDto> deleteQnaReply(@PathVariable Long mtmCode){
+//		
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 삭제 성공", mtmService.deleteQnaReply(mtmCode)));
+//	}
+//	
 	
 	
 	
