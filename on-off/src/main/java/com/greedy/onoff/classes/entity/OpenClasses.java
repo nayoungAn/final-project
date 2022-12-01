@@ -84,6 +84,7 @@ public class OpenClasses {
 	private Long classStudents;
 
 
+
 	public void update(Long classCode, String className, Long classQuota, Long classPrice, Date classStartDate, Date classEndDate,
 			String classRoom, String classStatus, String classDescription, Long classStudents,
 			List<ClassesSchedule> classesScheduleList, Member member, Subject subject) {
@@ -106,6 +107,7 @@ public class OpenClasses {
 		
 	}
 	
+
 	
 	
 	}
