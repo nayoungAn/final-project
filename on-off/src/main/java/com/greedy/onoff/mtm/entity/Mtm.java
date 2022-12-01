@@ -2,13 +2,16 @@ package com.greedy.onoff.mtm.entity;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,10 +20,14 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.re.entity.Re;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+@ToString
 
 @NoArgsConstructor
 @Getter
@@ -56,20 +63,29 @@ public class Mtm {
 	@JoinColumn(name = "CLASS_CODE")
 	private OpenClasses classes;
 	
-	@Column(name = "MTM_REFER")
-    private Long mtmRefer;
-	
 	@Column(name = "ANSWER_CODE")
     private Long answerCode;
 	
 	@Column(name = "MTM_DELETE")
     private String mtmDelete;
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "MTM_CODE")
+	private Re reList;
 
-	public void update(String mtmTitle, String mtmDescription) {
+	public void update(String mtmTitle, String mtmDescription, Re reList, Member member, OpenClasses classes ) {
 		this.mtmTitle = mtmTitle;
 		this.mtmDescription = mtmDescription;
+		this.reList = reList;
+		this.member = member;
+		this.classes = classes;
 		
 	}
+
+	
+	
+
+	
 	
 
 }
