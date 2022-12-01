@@ -58,6 +58,11 @@ public class ClassesHistory {
 		this.openClasses = openClasses;
 		
 	}
+
+	public void update(String classStatus) {
+		this.classStatus = classStatus;
+		
+	}
 	
 
 	

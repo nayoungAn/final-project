@@ -2,6 +2,8 @@ package com.greedy.onoff.classes.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +28,13 @@ public class ClassesHistoryController {
 		this.classesHistoryService = classesHistoryService;
 	}
 	
-	
-	
+	/* 수강 이력 조회- classHistory로 수강이력 1개 조회, 상태 여부 'N' 포함 (관리자) */
+    @GetMapping("/classesHistory/{classHistoryCode}")
+    public ResponseEntity<ResponseDto> selectClassHistoryDetailForAdmin(@PathVariable Long classHistoryCode) {
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "수강 이력 상세정보 조회 성공",  
+        		classesHistoryService.selectClassHistoryDetailForAdmin(classHistoryCode)));
+    }
 	/* 수강 이력 등록 */
     @PostMapping("/classesHistory")
     public ResponseEntity<ResponseDto> insertClassHistory(@RequestBody ClassesHistoryDto classesHistoryDto) {

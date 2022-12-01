@@ -211,7 +211,7 @@ public class MemberService {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberDto.getMemberImage());
 				memberDto.setMemberImageUrl(replaceFileName);
-				
+				if(oriImage != null) 
 				/* 기존에 저장 된 이미지 삭제*/
 				FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
 
