@@ -1,6 +1,8 @@
 package com.greedy.onoff.classes.entity;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,9 +45,24 @@ public class ClassesHistory {
 	@Column(name = "CLASS_STATUS")
 	private String classStatus;
 	
+	@Column(name = "START_DATE")
+	private Date startDate;
+	
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_CODE")
 	private Member member;
+
+	public void update(String classStatus, Date startDate, OpenClasses openClasses) {
+		this.classStatus = classStatus;
+		this.startDate = startDate;
+		this.openClasses = openClasses;
+		
+	}
+
+	public void update(String classStatus) {
+		this.classStatus = classStatus;
+		
+	}
 	
 
 	

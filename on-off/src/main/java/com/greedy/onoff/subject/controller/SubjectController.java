@@ -66,7 +66,7 @@ public class SubjectController {
 		log.info("[SubjectController] selectSubjectListForAdminNopaging Start ================================");
 
 			
-		log.info("[SubjectController] selectSubjectListForAdmin End ================================");
+		log.info("[SubjectController] selectSubjectListForAdminNopaging End ================================");
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", subjectService.selectSubjectListForAdmin()));
 	}

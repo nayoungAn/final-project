@@ -80,6 +80,18 @@ public class ClassesService {
 
 
 
+	/*  강의 목록 조회 - 상태 'n' 제외 , 페이지 X (관리자) */
+	public List<OpenClassesDto> selectClassListForAdminNopaging() { 
+
+		List<OpenClasses> classList = classesRepository.findByClassStatus("개강");
+		List<OpenClassesDto> classDtoList = classList.stream()
+				.map(classes -> modelMapper.map(classes, OpenClassesDto.class)).collect(Collectors.toList());
+
+		log.info("[ClassesService] classDtoList End =====================");
+
+		return classDtoList;
+	}
+
 	/* 강의 상세 조회 - classCode로 강의 1개 조회, 상태 여부 'N' 포함 (관리자) */
 	public OpenClassesDto selectClassForAdmin(Long classCode) { 
         log.info("[ClassesService] selectClassForAdmin Start ===================================");
@@ -155,6 +167,8 @@ public class ClassesService {
 
 		return openClassesDto;
 	}
+
+
 
 
 	
