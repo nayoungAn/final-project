@@ -103,7 +103,7 @@ public class StudentManagerService {
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
 		
-		Page<Member> memberList = studentManagerRepository.findByMemberName(pageable, memberName);
+		Page<Member> memberList = studentManagerRepository.findByMemberNameContainsAndMemberRole(pageable, memberName, "ROLE_STUDENT");
 		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
 		/* 클라이언트 측에서 서버에 저장 된 이미지 요청 시 필요한 주소로 가공 */
 		memberDtoList.forEach(product -> product.setMemberImageUrl(IMAGE_URL + product.getMemberImageUrl()));
@@ -147,11 +147,11 @@ public class StudentManagerService {
 			oriStudent.studentUpdate(
 					memberDto.getMemberId(), 
 					memberDto.getMemberName(), 
+					memberDto.getMemberBirthday(),
+					memberDto.getMemberGender(),
+					memberDto.getMemberEmail(), 
 					memberDto.getMemberPhone(),  
 					memberDto.getMemberAddress(), 
-					memberDto.getMemberStatus(),
-					memberDto.getMemberEmail(), 
-					memberDto.getMemberRole(),
 					memberDto.getMemberImageUrl());
 			
 			studentManagerRepository.save(oriStudent);
@@ -175,6 +175,8 @@ public class StudentManagerService {
 		
 		log.info("[StudentService] signupStudent Start ============================");
 		log.info("[StudentService] memberDto : {}" + memberDto);
+		String imageName = UUID.randomUUID().toString().replace("-", "");
+		String replaceFileName = null;
 		
 		if(studentManagerRepository.findByMemberId(memberDto.getMemberId()) != null) {
 			log.info("[StudentService] 아이디가 중복 됩니다.");
@@ -186,13 +188,24 @@ public class StudentManagerService {
 			throw new DuplicateMemberEmailException("이메일이 중복 됩니다.");
 		}
 		
-		
-		memberDto.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
-		memberDto.setMemberRole("ROLE_STUDENT");
-		studentManagerRepository.save(modelMapper.map(memberDto, Member.class));
-		
-		
-		
+		try {
+			replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberDto.getMemberImage());
+			memberDto.setMemberImageUrl(replaceFileName);
+			log.info("[StudentService] replaceFileName : {}", replaceFileName);
+			
+			
+			memberDto.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
+			memberDto.setMemberRole("ROLE_STUDENT");
+			studentManagerRepository.save(modelMapper.map(memberDto, Member.class));
+	
+		} catch (IOException e) {
+			e.printStackTrace();
+			 try {
+				 FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}	 
+		}
 		
 		log.info("[StudentService] signupStudent End ============================");
 		return memberDto;

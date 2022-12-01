@@ -77,15 +77,15 @@ public class Member {
 		
 	}
 	
-	public void studentUpdate(String memberId, String memberName, String memberPhone,
-			String memberAddress, String memberStatus, String memberEmail, String memberRole, String memberImageUrl) {
+	public void studentUpdate(String memberId, String memberName, String memberBirthday, String memberGender,
+			String memberEmail, String memberPhone, String memberAddress, String memberImageUrl) {
 		this.memberId = memberId;
 		this.memberName = memberName;
+		this.memberBirthday = memberBirthday;
+		this.memberGender = memberGender;
+		this.memberEmail = memberEmail;
 		this.memberPhone = memberPhone;
 		this.memberAddress = memberAddress;
-		this.memberStatus = memberStatus;
-		this.memberEmail = memberEmail;
-		this.memberRole = memberRole;
 		this.memberImageUrl = memberImageUrl;
 	}
 

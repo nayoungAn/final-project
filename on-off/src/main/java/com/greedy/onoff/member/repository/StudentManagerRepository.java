@@ -9,7 +9,7 @@ import com.greedy.onoff.member.entity.Member;
 public interface StudentManagerRepository extends JpaRepository<Member, Long>{
 
 	/* 원생 이름 검색 */
-	Page<Member> findByMemberName(Pageable pageable, String studentName);
+	Page<Member> findByMemberNameContainsAndMemberRole(Pageable pageable, String memberName, String string);
 
 	/* 이메일 중복 확인 */
 	Member findByMemberEmail(String memberEmail);
