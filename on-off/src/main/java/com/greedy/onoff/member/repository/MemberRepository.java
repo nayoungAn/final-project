@@ -1,5 +1,6 @@
 package com.greedy.onoff.member.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -26,4 +27,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	/* 현재 등록하는 멤버 코드 값*/
 	@Query(value = "SELECT SEQ_MEMBER_CODE.currval FROM dual", nativeQuery = true)
     public Long getCurrvalMemberCodeSequence();
+
+	List<Member> findByMemberRole(String memberRole);
 }

@@ -1,5 +1,6 @@
 package com.greedy.onoff.classes.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -28,5 +29,7 @@ public interface ClassesRepository extends JpaRepository<OpenClasses, Long> {
 	/* 현재 등록하는 강의 코드 값*/
 	@Query(value = "SELECT SEQ_CLASSES_CODE.currval FROM dual", nativeQuery = true)
     public Long getCurrvalClassCodeSequence();
+
+	List<OpenClasses> findByClassStatus(String classStatus);
 	
 }

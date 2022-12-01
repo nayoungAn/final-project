@@ -129,11 +129,11 @@ public class MemberService {
 	}
 
 	
-	/* 강사 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+	/* 강사 목록 조회 -  상태 여부 'N'포함, 페이징 X (관리자)*/
 	public List<MemberDto> selectTeacherListForAdmin() {
 			
 
-			List<Member> memberList = memberRepository.findAll();
+			List<Member> memberList = memberRepository.findByMemberRole("ROLE_TEACHER");
 			List<MemberDto> memberDtoList = memberList.stream()
 			.map(member -> modelMapper.map(member, MemberDto.class))
 			.collect(Collectors.toList());
@@ -211,7 +211,7 @@ public class MemberService {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberDto.getMemberImage());
 				memberDto.setMemberImageUrl(replaceFileName);
-				
+				if(oriImage != null) 
 				/* 기존에 저장 된 이미지 삭제*/
 				FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
 

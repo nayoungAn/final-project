@@ -40,13 +40,17 @@ public class Attend {
 	@Column(name = "ATTEND_STATUS")
 	private String attendStatus;
 	
-	
-	@JoinColumn(name = "MEMBER_CODE")
+	@JoinColumn(name = "CLASS_HISTORY_CODE")
 	@ManyToOne
-	private ClassesHistory student;
+	private ClassesHistory historyCode;
 	
 	@JoinColumn(name = "CLASS_CODE")
 	@ManyToOne
 	private OpenClasses classes;
+
+	public void update(String attendStatus) {
+		this.attendStatus = attendStatus;
+		
+	}
 	
 }
