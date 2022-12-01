@@ -82,6 +82,8 @@ public interface StudentQnaRepository extends JpaRepository<Mtm, Long> {
 	
 	Page<Mtm> findAll(Pageable pageable);
 
+	Page<Mtm> findByMemberAndMtmDelete(Pageable pageable, Member member, String mtmdelete);
+
 	//Page<Mtm> findByMemberAndClassCode(Pageable pageable, Member member, Long classCode);
 
 

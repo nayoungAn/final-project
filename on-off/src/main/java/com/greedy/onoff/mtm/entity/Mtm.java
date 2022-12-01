@@ -1,6 +1,7 @@
 package com.greedy.onoff.mtm.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,7 +22,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.entity.Member;
-import com.greedy.onoff.re.dto.ReDto;
 import com.greedy.onoff.re.entity.Re;
 
 
@@ -73,14 +73,23 @@ public class Mtm {
 	@JoinColumn(name = "MTM_CODE")
 	private Re reList;
 
-	public void update(String mtmTitle, String mtmDescription, Re reList, Member member, OpenClasses classes ) {
+	public void update(Date mtmDate, String mtmTitle, String mtmDescription,
+			Long answerCode, String mtmDelete) {
+		
+		//this.mtmCode = mtmCode;
+		this.mtmDate = mtmDate;
 		this.mtmTitle = mtmTitle;
 		this.mtmDescription = mtmDescription;
-		this.reList = reList;
-		this.member = member;
-		this.classes = classes;
+		this.answerCode = answerCode;
+		this.mtmDelete = mtmDelete;
+		//this.reList = reList;
+		//this.member = member;
+		//this.classes = classes;
 		
-	}
+	};
+
+	
+
 
 	
 	
