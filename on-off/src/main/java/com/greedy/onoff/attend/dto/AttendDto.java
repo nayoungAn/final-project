@@ -13,7 +13,7 @@ public class AttendDto {
 	private Long attendCode;
 	private Date attendDate;
 	private String attendStatus;
-	private ClassesHistoryDto student;
+	private ClassesHistoryDto historyCode;
 	private OpenClassesDto classes;
 	
 }
