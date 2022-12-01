@@ -1,6 +1,6 @@
 package com.greedy.onoff.classes.dto;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import com.greedy.onoff.member.dto.MemberDto;

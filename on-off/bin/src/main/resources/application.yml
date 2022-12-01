@@ -15,7 +15,7 @@ spring:
       max-request-size: 10MB
   web:
     resources:
-      static-locations: classpath:/imgs/
+      static-locations: classpath:/memberimgs/
       
 # jpa config
   jpa:
@@ -30,7 +30,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: rhaehfdlvn91@gmail.com
-    password: 
+    password: vlndnalkpqxycarl
     properties:
       mail:
         smtp:
@@ -46,13 +46,13 @@ spring:
 # 이미지 저장할 위치와 응답 시 이미지 주소 설정
 image:
   # WebConfig에 세팅
-  add-resource-locations: classpath:/static/imgs/
+  add-resource-locations: classpath:/static/memberimgs/
   add-resource-handler: /memberimgs/**
   # ProductService에 세팅
-  image-dir: src/main/resources/static/imgs
-  image-url: http://localhost:8001/imgs/
+  image-dir: src/main/resources/static/memberimgs
+  image-url: http://localhost:8001/memberimgs/
 
 # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
 # Secret 값은 특정 문자열을 Base64 로 인코딩한 값 사용
 jwt:
-  secret:
+  secret: asdfjp298pafo1320efqw0udvnh0er0h412r08byfdq9dsvh02143908hfeqwn80fdqs0nfdqs0n412013rq0nqefn08dfas0das730732g86923

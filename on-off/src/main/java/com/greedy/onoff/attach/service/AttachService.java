@@ -1,18 +1,33 @@
 package com.greedy.onoff.attach.service;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+import java.util.UUID;
+
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.greedy.onoff.append.dto.AppendDto;
+import com.greedy.onoff.attach.dto.AttachDto;
+import com.greedy.onoff.attach.entity.Attach;
+import com.greedy.onoff.attach.repository.AttachRepository;
 import com.greedy.onoff.attach.repository.MyClassRepository;
 import com.greedy.onoff.attach.repository.StudentInfoRepository;
 import com.greedy.onoff.classes.dto.OpenClassesDto;
 import com.greedy.onoff.classes.entity.OpenClasses;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
+import com.greedy.onoff.util.FileUploadUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,11 +38,17 @@ public class AttachService {
 	private final MyClassRepository myclassRepository; 
 	private final StudentInfoRepository studentinfoRepository;
 	private final ModelMapper modelMapper;
+	private final AttachRepository attachRepository;
 	
-	public AttachService(MyClassRepository myclassRepository, ModelMapper modelMapper, StudentInfoRepository studentinfoRepository ) {
+	@Value("${file.file-dir}"+ "/attachfile")
+	private String FILE_DIR;
+	
+	public AttachService(MyClassRepository myclassRepository, ModelMapper modelMapper, StudentInfoRepository studentinfoRepository ,
+			AttachRepository attachRepository) {
 		this.myclassRepository = myclassRepository;
 		this.modelMapper = modelMapper;
 		this.studentinfoRepository = studentinfoRepository;
+		this.attachRepository = attachRepository;
 		
 	}
 	
@@ -73,16 +94,70 @@ public class AttachService {
 
 	
 	/*3. 강의 자료 공유 등록 */
-
-//	public Object attachRegist(OpenClassesDto openclassesDto) {
-//		
-//		
-//		
-//		return null;
-//	}
-
 	
+	@Transactional //트랜젝션 단위로 묶음  //AttachDto
+	public AttachDto attachRegist(AttachDto attachDto) {
+		
+		log.info("[AttachService] 첨부파일 등록 ===========================");
+		log.info("[AttachServcie] attachDto:{}", attachDto);
+		
+		
+		
+		//첨부파일
+		String fileName = UUID.randomUUID().toString().replace("-",""); //랜덤 유효 아이디 생성
+		List<String> replaceFilesName = null;
+		List<AppendDto> appendList = new ArrayList<AppendDto>();
+		
+		AppendDto appendDto = null; //추가
+		
+		String date = LocalDate.now().toString();
+		attachDto.setAttachDate(date);
+	  
+		//Long classCode = Attach.getOpenClasses().getClassCode();
+		
+		
+		
+		try {
+			
+			
+			replaceFilesName = FileUploadUtils.saveFiles(FILE_DIR, fileName, attachDto.getAppendFile());
+			
+			
+			//파일을 배열로 관리
+			for(String replaceFileName : replaceFilesName) {//
+				
+				appendDto = new AppendDto();//
+				
+				appendDto.setAppendSaveFile(replaceFileName);
+				
+				appendList.add(appendDto);//
+				
+			}
+			
+			attachDto.setAppendList(appendList);
+			
+			
+			attachRepository.save(modelMapper.map(attachDto, Attach.class));
 	
+			
+			
+		} catch (IOException e) {
+
+			e.printStackTrace();
+			
+		}
+		
+
+		log.info("[AttachService] 첨부파일 등록 종료  ==========================");
+
+		return attachDto;
+	}
+	
+
+
+
+
+
 	
 	/*7. 원생정보 조회 */
 
@@ -98,9 +173,6 @@ public class AttachService {
 		
 		return memberDtoList;
 	}
-
-
-
 
 
 
