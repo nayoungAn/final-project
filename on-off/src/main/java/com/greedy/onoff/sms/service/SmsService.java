@@ -26,22 +26,19 @@ public class SmsService {
 	}
 
 	/* 문자 전송대상 조회 */
-	public List<ClassesHistoryDto> selectSmsListForAdmin(SmsCriteria smsCriteria) {
+	public List<ClassesHistoryDto> selectSmsListForAdmin(String search) {
 		
 		log.info("[SmsService] smsClassList Start ============================");
 		
 		List<ClassesHistory> classesHistoryList = null; 
 		
-		if(smsCriteria.getClassName() != null) {
-			// 클래스명 기준으로 List<ClassesHistory> 조회
-			classesHistoryList = smsRepository.findByClassName(smsCriteria.getClassName());
+		if(search != null) {
+			// 클래스명, 멤버명 기준으로 List<ClassesHistory> 조회
+			classesHistoryList = smsRepository.findByClassName(search);
+			classesHistoryList = smsRepository.findByMemberName(search);
 			
 			log.info("[SmsService] classHistoryList : {}" , classesHistoryList);
 			
-		} else if (smsCriteria.getMemberName() != null) {
-			// 멤버이름 기준으로 List<ClassesHistory> 조회
-			
-			classesHistoryList = smsRepository.findByMemberName(smsCriteria.getMemberName());
 		}
 		
 		// entity -> dto 변환 후 반환
