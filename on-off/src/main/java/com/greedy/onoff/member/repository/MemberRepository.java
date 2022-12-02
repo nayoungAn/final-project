@@ -29,4 +29,6 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
     public Long getCurrvalMemberCodeSequence();
 
 	List<Member> findByMemberRole(String memberRole);
+
+	Member findByMemberCode(Long memberCode);
 }

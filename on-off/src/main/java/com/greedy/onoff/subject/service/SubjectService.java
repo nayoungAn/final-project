@@ -39,7 +39,7 @@ public class SubjectService {
 
 		log.info("[SubjectService] selectSubjectList Start =====================");
 
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("subjectCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 9, Sort.by("subjectCode").descending());
 
 		Page<Subject> subjectList = subjectRepository.findAll(pageable);
 		Page<SubjectDto> subjectDtoList = subjectList.map(subject -> modelMapper.map(subject, SubjectDto.class));

@@ -114,7 +114,7 @@ public class MemberService {
 		log.info("[MemberService] selectTeacherListForAdmin Start =====================" );
 
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("memberCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 9, Sort.by("memberCode").descending());
 
 		Page<Member> memberList = memberRepository.findByMemberRole(pageable,"ROLE_TEACHER");
 		Page<MemberDto> memberDtoList = memberList.map(member -> modelMapper.map(member, MemberDto.class));
