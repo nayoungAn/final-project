@@ -33,7 +33,7 @@ public class SmsService {
 		List<ClassesHistory> classesHistoryList = null; 
 		
 		if(search != null) {
-			// 클래스명 기준으로 List<ClassesHistory> 조회
+			// 클래스명, 멤버명 기준으로 List<ClassesHistory> 조회
 			classesHistoryList = smsRepository.findByClassName(search);
 			classesHistoryList = smsRepository.findByMemberName(search);
 			
