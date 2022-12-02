@@ -1,6 +1,8 @@
 package com.greedy.onoff.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ import com.greedy.onoff.common.paging.PagingButtonInfo;
 import com.greedy.onoff.common.paging.ResponseDtoWithPaging;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.mtm.dto.MtmDto;
+import com.greedy.onoff.notice.dto.NoticeDto;
 import com.greedy.onoff.student.service.StudentClassesService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,11 +50,54 @@ public class StudentClassesController {
 		
 		log.info("[AttachController] myinfoForMember Start=================================" );
 		log.info("[AttachController] member :{}", Member);
+		Long memberCode = Member.getMemberCode();
+		// 원생 상세 정보 조회
+		MemberDto member = studentClassesService.selectStudent(memberCode);
+		
+		// 듣고있는 강의 목록 조회
+		List<ClassesHistoryDto> classesList = studentClassesService.studentClassList(member.getMemberCode(), member);
+		
+
+		Map<String, Object> data = new HashMap<>();
+		data.put("lectureList", classesList);
+		data.put("memberInfo", member);
 		log.info("[AttachController] myinfoForMember End===================================" );
 		
-		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생정보 조회 성공", Member));
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생정보 조회 성공", data));
+	}
+	
+	/* 1-2 원생 정보 수정 */
+	@PutMapping("/memberinfoUpdate")
+	public ResponseEntity<ResponseDto> updateStudent(@ModelAttribute MemberDto memberDto) {
+		log.info("[AttachController] updateStudent Start=================================" );
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생정보 수정 완료", studentClassesService.updateStudent(memberDto)));
+	}
 	
 	
+	/* 공지 검색 목록 조회 - 공지명 검색 기준, 페이징(원생) */
+	@GetMapping("/memberclass/notice/search")
+	public ResponseEntity<ResponseDto> selectSearchList
+		(@RequestParam(name="page", defaultValue="1") int page, @RequestParam(name="search") String noticeName) {
+		
+		log.info("[SubjectController] selectSearchList Start ================================");
+		log.info("[SubjectController] page : {}", page);
+		log.info("[SubjectController] noticeName : {}", noticeName);
+		
+		Page<NoticeDto> subjectDtoList = studentClassesService.selectNoticeListByNoticeName(page, noticeName);
+		
+		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(subjectDtoList);
+		 
+		log.info("[SubjectController] pageInfo : {}", pageInfo);
+		
+		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
+		responseDtoWithPaging.setPageInfo(pageInfo);
+		responseDtoWithPaging.setData(subjectDtoList.getContent());
+		
+		log.info("[SubjectController] selectSearchList End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
+
 	}
 	
 	
@@ -105,12 +151,13 @@ public class StudentClassesController {
 	
 	
 	/* 5. 내 상담신청 목록조회(원생) - 페이징 , 로그인한 멤버의 상담 신청 내역 조회  */
-	@GetMapping("/memberclass/qna")
-	public ResponseEntity<ResponseDto> getMtmList(@RequestParam(name="page", defaultValue="1")int page,@AuthenticationPrincipal MemberDto Member ){
-			
+	@GetMapping("/memberclass/qna/search")
+	public ResponseEntity<ResponseDto> getMtmList(@RequestParam(name="page", defaultValue="1")int page,@AuthenticationPrincipal MemberDto Member
+			, @RequestParam(name="search") String noticeName){
+		log.info("검색값 : {} ", noticeName);
 		Long memberCode = Member.getMemberCode();
 		log.info("멤버코드 : {} ", Member.getMemberCode());
-		Page <MtmDto> mtmDtoList = studentClassesService.selectMtmList(page, Member);
+		Page <MtmDto> mtmDtoList = studentClassesService.selectMtmList(page, Member, noticeName);
 		log.info("상담내역조회 : {} ", mtmDtoList);
 		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(mtmDtoList);
 		ResponseDtoWithPaging responseDtoWithPaging = new ResponseDtoWithPaging();
@@ -119,8 +166,6 @@ public class StudentClassesController {
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "상담 신청 목록 조회 성공", responseDtoWithPaging));
 	}
-	
-	
 	
 	
 		//1:1상담 상세조회

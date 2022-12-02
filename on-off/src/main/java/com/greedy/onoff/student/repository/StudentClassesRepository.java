@@ -26,14 +26,10 @@ public interface StudentClassesRepository extends JpaRepository<ClassesHistory, 
 	Optional<OpenClasses> findByClassCode(Long classCode);
 
 	/* 내강의 목록 조회 - 노페이징*/
-	
-//	@Query("SELECT m.className " + 
-//			"FROM ClassHistory m " +
-//			"WHERE m.member.memberCode = :memberCode" +
-//			"AND m.classStatus = :classStatus" 
-//			
-//			)
 	List<ClassesHistory> findByMemberMemberCodeAndClassStatus(Long memberCode, String classStatus);
+
+
+	List<ClassesHistory> findByMember(Member member);
 
 
 

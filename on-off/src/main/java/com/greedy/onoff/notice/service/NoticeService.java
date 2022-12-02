@@ -35,13 +35,13 @@ public class NoticeService {
 	}
 	
 	/* 1. 공지사항 목록 조회 */
-	public Page<NoticeDto> selectNoticeList(int page) {
+	public Page<NoticeDto> selectNoticeList(int page, String noticeName) {
 		
 		log.info("[NoticeService] selectNoticeList Start ===================================");
 		
 		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("noticeCode").descending());
 		
-		Page<Notice> noticeList = noticeRepository.findAll(pageable);
+		Page<Notice> noticeList = noticeRepository.findByNoticeTitleContains(pageable, noticeName);
 		Page<NoticeDto> noticeDtoList = noticeList.map(notice -> modelMapper.map(notice, NoticeDto.class));
 		
 		log.info("[NoticeService] NoticeList : {}", noticeDtoList.getContent());
