@@ -11,11 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 import com.greedy.onoff.member.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long>{
-
-	Member findByMemberEmail(String memberEmail);
-
-    Optional <Member> findByMemberId(String memberId);
-
+	
+	
+	/*memberId로 조회*/
+	Optional <Member> findByMemberId(String memberId);
+	
 	Optional<Member>findByMemberIdAndMemberEmail(String memberId, String memberEmail);
 
 	Optional<Member> findByMemberNameAndMemberEmail(String memberEmail, String memberName);
@@ -29,4 +29,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
     public Long getCurrvalMemberCodeSequence();
 
 	List<Member> findByMemberRole(String memberRole);
+
+
+
 }
