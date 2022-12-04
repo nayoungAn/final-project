@@ -44,7 +44,7 @@ public class ClassesService {
 		
 		log.info("[ClassesService] selectClassListForAdmin Start =====================" );
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("classCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 9, Sort.by("classCode").descending());
 		
 		Page<OpenClasses> classList = classesRepository.findAll(pageable);
 		Page<OpenClassesDto> classDtoList = classList.map(OpenClasses -> modelMapper.map(OpenClasses, OpenClassesDto.class));
@@ -66,7 +66,7 @@ public class ClassesService {
 		
 		log.info("[ClassesService] selectClassListByClassName Start =====================" );
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("classCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 9, Sort.by("classCode").descending());
 		
 		Page<OpenClasses> classList = classesRepository.findByClassNameContains(pageable, className);
 		Page<OpenClassesDto> classDtoList = classList.map(OpenClasses -> modelMapper.map(OpenClasses, OpenClassesDto.class));

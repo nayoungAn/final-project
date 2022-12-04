@@ -68,7 +68,7 @@ public class SubjectService {
 
 		log.info("[SubjectService] selectSubjectListBySubjectName Start =====================");
 
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("subjectCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 9, Sort.by("subjectCode").descending());
 
 		Page<Subject> subjectList = subjectRepository.findBySubjectNameContains(pageable, subjectName);
 		Page<SubjectDto> subjectDtoList = subjectList.map(subject -> modelMapper.map(subject, SubjectDto.class));
@@ -100,11 +100,16 @@ public class SubjectService {
 
 		log.info("[SubjectService] insertSubject Start ===================================");
 		log.info("[SubjectService] subjectDto : {}", subjectDto);
-
-		subjectRepository.save(modelMapper.map(subjectDto, Subject.class));
-
+		Subject subject = subjectRepository.findBySubjectName(subjectDto.getSubjectName());
+				
+		if(subject == null) {
+			subjectRepository.save(modelMapper.map(subjectDto, Subject.class));
+		}
+		else {
+	
+			return subjectDto;
+		}
 		log.info("[SubjectService] insertSubject End ===================================");
-
 		return subjectDto;
 	}
 
