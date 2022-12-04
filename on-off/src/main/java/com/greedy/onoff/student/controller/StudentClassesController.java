@@ -150,12 +150,12 @@ public class StudentClassesController {
 	}
 	
 	
-	/* 5. 내 상담신청 목록조회(원생) - 페이징 , 로그인한 멤버의 상담 신청 내역 조회  */
+	/* 5. 내 상담신청 목록조회(원생) - 페이징 , 로그인한 멤버의 상담 신청 내역 조회, 검색  */
 	@GetMapping("/memberclass/qna/search")
 	public ResponseEntity<ResponseDto> getMtmList(@RequestParam(name="page", defaultValue="1")int page,@AuthenticationPrincipal MemberDto Member
 			, @RequestParam(name="search") String noticeName){
+		
 		log.info("검색값 : {} ", noticeName);
-		Long memberCode = Member.getMemberCode();
 		log.info("멤버코드 : {} ", Member.getMemberCode());
 		Page <MtmDto> mtmDtoList = studentClassesService.selectMtmList(page, Member, noticeName);
 		log.info("상담내역조회 : {} ", mtmDtoList);

@@ -125,19 +125,11 @@ public class StudentClassesService {
 		public Page<MtmDto> selectMtmList(int page, MemberDto member, String noticeName) {
 			
 			
-			//Mtm orginMember = studentQnaRepository.findAll( member )
-					//.orElseThrow(() -> new UserNotFoundException(member + "를 찾을 수 없습니다."));
-			
 			Long memberCode = member.getMemberCode();
 			log.info("멤버코드 : {} ", memberCode.toString());
 			
 			
 			Pageable pageable = PageRequest.of(page -1, 10, Sort.by("mtmDelete").descending());
-//			Page<Mtm> mtmCode = studentQnaRepository.findByMtmTitleContains(pageable, noticeName);
-//			Page<MtmDto> mtmCodeList = mtmCode.map(mtm -> modelMapper.map(mtm, MtmDto.class));
-//			log.info("답변테스트 : {} ", mtmCodeList.getContent());
-//			
-			
 			Page<Mtm> mtmList = studentQnaRepository.findByMemberAndMtmDeleteAndMtmTitleContains(pageable, modelMapper.map(member, Member.class),"N",noticeName);
 					
 			Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
@@ -185,25 +177,15 @@ public class StudentClassesService {
 		
 			
 			foundMtm.update(
-					//mtmDto.getMtmCode(), 
 					mtmDto.getMtmDate(), 
 					mtmDto.getMtmTitle(), 
 					mtmDto.getMtmDescription(), 
 					mtmDto.getAnswerCode(),
 					mtmDto.getMtmDelete()
-					//modelMapper.map(mtmDto.getMember(), Member.class), 
-					//modelMapper.map(mtmDto.getClasses(), OpenClasses.class)
 					);
 			
 			studentQnaRepository.save(foundMtm);
 			
-			
-			
-			//Re reList = studentReRepository.findByMtmMtmCode(null);
-			//log.info("[StudentClassesService] Re : {}", reList);
-			
-			//studentReRepository.deleteById(reList.getMtmCode());
-		
 			log.info("[StudentClassesService] updateQnaRequest End ===================================");
 			
 			return mtmDto;
