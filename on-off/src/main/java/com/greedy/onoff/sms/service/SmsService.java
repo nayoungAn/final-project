@@ -25,7 +25,7 @@ public class SmsService {
 		this.modelMapper = modelMapper;
 	}
 
-	/* 문자 전송대상 조회 */
+	/* 문자 전송 대상 조회 */
 	public List<ClassesHistoryDto> selectSmsListForAdmin(String search) {
 		
 		log.info("[SmsService] smsClassList Start ============================");
