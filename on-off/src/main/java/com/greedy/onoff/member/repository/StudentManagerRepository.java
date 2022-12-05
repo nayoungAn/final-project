@@ -24,6 +24,10 @@ public interface StudentManagerRepository extends JpaRepository<Member, Long>{
 
 	List<Member> findByMemberRole(String memberRole);
 
+	/* 아이디 중복 확인 */
+	Boolean existsByMemberId(String memberId);
 
+	/* 이메일 중복 확인 */
+	Boolean existsByMemberEmail(String memberEmail);
 	
 }
