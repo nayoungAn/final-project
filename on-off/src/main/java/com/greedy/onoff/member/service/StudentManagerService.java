@@ -76,7 +76,7 @@ public class StudentManagerService {
 	  MemberDto memberDto = modelMapper.map(studentManagerRepository.findById(memberCode)
 	  .orElseThrow(() -> new RuntimeException("존재하지 않는 회원입니다.")), MemberDto.class);
 	  
-	
+	  memberDto.setMemberImageUrl(IMAGE_URL + memberDto.getMemberImageUrl());
 	  log.info("[StudentService] selectStudent End ============================");
 	  
 	  return memberDto;
