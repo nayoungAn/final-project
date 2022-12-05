@@ -3,10 +3,10 @@ package com.greedy.onoff.attach.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -76,7 +76,7 @@ public class AttachService {
 	
 	/*2. 내강의 정보 상세 조회 */
 
-	public OpenClassesDto selectMyclass(Long classCode) {
+	public Map<String, Object> selectMyclass(Long classCode) {
 		
 		log.info("[AttachService] selectMyclass Start==============================");
 		log.info("[AttachService] classCode : {}", classCode);
@@ -85,12 +85,18 @@ public class AttachService {
 				.orElseThrow(()-> new IllegalArgumentException("해당 강좌가 없습니다. classCode =" + classCode));
 		OpenClassesDto openclassesDto = modelMapper.map(openClasses, OpenClassesDto.class);
 		
+		List<AttachDto> attachList = attachRepository.findByOpenClasses(classCode).stream().map(at -> modelMapper.map(at, AttachDto.class)).toList();
+		
+		Map<String, Object> detail = new HashMap<>();
+		detail.put("openClasses", openclassesDto);
+		detail.put("attachList", attachList);
+	
 		log.info("[AttachService] openclassesDto: " + openclassesDto);
 		
 		log.info("[AttachService] selectMyclass End==============================");
 		
 		
-		return openclassesDto;
+		return detail;
 	}
 
 	
