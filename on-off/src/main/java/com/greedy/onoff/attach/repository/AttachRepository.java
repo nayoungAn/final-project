@@ -15,6 +15,9 @@ import com.greedy.onoff.classes.dto.OpenClassesDto;
 
 public interface AttachRepository extends JpaRepository<Attach, String> {
 
+	@Query("select a from Attach a where a.openClasses.classCode =:classCode")
+	List<Attach> findByOpenClasses(@Param("classCode")Long classCode);
+
 //	OpenClasses findByattachSearch(Long classCode);
 //public interface AttachRepository extends JpaRepository<AttachDto, Long> {
 	

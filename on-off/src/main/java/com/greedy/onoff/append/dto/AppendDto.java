@@ -18,7 +18,7 @@ public class AppendDto {
 	
 	private String appendSaveFile;
 	private String appendPath;
-	private String appendType;
+//	private String appendType;
 	private String appendSort;
 	private Long classCode;	
 	private Long memberCode;

@@ -48,8 +48,8 @@ public class Append {
 	@Column(name = "APPEND_PATH")
 	private String appendPath;
 	
-	@Column(name = "APPEND_TYPE")
-	private String appendType;
+//	@Column(name = "APPEND_TYPE")
+//	private String appendType;
 	
 	//@ManyToOne
 	@Column(name = "ATTACH_CODE")
