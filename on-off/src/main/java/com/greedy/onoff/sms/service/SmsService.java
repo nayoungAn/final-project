@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.greedy.onoff.classes.dto.ClassesHistoryDto;
 import com.greedy.onoff.classes.entity.ClassesHistory;
-import com.greedy.onoff.sms.dto.SmsCriteria;
 import com.greedy.onoff.sms.repository.SmsRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +48,18 @@ public class SmsService {
 		
 		return classesHistoryDtoList;
 	}
+
+//	/* 문자 전송 */
+//	
+//	public String uploadFile(File file, StorageType mms, Object object) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public SingleMessageSentResponse sendOne(SingleMessageSentResponse singleMessageSentResponse) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 	
 	
