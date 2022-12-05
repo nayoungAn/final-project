@@ -37,12 +37,12 @@ private final NoticeService noticeService;
 	
 	/* 1. 공지사항 목록 조회 (페이징) */
 	@GetMapping("/notice")
-	public ResponseEntity<ResponseDto> selectNoticeList(@RequestParam(name="page", defaultValue="1") int page) {
+	public ResponseEntity<ResponseDto> selectNoticeList(@RequestParam(name="page", defaultValue="1") int page,@RequestParam(name="search") String noticeName) {
 		
 		log.info("[NoticeController] selectNoticeList Start ===============================");
 		log.info("[NoticeController] page : {}", page);
 		
-		Page<NoticeDto> NoticeDtoList = noticeService.selectNoticeList(page);
+		Page<NoticeDto> NoticeDtoList = noticeService.selectNoticeList(page, noticeName);
 		
 		PagingButtonInfo pageInfo = Pagenation.getPagingButtonInfo(NoticeDtoList);
 		

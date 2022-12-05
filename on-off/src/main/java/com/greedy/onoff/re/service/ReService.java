@@ -1,26 +1,25 @@
 package com.greedy.onoff.re.service;
 
+import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.greedy.onoff.mtm.dto.MtmDto;
 import com.greedy.onoff.mtm.entity.Mtm;
 import com.greedy.onoff.mtm.repository.MtmRepository;
 import com.greedy.onoff.re.dto.ReDto;
 import com.greedy.onoff.re.entity.Re;
 import com.greedy.onoff.re.repository.ReRepository;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class ReService {
+
 	
 	private final ModelMapper modelMapper;
 	private final ReRepository reRepository;
@@ -42,8 +41,6 @@ public class ReService {
 		 Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
 		log.info("상담내역조회 : {} ", mtmDtoList);
 		
-		//List<Mtm> mtmList = mtmRepository.findByClassCode(classCode, (page - 1) * 10, 10);
-		//log.info("mtmList : {} ", mtmList);
 		return mtmDtoList;
 	}
 

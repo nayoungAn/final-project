@@ -31,5 +31,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>{
 	List<Member> findByMemberRole(String memberRole);
 
 
+	Member findByMemberCode(Long memberCode);
+
 
 }

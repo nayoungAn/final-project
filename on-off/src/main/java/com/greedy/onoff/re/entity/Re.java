@@ -1,5 +1,7 @@
 package com.greedy.onoff.re.entity;
 
+
+
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -23,14 +25,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "TBL_RE")
 @DynamicInsert
-/*@SequenceGenerator(name = "RE_SEQ_GENERATOR", 
-sequenceName = "SEQ_RE_CODE", 
-initialValue = 1, allocationSize = 1)*/
 public class Re {
 	
 	@Id
 	@Column(name = "RE_CODE")
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RE_SEQ_GENERATOR")
+
     private Long reCode;
 
 	@Column(name = "RE_TITLE")
@@ -41,6 +40,7 @@ public class Re {
 
 	@Column(name = "RE_DATE")
     private Date reDate;
+
 	
 	@Column(name = "RE_STATUS")
     private String reStatus;
@@ -51,6 +51,7 @@ public class Re {
 	
 	@Column(name = "MTM_CODE")
     private Long mtmCode;
+	
 
 	public void update(String reTitle, String reContent) {
 		this.reTitle = reTitle;
@@ -58,5 +59,5 @@ public class Re {
 		
 	}
 	
-	
 }
+
