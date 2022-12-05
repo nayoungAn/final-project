@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.greedy.onoff.acc.dto.AccDto;
 import com.greedy.onoff.acc.entity.Acc;
 import com.greedy.onoff.acc.repository.AccRepository;
+import com.greedy.onoff.member.dto.MemberDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,20 +31,22 @@ public class AccService {
 	}
 	
 	/* 수납 내역 조회 */
-	public Page<AccDto> selectAccListForAdmin(int page) {
+	public Page<AccDto> selectAccListByAccStatus(int page, String accStatus) {
 		
-		log.info("[AccService] selectAccListForAdmin Start ====================");
+		log.info("[AccService] selectAccListByAccStatus Start ====================");
 		
 		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("accCode").descending());
-		Page<Acc> accList = accRepository.findAll(pageable);
+		
+		Page<Acc> accList = accRepository.findByAccStatusContains(pageable, accStatus);
 		Page<AccDto> accDtoList = accList.map(acc -> modelMapper.map(acc, AccDto.class));
 		
-		log.info("[AccService] accDtoList : {}", accDtoList.getContent());
+		log.info("[AccService] AccDtoList : {}", accDtoList.getContent());
 		
-		log.info("[AccService] selectAccListForAdmin End ====================");
+		log.info("[AccService] selectAccListByAccStatus End ====================");
 		
 		return accDtoList;
 	}
+	
 
 	/* 수납 내역 상세 조회 */
 	public Object selectAccForAdmin(Long accCode) {
@@ -80,5 +83,7 @@ public class AccService {
 		
 		return accDto;
 	}
+
+	
 
 }

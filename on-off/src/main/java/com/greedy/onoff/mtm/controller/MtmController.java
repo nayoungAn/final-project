@@ -77,7 +77,10 @@
 //		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 삭제 성공", mtmService.deleteQnaReply(mtmCode)));
 //	}
 //	
-//	
-//	
-//	
-//}
+
+
+	
+	
+	
+}
+

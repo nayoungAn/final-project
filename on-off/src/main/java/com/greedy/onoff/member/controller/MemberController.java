@@ -101,6 +101,7 @@ public class MemberController {
         		memberService.selectTeacherForAdmin(memberCode)));
     }
     
+    /* 강사 등록 */
 	@PostMapping("/teachers")
 	public ResponseEntity<ResponseDto> teacherRegister(@ModelAttribute MemberDto memberDto){
 		
