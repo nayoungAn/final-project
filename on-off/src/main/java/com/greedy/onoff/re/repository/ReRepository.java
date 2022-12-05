@@ -7,8 +7,6 @@ import com.greedy.onoff.re.entity.Re;
 public interface ReRepository extends JpaRepository<Re, Long>{
 
 
-
-
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;

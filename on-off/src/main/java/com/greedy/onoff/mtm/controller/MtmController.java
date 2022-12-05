@@ -53,7 +53,6 @@
 //		
 //		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "상세조회 성공", mtmService.selectMtmDetail(mtmCode)));
 //	}
-
 //	
 //	
 //	//답글 작성
@@ -79,13 +78,9 @@
 //	}
 //	
 
+
 	
 	
 	
 }
-
-//	
-//	
-//	
-//}
 

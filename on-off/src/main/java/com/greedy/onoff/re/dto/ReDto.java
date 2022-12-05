@@ -1,6 +1,8 @@
 package com.greedy.onoff.re.dto;
 
+
 import java.sql.Date;
+
 
 import com.greedy.onoff.member.dto.MemberDto;
 
@@ -12,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class ReDto {
 	
+
   	private Long reCode;
     private String reTitle;
     private String reContent;
@@ -19,6 +22,7 @@ public class ReDto {
     private String reStatus;
     private MemberDto member;
     private Long mtmCode;
+
 
 
 }
