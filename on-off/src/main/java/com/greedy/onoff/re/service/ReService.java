@@ -42,8 +42,6 @@ public class ReService {
 		 Page<MtmDto> mtmDtoList = mtmList.map(mtm -> modelMapper.map(mtm, MtmDto.class));
 		log.info("상담내역조회 : {} ", mtmDtoList);
 		
-		//List<Mtm> mtmList = mtmRepository.findByClassCode(classCode, (page - 1) * 10, 10);
-		//log.info("mtmList : {} ", mtmList);
 		return mtmDtoList;
 	}
 

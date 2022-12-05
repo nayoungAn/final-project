@@ -20,6 +20,4 @@ public class ReDto {
     private String reStatus;
     private MemberDto member;
     private Long mtmCode;
-
-
 }

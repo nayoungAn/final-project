@@ -62,7 +62,7 @@ public class SecurityConfig {
 		             .authorizeRequests()
 		             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		             .antMatchers("/auth/**").permitAll()
-		             .antMatchers("/ono/**").hasAnyRole("TEACHER", "ADMIN", "STUDENT")  
+		             .antMatchers("/ono/**").hasAnyRole("TEACHER", "ADMIN", "STUDENT")
 		         .and()
 		         	.cors()
 		         .and()
