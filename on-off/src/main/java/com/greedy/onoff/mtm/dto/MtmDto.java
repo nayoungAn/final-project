@@ -2,8 +2,16 @@ package com.greedy.onoff.mtm.dto;
 
 
 import java.util.Date;
+import java.util.List;
+
+
+import java.util.Date;
 import com.greedy.onoff.classes.dto.OpenClassesDto;
 import com.greedy.onoff.member.dto.MemberDto;
+
+import com.greedy.onoff.mtm.entity.Mtm;
+
+
 import com.greedy.onoff.re.dto.ReDto;
 
 import lombok.Data;

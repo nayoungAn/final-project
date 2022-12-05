@@ -32,7 +32,7 @@ public class ConsService {
 		this.modelMapper = modelMapper;
 		
 	}
-	/* 1. 등록상담 조회 */
+	/* 1. 등록상담 상세조회 */
 	@Transactional
 	public ConsDto selectMyInfo(Long consCode) {
 		log.info("[ConsService] selectMyInfo Start ===========================");

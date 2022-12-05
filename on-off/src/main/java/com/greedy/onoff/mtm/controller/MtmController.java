@@ -53,6 +53,7 @@
 //		
 //		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "상세조회 성공", mtmService.selectMtmDetail(mtmCode)));
 //	}
+
 //	
 //	
 //	//답글 작성
@@ -77,7 +78,14 @@
 //		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "답변 삭제 성공", mtmService.deleteQnaReply(mtmCode)));
 //	}
 //	
+
+	
+	
+	
+}
+
 //	
 //	
 //	
 //}
+

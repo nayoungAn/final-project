@@ -1,5 +1,15 @@
 package com.greedy.onoff.re.entity;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -26,6 +36,7 @@ import lombok.Setter;
 /*@SequenceGenerator(name = "RE_SEQ_GENERATOR", 
 sequenceName = "SEQ_RE_CODE", 
 initialValue = 1, allocationSize = 1)*/
+
 public class Re {
 	
 	@Id
@@ -51,6 +62,9 @@ public class Re {
 	
 	@Column(name = "MTM_CODE")
     private Long mtmCode;
+	
+	
+}
 
 	public void update(String reTitle, String reContent) {
 		this.reTitle = reTitle;
