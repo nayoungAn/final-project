@@ -16,6 +16,8 @@ import com.greedy.onoff.mtm.entity.Mtm;
 
 public interface MtmRepository extends JpaRepository<Mtm, Long>{
 
+	
+
 
 
 //	Optional<Mtm> findByMtmCodeAndMtmReferAndAnswerCode(Long mtmCode, Long mtmRefer, Long answerCode);
@@ -32,13 +34,13 @@ public interface MtmRepository extends JpaRepository<Mtm, Long>{
 //	Mtm findByMtmCode(Long mtmCode);
 //
 //
-//	@Query("SELECT m " + 
-//			"FROM Mtm m " +
-//			"WHERE m.mtmDelete = 'N'" +
-//			"AND m.classes.classCode = :classCode"
-//			)
-//	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
-//
+	@Query("SELECT m " + 
+			"FROM Mtm m " +
+			"WHERE m.mtmDelete = 'N'" +
+			"AND m.classes.classCode = :classCode"
+			)
+	Page<Mtm> findByClassCode(Pageable pageable, Long classCode);
+
 
 
 	
