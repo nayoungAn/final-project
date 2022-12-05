@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -60,7 +61,7 @@ public class AttachService {
 		
 		
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("classCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 8, Sort.by("classCode").descending());
 		
 		Page<OpenClasses> classesList = myclassRepository.findByMember(pageable, modelMapper.map(teacher, Member.class));
 		
@@ -96,10 +97,10 @@ public class AttachService {
 	/*3. 강의 자료 공유 등록 */
 	
 	@Transactional //트랜젝션 단위로 묶음  //AttachDto
-	public AttachDto attachRegist(AttachDto attachDto) {
+	public AttachDto attachRegist(AttachDto attach) {
 		
 		log.info("[AttachService] 첨부파일 등록 ===========================");
-		log.info("[AttachServcie] attachDto:{}", attachDto);
+		log.info("[AttachServcie] attachDto:{}", attach);
 		
 		
 		
@@ -108,36 +109,36 @@ public class AttachService {
 		List<String> replaceFilesName = null;
 		List<AppendDto> appendList = new ArrayList<AppendDto>();
 		
-		AppendDto appendDto = null; //추가
+		AppendDto appendDto = null; 
 		
 		String date = LocalDate.now().toString();
-		attachDto.setAttachDate(date);
-	  
-		//Long classCode = Attach.getOpenClasses().getClassCode();
-		
-		
+		attach.setAttachDate(date);
+
 		
 		try {
 			
-			
-			replaceFilesName = FileUploadUtils.saveFiles(FILE_DIR, fileName, attachDto.getAppendFile());
+			replaceFilesName = FileUploadUtils.saveFiles(FILE_DIR, fileName, attach.getAppendFile());
 			
 			
 			//파일을 배열로 관리
-			for(String replaceFileName : replaceFilesName) {//
+			for(String replaceFileName : replaceFilesName) {
 				
-				appendDto = new AppendDto();//
+				appendDto = new AppendDto();
 				
 				appendDto.setAppendSaveFile(replaceFileName);
 				
-				appendList.add(appendDto);//
+				appendDto.setAppendPath(fileName);//파일네임 전달
+				
+				
+				
+				appendList.add(appendDto);
 				
 			}
 			
-			attachDto.setAppendList(appendList);
+			attach.setAppendList(appendList);
 			
-			
-			attachRepository.save(modelMapper.map(attachDto, Attach.class));
+			//강의자료 저장
+			attachRepository.save(modelMapper.map(attach, Attach.class));
 	
 			
 			
@@ -150,12 +151,56 @@ public class AttachService {
 
 		log.info("[AttachService] 첨부파일 등록 종료  ==========================");
 
-		return attachDto;
+		return attach;
 	}
 	
 
 
+	
+	/*4. 강의자료 조회*/
 
+
+//	public AttachDto findByattachSearch(OpenClassesDto classCode) {
+//		
+//		log.info("[attachSearch] attachSearchList Start=====================================");
+//		
+//		log.info("[attachSearch] openclassesDto:{}", classCode  );
+//		
+//		OpenClassesDto attachSearchList = null;
+//		
+//		attachSearchList = attachRepository.findByattachSearchList(classCode.getClassCode());
+//		
+////		OpenClasses openClasses = (myclassRepository.findByclassCode(classCode))
+////				.orElseThrow(()-> new IllegalArgumentException("해당 강좌가 없습니다. classCode =" + classCode));
+////		OpenClassesDto openclassesDto = modelMapper.map(openClasses, OpenClassesDto.class);
+//		
+//		
+//		
+////		AttachDto attachList = attachSearchList.stream().map(attach -> modelMapper.map(attach,AttachDto.class ))
+////			.collect(Collectors.toList());
+//		log.info("[attachSearch] attachSearhList End========================================");	
+//		
+//		return attachSearchList;
+//	}
+	
+	
+//	
+//	/*현재 작업중*/
+//	public attachDto findByattachSearch(Long classCode) {
+//		
+//		log.info("[attachSearch] attachSearchList Start=====================================");
+//		log.info("[attachSearch] openclassesDto:{}", classCode  );
+//		
+//		//OpenClassesDto attachSearchList = null;
+//		
+//		OpenClasses attachSearchList = (attachRepository.findByattachSearch(classCode))
+//				.orElseThrow(()-> new IllegalArgumentException("강의자료가 없습니다. classCode =" + classCode));
+//		OpenClassesDto attachSearch = modelMapper.map(attachSearchList, OpendClassesDto.class); 
+//		
+//		
+//		
+//		return attachSearchList;
+//	}
 
 
 	
@@ -173,6 +218,16 @@ public class AttachService {
 		
 		return memberDtoList;
 	}
+
+
+
+
+
+
+
+
+
+
 
 
 
