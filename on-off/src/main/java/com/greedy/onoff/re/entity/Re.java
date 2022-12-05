@@ -52,8 +52,6 @@ public class Re {
 	@Column(name = "MTM_CODE")
     private Long mtmCode;
 	
-	
-
 
 	public void update(String reTitle, String reContent) {
 		this.reTitle = reTitle;

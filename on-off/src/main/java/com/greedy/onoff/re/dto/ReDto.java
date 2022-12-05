@@ -18,11 +18,8 @@ public class ReDto {
   	private Long reCode;
     private String reTitle;
     private String reContent;
-    private String reDate;
+    private Date reDate;
     private String reStatus;
     private MemberDto member;
     private Long mtmCode;
-
-
-
 }

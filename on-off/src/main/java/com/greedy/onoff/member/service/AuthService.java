@@ -63,7 +63,6 @@ public class AuthService {
 				.orElseThrow(() -> new FindMemberFaildeException("아이디 찾기에 실패하였습니다."));
 			
 		return modelMapper.map(member, MemberDto.class);
-		//return  member.getMemberId();
 	}
 	
 
