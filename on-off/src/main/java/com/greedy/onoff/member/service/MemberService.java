@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import com.greedy.onoff.member.dto.MemberDto;
 import com.greedy.onoff.member.entity.Member;
 import com.greedy.onoff.member.exception.DuplicateMemberEmailException;
+import com.greedy.onoff.member.exception.DuplicateMemberIdException;
+import com.greedy.onoff.member.repository.MemberInsertRepository;
 import com.greedy.onoff.member.repository.MemberRepository;
 import com.greedy.onoff.teacher.dto.TeacherHistoryDto;
 import com.greedy.onoff.teacher.entity.TeacherHistory;
@@ -41,30 +43,33 @@ public class MemberService {
 	private final PasswordEncoder passwordEncoder;
 	private final MemberRepository memberRepository;
 	private final TeacherHistoryRepository teacherHistoryRepository;
+	private final MemberInsertRepository memberInsertRepository;
 	
 	public MemberService(ModelMapper modelMapper,  PasswordEncoder passwordEncoder, MemberRepository memberRepository, 
-			TeacherHistoryRepository teacherHistoryRepository) {
+			TeacherHistoryRepository teacherHistoryRepository,  MemberInsertRepository memberInsertRepository) {
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 		this.memberRepository = memberRepository;
 		this.teacherHistoryRepository = teacherHistoryRepository;
+		this.memberInsertRepository = memberInsertRepository;
 		
 	}
 	
-
+	/* 강사 등록 */
 	@Transactional
 	public MemberDto teacherRegister(MemberDto memberDto) {
 		
-		log.info("[TeacherService] teacherRegister Start ============================");
-		log.info("[TeacherService] memberDto : {}", memberDto);
+		log.info("[MemberService] teacherRegister Start ============================");
+		log.info("[MemberService] memberDto : {}", memberDto);
 		String imageName = UUID.randomUUID().toString().replace("-", "");
 		String replaceFileName = null;
 		
-		/*if(memberRepository.findByMemberId(memberDto.getMemberId()) != null) {
-			throw new DuplicateMemberEmailException("아이디가 중복됩니다.");
-		}*/
+		if(memberInsertRepository.findByMemberId(memberDto.getMemberId()) != null) {
+			log.info("[MemberService] 아이디가 중복됩니다.");
+			throw new DuplicateMemberIdException("아이디가 중복됩니다.");
+		}
 		
-		if(memberRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
+		if(memberInsertRepository.findByMemberEmail(memberDto.getMemberEmail()) != null) {
 			throw new DuplicateMemberEmailException("이메일이 중복됩니다.");
 		}
 		
@@ -129,11 +134,11 @@ public class MemberService {
 	}
 
 	
-	/* 강사 목록 조회 -  상태 여부 'N'포함 (관리자)*/
+	/* 강사 목록 조회 -  상태 여부 'N'포함, 페이징 X (관리자)*/
 	public List<MemberDto> selectTeacherListForAdmin() {
 			
 
-			List<Member> memberList = memberRepository.findAll();
+			List<Member> memberList = memberRepository.findByMemberRole("ROLE_TEACHER");
 			List<MemberDto> memberDtoList = memberList.stream()
 			.map(member -> modelMapper.map(member, MemberDto.class))
 			.collect(Collectors.toList());
@@ -211,7 +216,7 @@ public class MemberService {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberDto.getMemberImage());
 				memberDto.setMemberImageUrl(replaceFileName);
-				
+				if(oriImage != null) 
 				/* 기존에 저장 된 이미지 삭제*/
 				FileUploadUtils.deleteFile(IMAGE_DIR, oriImage);
 

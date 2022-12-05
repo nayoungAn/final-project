@@ -1,14 +1,14 @@
 package com.greedy.onoff.sms.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.greedy.onoff.sms.dto.SmsDto;
-import com.greedy.onoff.sms.entity.Sms;
+import com.greedy.onoff.classes.dto.ClassesHistoryDto;
+import com.greedy.onoff.classes.entity.ClassesHistory;
+import com.greedy.onoff.sms.dto.SmsCriteria;
 import com.greedy.onoff.sms.repository.SmsRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,43 +21,41 @@ public class SmsService {
 	private final SmsRepository smsRepository;
 	private final ModelMapper modelMapper;
 	
-	public SmsService(SmsRepository smsRepository,
-			ModelMapper modelMapper) {
+	public SmsService(SmsRepository smsRepository, ModelMapper modelMapper) {
 		this.smsRepository = smsRepository;
 		this.modelMapper = modelMapper;
 	}
 
-	/* 문자 전송 대상 조회 */
-	public Page<SmsDto> selectSmsListForAdmin(int page) {
+	/* 문자 전송대상 조회 */
+	public List<ClassesHistoryDto> selectSmsListForAdmin(String search) {
 		
-		log.info("[SmsService] selectSmsListForAdmin Start ====================");
+		log.info("[SmsService] smsClassList Start ============================");
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("smsCode").descending());
-		Page<Sms> smsList = smsRepository.findAll(pageable);
-		Page<SmsDto> smsDtoList = smsList.map(sms -> modelMapper.map(sms, SmsDto.class));
+		List<ClassesHistory> classesHistoryList = null; 
 		
-		log.info("[SmsService] smsDtoList : {}", smsDtoList.getContent());
+		if(search != null) {
+			// 클래스명, 멤버명 기준으로 List<ClassesHistory> 조회
+			classesHistoryList = smsRepository.findByClassName(search);
+			classesHistoryList = smsRepository.findByMemberName(search);
+			
+			log.info("[SmsService] classHistoryList : {}" , classesHistoryList);
+			
+		}
 		
-		log.info("[SmsService] selectSmsListForAdmin End ====================");
+		// entity -> dto 변환 후 반환
+		List <ClassesHistoryDto> classesHistoryDtoList = classesHistoryList.stream().map(classes -> modelMapper.map(classes, ClassesHistoryDto.class))
+				.collect(Collectors.toList());
 		
-		return smsDtoList;
+		log.info("[SmsService] smsClassList End ============================");
+		
+		return classesHistoryDtoList;
 	}
+	
+	
+	
+	
 
-	/* 문자 전송 대상 상세 조회 */
-	public Object selectSmsForAdmin(Long smsCode) {
-		
-		log.info("[SmsService] selectSmsForAdmin Start ====================");
-		log.info("[SmsService] smsCode " + smsCode);
-		
-		Sms sms = smsRepository.findById(smsCode)
-				.orElseThrow(() -> new IllegalArgumentException("해당 내역이 업습니다!. accCode=" + smsCode));
-		SmsDto smsDto = modelMapper.map(sms, SmsDto.class);
-		
-		log.info("[SmsService] smsDto : " + smsDto);
-		log.info("[SmsService] selectSmsForAdmin End ====================");
-		
-		return smsCode;
-	}
+	
 	
 	
 	

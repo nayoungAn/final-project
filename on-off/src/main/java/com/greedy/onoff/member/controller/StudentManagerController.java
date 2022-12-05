@@ -60,7 +60,7 @@ public class StudentManagerController {
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", responseDtoWithPaging));
 	}
 	
-	/* 원생 상세 조회 */
+	/* 원생 상세 조회 (듣고 있는 강의 목록 조회)*/
 	@GetMapping("/student-manager/{memberCode}")
 	public ResponseEntity<ResponseDto> selectStudentDetail(@PathVariable Long memberCode, MemberDto memberDto) {
 		
@@ -77,6 +77,16 @@ public class StudentManagerController {
 		
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생 상세 조회 성공", data));
 	}
+	
+	/* 원생 상세 조회 */
+	@GetMapping("/student-managers/{memberCode}")
+	public ResponseEntity<ResponseDto> selectStudentManagerDetail(@PathVariable Long memberCode) {
+		
+
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "원생 상세 조회 성공", 
+				studentManagerService.selectStudentDetail(memberCode)));
+	}
+	
 	
 	
 	/* 원생 정보 수정 */
@@ -120,7 +130,17 @@ public class StudentManagerController {
 	}
 	
 	
-	
+	/*  원생 목록 조회 - 상태 'n' 포함 , 페이징 X (관리자) */
+	@GetMapping("/students-management-nopaging")
+	public ResponseEntity<ResponseDto> selectStudentListForAdminNopaging() {
+		
+		log.info("[StudentController] selectStudentListForAdminNopaging Start ================================");
+
+			
+		log.info("[StudentController] selectStudentListForAdminNopaging End ================================");
+		
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", studentManagerService.selectStudentListForAdmin()));
+	}
 	
 	
 	

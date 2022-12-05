@@ -1,8 +1,10 @@
 package com.greedy.onoff.mtm.entity;
 
 
+
 import java.util.Date;
 import java.util.List;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +30,9 @@ import com.greedy.onoff.re.entity.Re;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+@ToString
 
 @NoArgsConstructor
 @Getter
@@ -73,6 +78,7 @@ public class Mtm {
 	@JoinColumn(name = "MTM_CODE")
 	private Re reList;
 
+
 	public void update(Date mtmDate, String mtmTitle, String mtmDescription,
 			Long answerCode, String mtmDelete) {
 		
@@ -88,7 +94,6 @@ public class Mtm {
 		
 	};
 
-	
 
 
 	

@@ -3,8 +3,11 @@ package com.greedy.onoff.attach.entity;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,8 +33,9 @@ initialValue = 1, allocationSize = 1)
 public class Attach {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ATTACH_SEQ_GENERATOR")
 	@Column(name = "ATTACH_CODE")
-    private Date attachCode;
+    private Long attachCode;
 	
 	@Column(name = "ATTACH_DATE")
     private Date attachDate;
@@ -41,10 +45,13 @@ public class Attach {
 	
 	@ManyToOne 
 	@JoinColumn(name = "CLASS_CODE")
-	private OpenClasses classes;
+	private OpenClasses openClasses;
 	
-	@OneToMany
+	
+	@OneToMany(cascade= CascadeType.PERSIST )
 	@JoinColumn(name = "ATTACH_CODE")
-	private List<Append>  appendList;
+	private List<Append> appendList;
+	
+
 	
 }
