@@ -93,26 +93,24 @@ public class AttachController {
 	}
 	
 	
-	
-//	@PostMapping("/myclass/{classCode}/attach")                 //폼데이타 형태로 들어오는 어노테이션
-//	public ResponseEntity<ResponseDto> attachRegist(@ModelAttribute AppendDto attachRegist ){   //AppendDto로 컨트롤러 만들기
-//		
-//		
-//		log.info("[ATTACHREGIST] attachRegist : {}", attachRegist);
-//
-//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "파일첨부 등록 성공", attachService.attachRegist(attachRegist)));
-//		 
-//	}
-	
 
 	
 	
-	/*4. 강의 자료 공유 수정 */
+//	/*4. 강의 자료 조회 */
+//	
+//
+//	@GetMapping("/myclass/{classCode}")
+//	public ResponseEntity<ResponseDto> attachSearch(@PathVariable AttachDto classCode ){
+//		
+//		AttachDto attachSearchList = attachService.findByattachSearch(classCode.getClassCode()); 
+//		
+//		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK,"조회성공", attachService.findByattachSearch(classCode.getClassCode())));
+//		
+//	}
+//	
 	
 	
-	
-	
-	/*5. 강의 자료 공유 삭제 */
+	/*5. 강의 자료 수정,삭제 */
 	
 	
 	
@@ -125,7 +123,7 @@ public class AttachController {
 	
 	/*7. 원생정보 조회 */
 	
-	@GetMapping("/student-info")
+	@GetMapping("/studentinfo")
 	public ResponseEntity<ResponseDto> studentslist(@RequestParam(name="page", defaultValue="1")int page, String memberName ){
 		
 		
