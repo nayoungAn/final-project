@@ -142,7 +142,18 @@ public class StudentManagerController {
 		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "조회 성공", studentManagerService.selectStudentListForAdmin()));
 	}
 	
+	/* 아이디 중복 확인 */
+	@GetMapping("/checkMemberId/{memberId}")
+	public ResponseEntity<ResponseDto> checkMemberIdDuplicate(@PathVariable String memberId) {
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아이디 중복 체크 완료", studentManagerService.checkMemberIdDuplicate(memberId)));
+	}
 	
+	/* 이메일 중복 확인 */
+	@GetMapping("/checkEmail/{memberEmail}")
+	public ResponseEntity<ResponseDto> checkMemberEmailDuplicate(@PathVariable String memberEmail) {
+		return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "이메일 중복 체크 완료", studentManagerService.checkMemberEmailDuplicate(memberEmail)));
+		
+	}
 	
 	
 	
