@@ -50,25 +50,5 @@ public class SmsService {
 		return classesHistoryDtoList;
 	}
 
-//	/* 문자 전송 */
-//	
-//	public String uploadFile(File file, StorageType mms, Object object) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public SingleMessageSentResponse sendOne(SingleMessageSentResponse singleMessageSentResponse) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
-	
-	
-	
-
-	
-	
-	
-	
 
 }
