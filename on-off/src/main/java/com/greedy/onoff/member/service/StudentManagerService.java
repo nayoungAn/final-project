@@ -54,7 +54,7 @@ public class StudentManagerService {
 	public Page<MemberDto> selectStudentList(int page) {
 		log.info("[StudentService] selectStudentList Start ============================");
 		
-		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("memberCode").ascending());
+		Pageable pageable = PageRequest.of(page -1, 7, Sort.by("memberCode").ascending());
 		
 		Page<Member> studentList = studentManagerRepository.findByMemberRole(pageable, "ROLE_STUDENT");
 		

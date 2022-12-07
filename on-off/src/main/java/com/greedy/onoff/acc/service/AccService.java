@@ -35,7 +35,7 @@ public class AccService {
 		
 		log.info("[AccService] selectAccListByAccStatus Start ====================");
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("accCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 7, Sort.by("accCode").descending());
 		
 		Page<Acc> accList = accRepository.findByAccStatusContains(pageable, accStatus);
 		Page<AccDto> accDtoList = accList.map(acc -> modelMapper.map(acc, AccDto.class));
