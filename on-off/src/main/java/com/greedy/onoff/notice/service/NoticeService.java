@@ -39,7 +39,7 @@ public class NoticeService {
 		
 		log.info("[NoticeService] selectNoticeList Start ===================================");
 		
-		Pageable pageable = PageRequest.of(page -1, 10, Sort.by("noticeCode").descending());
+		Pageable pageable = PageRequest.of(page -1, 7, Sort.by("noticeCode").descending());
 		
 		Page<Notice> noticeList = noticeRepository.findByNoticeTitleContains(pageable, noticeName);
 		Page<NoticeDto> noticeDtoList = noticeList.map(notice -> modelMapper.map(notice, NoticeDto.class));
