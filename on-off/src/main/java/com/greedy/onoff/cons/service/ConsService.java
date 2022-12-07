@@ -53,7 +53,7 @@ public class ConsService {
 		
 		log.info("[ConsService] selectProductListForAdmin Start =====================" );
 		
-		Pageable pageable = PageRequest.of(page - 1, 10, Sort.by("ConsCode").descending());
+		Pageable pageable = PageRequest.of(page - 1, 8, Sort.by("ConsCode").descending());
 		
 		Page<Cons> consList = consRepository.findAll(pageable);
 		Page<ConsDto> consDtoList = consList.map(cons -> modelMapper.map(cons, ConsDto.class));
